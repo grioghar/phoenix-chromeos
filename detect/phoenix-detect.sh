@@ -31,7 +31,10 @@ if [ -z "$PROFILE_FILE" ] && [ "$VSLUG" = lenovo ]; then
 fi
 # no model profile (whitebox / unknown): the generic profile
 PROFILE_KIND=model; [ -n "$PROFILE_FILE" ] || PROFILE_KIND=none
-[ -z "$PROFILE_FILE" ] && [ -f "$PROFILES/generic.conf" ] && { PROFILE_FILE="$PROFILES/generic.conf"; PROFILE_KIND=generic; }
+if [ -z "$PROFILE_FILE" ]; then
+  case "$CHASSIS" in desktop) GEN=generic-desktop;; *) GEN=generic-laptop;; esac
+  [ -f "$PROFILES/$GEN.conf" ] && { PROFILE_FILE="$PROFILES/$GEN.conf"; PROFILE_KIND=generic; }
+fi
 
 # ---------------------------------------------------------------- CPU
 CPUFLAGS=$(grep -m1 '^flags' "$SYS/proc/cpuinfo" 2>/dev/null | sed 's/^flags[^:]*: //')
