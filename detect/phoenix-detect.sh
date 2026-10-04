@@ -29,6 +29,9 @@ PROFILE_FILE=""; [ -f "$PROFILES/$VSLUG/$MSLUG.conf" ] && PROFILE_FILE="$PROFILE
 if [ -z "$PROFILE_FILE" ] && [ "$VSLUG" = lenovo ]; then
   MT=$(slug "$(echo "$PRODUCT" | cut -c1-4)"); [ -f "$PROFILES/lenovo/mt-$MT.conf" ] && PROFILE_FILE="$PROFILES/lenovo/mt-$MT.conf"
 fi
+# no model profile (whitebox / unknown): the generic profile
+PROFILE_KIND=model; [ -n "$PROFILE_FILE" ] || PROFILE_KIND=none
+[ -z "$PROFILE_FILE" ] && [ -f "$PROFILES/generic.conf" ] && { PROFILE_FILE="$PROFILES/generic.conf"; PROFILE_KIND=generic; }
 
 # ---------------------------------------------------------------- CPU
 CPUFLAGS=$(grep -m1 '^flags' "$SYS/proc/cpuinfo" 2>/dev/null | sed 's/^flags[^:]*: //')
@@ -122,7 +125,7 @@ ANDROID=yes; [ "$VIRT" = 1 ] || ANDROID="no (CPU has no VT-x/AMD-V)"
 [ "$SSE42" = 1 ] || ANDROID="no (CPU lacks SSE4.2; ChromeOS itself will not run)"
 
 if [ "${1:-}" = --summary ]; then
-  echo "Machine:   ${VENDOR:-unknown} ${MODEL:-} (${CHASSIS}${PROFILE_FILE:+, known model})"
+  echo "Machine:   ${VENDOR:-unknown} ${MODEL:-} (${CHASSIS}, $( [ "$PROFILE_KIND" = model ] && echo known model || echo generic profile))"
   echo "CPU:       ${CPUNAME:-unknown}, $THREADS threads$( [ "$MOVBE" = 0 ] && echo ', pre-Haswell')"
   echo "Graphics:  ${GPU_MAIN:-none} (${GPU_STACK:-?})$( [ "$VULKAN" = 0 ] && echo ', no Vulkan')"
   echo "Memory:    ${MEM_MB} MB    Firmware: $FIRMWARE    Touchpad: $TOUCHPAD"
@@ -133,7 +136,7 @@ if [ "${1:-}" = --summary ]; then
 fi
 
 kv machine.vendor "$VENDOR"; kv machine.model "$MODEL"; kv machine.product "$PRODUCT"; kv machine.board "$BOARD"
-kv machine.bios "$BIOS"; kv machine.chassis "$CHASSIS"; kv machine.id "$VSLUG/$MSLUG"; kv machine.profile "$PROFILE_FILE"
+kv machine.bios "$BIOS"; kv machine.chassis "$CHASSIS"; kv machine.id "$VSLUG/$MSLUG"; kv machine.profile "$PROFILE_FILE"; kv machine.profile_kind "$PROFILE_KIND"
 kv cpu.vendor "$CPUVENDOR"; kv cpu.name "$CPUNAME"; kv cpu.threads "$THREADS"
 kv cpu.movbe "$MOVBE"; kv cpu.rdrand "$RDRAND"; kv cpu.avx "$AVX"; kv cpu.avx2 "$AVX2"; kv cpu.bmi2 "$BMI2"
 kv cpu.sse4_2 "$SSE42"; kv cpu.aes "$AES"; kv cpu.virt "$VIRT"; kv cpu.kvm "$KVMDEV"

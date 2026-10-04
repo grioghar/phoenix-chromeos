@@ -10,6 +10,7 @@
 #   io_tuning=auto|off                     disk scheduler/read-ahead by disk type
 #   performance_mode=off|on                boot options trading hardening for speed (needs reboot)
 #   android_animations=1|0.5|0             Android animation speed (0.5 = twice as fast)
+#   maintenance=on|off (+ maintenance_trim/_crashes/_crash_days/_android/_logs)   daily upkeep
 
 PHOENIX_SHARE=${PHOENIX_SHARE:-/usr/share/phoenix}
 PLATFORM_CONF=${PLATFORM_CONF:-/etc/phoenix/platform.conf}
@@ -53,6 +54,8 @@ module_loaded(){ [ -d "/sys/module/$(echo "$1" | tr - _)" ]; }
 # ---------------------------------------------------------------- config
 conf_load(){
   modules=""; cpu_profile=balanced; fan_mode=bios; io_tuning=auto; performance_mode=off; android_animations=1
+  # daily maintenance (platform/maintain.sh); ChromeOS already TRIMs SSDs and rotates logs
+  maintenance=on; maintenance_trim=off; maintenance_crashes=on; maintenance_crash_days=7; maintenance_android=on; maintenance_logs=off
   [ -r "$PLATFORM_CONF" ] && . "$PLATFORM_CONF"
 }
 # conf_default: a new config for this machine (recommended modules + catalog/profile options)
@@ -167,4 +170,11 @@ apply_android(){
   for k in window_animation_scale transition_animation_scale animator_duration_scale; do
     timeout 20 android-sh -c "settings put global $k $android_animations" >/dev/null 2>&1 || return 0
   done; echo "android animations: $android_animations"
+}
+
+# daily maintenance service (platform/maintain.sh via phoenix-maintain)
+apply_maintain(){
+  conf_load
+  if [ "$maintenance" = on ]; then start phoenix-maintain 2>/dev/null || true; echo "maintenance: on"
+  else stop phoenix-maintain 2>/dev/null || true; echo "maintenance: off"; fi
 }

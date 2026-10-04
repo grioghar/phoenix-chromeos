@@ -42,7 +42,7 @@ set +e   # collect whatever exists; a missing file or tool must not stop the rep
   sec "phoenix assessment"
   det --summary 2>&1
   PROFILE=$(det 2>/dev/null)
-  [ -n "$(printf '%s\n' "$PROFILE" | sed -n 's/^machine.profile=//p')" ] && echo "model profile: present" || echo "model profile: MISSING (this machine is not in Phoenix's profile list yet)"
+  [ "$(printf '%s\n' "$PROFILE" | sed -n 's/^machine.profile_kind=//p')" = model ] && echo "model profile: present" || echo "model profile: MISSING (generic profile in use; this machine is not in Phoenix's profile list yet)"
   printf '%s\n' "$PROFILE" | grep -E '^(cpu|gpu|firmware|input|sensors|fan|disk|power|wifi|android|needs)' | sed 's/^/  /'
 
   sec "software"

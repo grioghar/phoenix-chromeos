@@ -1,5 +1,5 @@
 #!/bin/sh
-# phoenix platform: view and configure this machine's platform modules, CPU profile and fan.
+# phoenix platform: view and configure this machine's platform modules, CPU profile, fan and maintenance.
 #   phoenix platform               status (what was detected, what is loaded, temperatures, fans)
 #   phoenix platform menu          interactive menu
 #   phoenix platform enable MOD    load MOD now and at every boot     (disable MOD: stop doing so)
@@ -8,6 +8,9 @@
 #   phoenix platform speed         speed settings: disk tuning, performance mode, Android animations
 #   phoenix platform perf on|off   performance mode (faster, less hardened; applies after reboot)
 #   phoenix platform anim 1|0.5|0  Android animation speed
+#   phoenix platform maintain [on|off]    enable/disable daily maintenance (TRIM, crash cleanup, health checks)
+#   phoenix platform maintain-menu interactive maintenance settings
+#   phoenix platform maintain-now  run maintenance tasks immediately
 #   phoenix platform reset         back to the recommended settings for this machine
 set -e
 [ "${VERBOSE:-0}" = 1 ] && set -x
@@ -42,7 +45,7 @@ save_conf(){ rw; mkdir -p /etc/phoenix; "$@"; ro; persist; }
 # ---------------------------------------------------------------- views
 status(){
   conf_load
-  echo "Machine:      $(profile_get machine.vendor) $(profile_get machine.model)$( [ -n "$(profile_get machine.profile)" ] && echo '  (known model)')"
+  echo "Machine:      $(profile_get machine.vendor) $(profile_get machine.model)$( [ "$(profile_get machine.profile_kind)" = model ] && echo '  (known model)' || echo '  (generic profile: run phoenix submit to add this model)')"
   echo "CPU:          $(profile_get cpu.name)   scaling: $(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_driver 2>/dev/null)/$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor 2>/dev/null)"
   echo "CPU profile:  $cpu_profile        Fan mode: $fan_mode$( [ -z "$(fan_pwm)" ] && echo '  (no software fan control on this machine)')"
   echo
@@ -109,6 +112,60 @@ fan(){
   if [ "$1" = bios ]; then stop phoenix-fan 2>/dev/null || true; else restart phoenix-fan 2>/dev/null || start phoenix-fan 2>/dev/null || true; fi
   echo "fan mode: $1"
 }
+
+# ---------------------------------------------------------------- maintenance
+maintain_status(){
+  conf_load
+  echo "Maintenance:"
+  echo "  Overall:            $maintenance"
+  echo "  TRIM (SSDs):        $maintenance_trim"
+  echo "  Crash cleanup:      $maintenance_crashes (keep for ${maintenance_crash_days} days)"
+  echo "  Android cache trim: $maintenance_android"
+  echo "  Log cleanup:        $maintenance_logs (disabled by default; ChromeOS already handles logs)"
+  echo
+  echo "Run 'phoenix platform maintain on|off' to enable/disable, or 'phoenix platform run' to execute now."
+}
+maintain_menu(){
+  while :; do
+    clear 2>/dev/null || true
+    maintain_status
+    echo
+    echo "  1) toggle maintenance on/off"
+    echo "  2) toggle TRIM"
+    echo "  3) toggle crash cleanup"
+    echo "  4) set crash retention days"
+    echo "  5) toggle Android cache trim"
+    echo "  6) toggle log cleanup"
+    echo "  r) reset to defaults"
+    echo "  q) quit"
+    printf "> "; read -r k || exit 0
+    case "$k" in
+      1) printf "Maintenance (on / off): "; read -r v; [ -n "$v" ] && maintain_toggle "$v"; pause ;;
+      2) conf_load; maintenance_trim=$([ "$maintenance_trim" = on ] && echo off || echo on); save_conf conf_set maintenance_trim "$maintenance_trim"; pause ;;
+      3) conf_load; maintenance_crashes=$([ "$maintenance_crashes" = on ] && echo off || echo on); save_conf conf_set maintenance_crashes "$maintenance_crashes"; pause ;;
+      4) printf "Keep crashes for (days): "; read -r d; [ -n "$d" ] && save_conf conf_set maintenance_crash_days "$d"; pause ;;
+      5) conf_load; maintenance_android=$([ "$maintenance_android" = on ] && echo off || echo on); save_conf conf_set maintenance_android "$maintenance_android"; pause ;;
+      6) conf_load; maintenance_logs=$([ "$maintenance_logs" = on ] && echo off || echo on); save_conf conf_set maintenance_logs "$maintenance_logs"; pause ;;
+      r) save_conf sh -c ". $SHARE/platform/platform-lib.sh; conf_default > $PLATFORM_CONF"; echo "Reset to defaults."; pause ;;
+      q|"") exit 0 ;;
+    esac
+  done
+}
+maintain_toggle(){
+  case "$1" in
+    on|off) save_conf conf_set maintenance "$1"; apply_maintain; echo "Maintenance: $1" ;;
+    *) echo "use: on or off" ;;
+  esac
+}
+maintain_now(){
+  echo "Running maintenance tasks..."
+  if command -v /usr/share/phoenix/platform/maintain.sh >/dev/null 2>&1; then
+    /usr/share/phoenix/platform/maintain.sh
+    echo "Maintenance completed (check logs with: journalctl -t phoenix-maintain -n 20)"
+  else
+    echo "Maintenance script not found; run 'phoenix platform apply' to set up Phoenix."
+  fi
+}
 perf(){
   case "$1" in on|off) ;; *) echo "use: on or off"; return;; esac
   if [ "$1" = on ]; then
@@ -132,9 +189,12 @@ case "${1:-status}" in
   cpu)     cpu "${2:-}" ;;
   fan)     fan "${2:-}" ;;
   reset)   reset ;;
-  apply)   apply_modules; apply_cpu; apply_io ;;
+  apply)   apply_modules; apply_cpu; apply_io; apply_maintain ;;
   speed)   speed ;;
   perf)    perf "${2:-}" ;;
   anim)    anim "${2:-}" ;;
-  *) echo "usage: phoenix platform [status|menu|enable MOD|disable MOD|cpu PROFILE|fan MODE|speed|perf on|off|anim N|reset|apply]" ;;
+  maintain)     [ -z "$2" ] && maintain_status || maintain_toggle "$2" ;;
+  maintain-menu) maintain_menu ;;
+  maintain-now)  maintain_now ;;
+  *) echo "usage: phoenix platform [status|menu|enable MOD|disable MOD|cpu PROFILE|fan MODE|speed|perf on|off|anim N|reset|apply|maintain [on|off]|maintain-menu|maintain-now]" ;;
 esac

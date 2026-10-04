@@ -37,3 +37,37 @@ Plan for choosing it:
 - Lighter app choices for old machines (documented recommendations, not forced).
 - Later: rewrite MOVBE out of the hottest Android libraries. That removes the remaining
   hypervisor-emulation cost on pre-Haswell CPUs.
+
+## 4. Keeping it fresh: Daily maintenance (`phoenix platform maintain`)
+
+Phoenix runs optional daily maintenance tasks to keep old machines responsive. ChromeOS already
+handles most cleanup automatically, so these are **supplements** for user control and visibility.
+
+| Task | What it does | Default | Safe to enable |
+|---|---|---|---|
+| **TRIM** | Runs `fstrim` on SSDs (reduces garbage-collection pauses). ChromeOS already does this every 6 hours automatically; this runs on schedule if enabled. | on | Yes. TRIM only marks blocks as reusable; it doesn't touch data. Only runs on SSDs (rotational=0). |
+| **Crash cleanup** | Removes crash dump files older than N days (default: 7). Keeps recent crashes for debugging. ChromeOS auto-limits to 32 crashes per directory. | on | Yes. Only removes old `.dmp` and `.log` files; doesn't affect future crash collection. |
+| **Android cache trim** | Runs `pm trim-caches` in ARCVM when it's running. ARCVM already has WorkingSetTrim for automatic cache reclamation on memory pressure. | on | Yes. Only clears app caches (not data); apps rebuild on next use. Don't enable frequent runs; once per day is enough. |
+| **Log cleanup** | Removes log files older than 14 days (ChromeOS already rotates daily at 7 days). Only touches archived log files, not active logs. | off | Yes, but usually not needed. ChromeOS already runs `chromeos-cleanup-logs` daily. Enable only if you need extra cleanup. |
+
+**Configure maintenance:**
+- `phoenix platform maintain on` / `off` — enable/disable daily maintenance
+- `phoenix platform maintain-menu` — interactive menu to toggle individual tasks
+- `phoenix platform maintain-now` — run maintenance tasks immediately (for testing)
+
+**Why these defaults:**
+- TRIM, crash cleanup, and Android cache trim are on by default because they're safe and benefit old hardware with limited storage/memory.
+- Log cleanup is off because ChromeOS already does it; enable only if you want more aggressive cleanup.
+- All tasks are fully reversible: disabling simply stops the daily runs.
+
+**How it works:**
+- The `phoenix-maintain` upstart service runs daily (background loop, low priority via `nice`).
+- Each task is optional and can be toggled independently.
+- Health reporting (memory, swap, disk usage) runs with every maintenance cycle and logs warnings if concerning.
+- All tasks are idempotent (safe to run multiple times) and never delete user files.
+
+**References:**
+- TRIM: [ChromeOS fstrim.conf](https://cos.googlesource.com/third_party/platform2/+/refs/heads/release-R113/trim/init/trim.conf)
+- Crash dumps: [ChromeOS crash-reporting FAQ](https://new.chromium.org/chromium-os/packages/crash-reporting/faq)
+- Android cache: [Android ComponentCallbacks2](https://developer.android.com/reference/android/content/ComponentCallbacks2), [ARCVM memory management](https://chromium.googlesource.com/chromium/src/+/f9ef487d3e8736e259e1cb11b45e47fee17d48d3)
+- Log rotation: [ChromeOS log-rotate.conf](https://chromium.googlesource.com/chromiumos/platform2/+/HEAD/init/upstart/log-rotate.conf)
