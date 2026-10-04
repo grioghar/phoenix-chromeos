@@ -40,7 +40,8 @@ esac
 step "Checking the Phoenix server for the current release"
 M=/tmp/phoenix-release.manifest
 curl -s -m 20 "http://$H/rel/manifest" -o $M && grep -q '^tag=' $M || { echo "  Cannot reach the Phoenix server."; exit 1; }
-. $M          # tag= base_initramfs= base_kernel= initramfs_sha= patches_sha=
+# tag= base_initramfs= base_kernel= initramfs_sha= patches_sha=  (parsed, not sourced: /tmp is noexec)
+eval "$(grep -E '^(tag|base_initramfs|base_kernel|initramfs_sha|patches_sha)=[A-Za-z0-9._-]+$' $M)"
 echo "  Phoenix release: $tag (Brunch base kernel $base_kernel)"
 
 step "Checking this installation"

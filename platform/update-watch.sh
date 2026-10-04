@@ -41,7 +41,7 @@ fi
 D=$(disk)
 if have; then
   if [ -f $ST/held ]; then            # release a hold: give KERN-B back the priority update_engine set
-    . $ST/held; cgpt add -i 4 -P "$prio" -T "$tries" -S 0 "$D" && rm -f $ST/held
+    eval "$(tr ' ' '\n' < $ST/held | grep -E '^(prio|tries|version)=[0-9.]+$')"; cgpt add -i 4 -P "$prio" -T "$tries" -S 0 "$D" && rm -f $ST/held
     log "update $newv released: its bundle is ready; it installs at the next reboot"
   else
     log "update $newv ready: hardware support for it is saved; it installs at the next reboot"
