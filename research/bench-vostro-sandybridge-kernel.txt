@@ -1,0 +1,13 @@
+label=sandybridge-kernel+perf
+time=2026-10-04 17:08:30
+kernel=6.12.91-phoenix-sandybridge
+cmdline_perf=mitigations=off init_on_alloc=0 nowatchdog 
+spectre_v2=Vulnerable; IBPB: disabled; STIBP: disabled; PBRSB-eIBRS: No
+load_before=4.97
+syscalls_2M_ms=696
+forks_400_ms=568
+pipes_200MB_ms=346
+memtouch_1GB_ms=1035
+vm_exits_per_s=55041
+vm_cpu_pct=86
+cpu_pressure=some avg10=18.91 avg60=23.90 avg300=45.49
