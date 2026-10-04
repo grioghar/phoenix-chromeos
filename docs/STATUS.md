@@ -10,8 +10,13 @@ Read with: README.md, docs/HOWTO.md, docs/ARCHITECTURE.md, docs/FINDINGS.md, doc
   (RDRAND→clc, OpenGL instead of Vulkan), native ALPS touchpad (`phoenix touchpad alps`).
 - `phoenix` CLI installed; **remote access ON**: from the Mac, `ssh vostro` (root, key
   ~/.ssh/phoenix_vostro, only from 192.168.1.119, port 2222). Turn off: `phoenix remote off`.
+- **2026-10-04 17:00: verified on real hardware**: performance mode (syscalls 2.4x, forks 39%,
+  memory 27% faster: research/bench-vostro.md), `phoenix save` + Brunch hook, and the Sandy Bridge
+  kernel `6.12.91-phoenix-sandybridge` via `phoenix kernel install`. The kernel switch triggered a
+  full Brunch rebuild and the hook restored all fixes (patched crosvm byte-identical, shim, crocus,
+  Android) in ~9 s; Dell platform modules (dell_smm_hwmon, dell_laptop, dell_wmi) load at boot.
 - Not yet applied on the Vostro: `phoenix touchpad tune` (pointer jumps on two-finger scroll),
-  `phoenix upgrade` (boot screen etc.), the Sandy Bridge kernel, `phoenix save`/hook.
+  `phoenix upgrade` (boot screen).
 - Slowness root cause found 2026-10-04 15:10: the **Claude Android app** re-rendering a very long
   conversation (constant GC, skipped frames) keeps ARCVM's 4 vCPUs busy; ARCVM re-arms the
   TSC-deadline timer ~10k/s (no APICv on Sandy Bridge → every re-arm is a VM exit). Memory is fine.
