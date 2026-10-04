@@ -51,9 +51,9 @@ sync; umount "$W/rc"
 step "Installer: fork's chromeos-install.sh"
 install -m 755 "$FORK/scripts/chromeos-install.sh" "$W/rel/chromeos-install.sh"
 
-TAG=$(cd "$FORK" && git -c safe.directory="*" describe --always --dirty 2>/dev/null || echo local)
+TAG=${PHOENIX_TAG:-$(cd "$FORK" && git -c safe.directory="*" describe --always --dirty 2>/dev/null || echo local)}
 # phoenix-<brunch base>-<fork commit>, e.g. phoenix-r150-0937d31 (fork branches are named phoenix-rXXX)
-BASE=$(cd "$FORK" && git -c safe.directory="*" rev-parse --abbrev-ref HEAD); BASE=${BASE#phoenix-}
+BASE=${PHOENIX_BASE:-$(cd "$FORK" && git -c safe.directory="*" rev-parse --abbrev-ref HEAD)}; BASE=${BASE#phoenix-}
 NAME=phoenix-$BASE-$TAG
 tar -czf "$OUT/$NAME.tar.gz" -C "$W/rel" .
 ( cd "$OUT" && sha256sum "$NAME.tar.gz" | tee "$NAME.tar.gz.sha256" )

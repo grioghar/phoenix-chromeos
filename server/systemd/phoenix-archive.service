@@ -1,0 +1,13 @@
+[Unit]
+Description=Phoenix: archive ChromeOS recovery images and Brunch releases (verified, never deleted)
+Wants=network-online.target
+After=network-online.target
+RequiresMountsFor=/root/phoenix-archive
+
+[Service]
+Type=oneshot
+Nice=10
+IOSchedulingClass=idle
+ExecStart=/usr/bin/python3 /root/phoenix/build/archive.py
+StandardOutput=append:/root/phoenix-archive/archive.log
+StandardError=append:/root/phoenix-archive/archive.log
