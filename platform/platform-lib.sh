@@ -11,6 +11,9 @@
 #   performance_mode=off|on                boot options trading hardening for speed (needs reboot)
 #   android_animations=1|0.5|0             Android animation speed (0.5 = twice as fast)
 #   maintenance=on|off (+ maintenance_trim/_crashes/_crash_days/_android/_logs)   daily upkeep
+#   throttle_override=on|off             undo firmware throttling (dead battery, unrecognised charger)
+#   thermal_guard=on|off, thermal_limit=90, thermal_hysteresis=5, thermal_step=100 (MHz), thermal_poll=3 (s)
+#                                        temperature-based speed control
 
 PHOENIX_SHARE=${PHOENIX_SHARE:-/usr/share/phoenix}
 PLATFORM_CONF=${PLATFORM_CONF:-/etc/phoenix/platform.conf}
@@ -55,6 +58,7 @@ module_loaded(){ [ -d "/sys/module/$(echo "$1" | tr - _)" ]; }
 conf_load(){
   modules=""; cpu_profile=balanced; fan_mode=bios; io_tuning=auto; performance_mode=off; android_animations=1
   # daily maintenance (platform/maintain.sh); ChromeOS already TRIMs SSDs and rotates logs
+  throttle_override=on; thermal_guard=on; thermal_limit=90; thermal_hysteresis=5; thermal_step=100; thermal_poll=3   # platform/throttle.sh
   maintenance=on; maintenance_trim=off; maintenance_crashes=on; maintenance_crash_days=7; maintenance_android=on; maintenance_logs=off
   [ -r "$PLATFORM_CONF" ] && . "$PLATFORM_CONF"
 }
@@ -177,4 +181,13 @@ apply_maintain(){
   conf_load
   if [ "$maintenance" = on ]; then start phoenix-maintain 2>/dev/null || true; echo "maintenance: on"
   else stop phoenix-maintain 2>/dev/null || true; echo "maintenance: off"; fi
+}
+
+# firmware throttle override + thermal guard (platform/throttle.sh via phoenix-throttle)
+apply_throttle(){
+  conf_load
+  if [ "$throttle_override" = on ] || [ "$thermal_guard" = on ]; then start phoenix-throttle 2>/dev/null || true
+  else stop phoenix-throttle 2>/dev/null || true
+       for p in /sys/devices/system/cpu/cpufreq/policy*; do cat $p/cpuinfo_max_freq > $p/scaling_max_freq 2>/dev/null; done; fi
+  echo "throttle override: $throttle_override   thermal guard: $thermal_guard (limit ${thermal_limit} C, hysteresis ${thermal_hysteresis} C, step ${thermal_step} MHz, every ${thermal_poll} s)"
 }

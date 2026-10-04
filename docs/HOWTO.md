@@ -96,8 +96,13 @@ The installer walks you through it:
    less protected against malicious sites or apps exploiting CPU flaws (Spectre, Meltdown and
    others). The installer explains the trade-off before asking. Change it later with
    `phoenix platform perf on|off`.
-6. Installation. Brunch copies the system, which takes several minutes.
-7. **BIOS boot** (BIOS-only computers), then the fixes are copied onto the drive.
+6. **Throttle override** (on by default, pointed out): some firmware slows the processor down
+   drastically when the battery has failed or the charger isn't recognised (a Dell with a dead
+   battery drops to about 400 MHz). Phoenix undoes that and guards the temperature itself, slowing
+   down above 90 °C. Turn it off if the computer uses a weaker charger than it came with. Change it
+   later with `phoenix platform throttle on|off`.
+7. Installation. Brunch copies the system, which takes several minutes.
+8. **BIOS boot** (BIOS-only computers), then the fixes are copied onto the drive.
 
 When it says Done, run `sudo poweroff`, **remove the USB stick**, and power on. If the computer
 doesn't start from the drive by itself, open the boot menu and pick the internal drive. On the
@@ -124,6 +129,11 @@ Common changes:
 | `phoenix platform cpu performance` | CPU profile: `balanced` (default), `performance`, `quiet` |
 | `phoenix platform fan auto` | Fan curve (`bios` = firmware decides; only where software control is allowed) |
 | `phoenix platform anim 0.5` | Android animations twice as fast (`0` = off) |
+| `phoenix platform throttle on\|off` | Undo firmware throttling (dead battery, unrecognised charger); on by default |
+| `phoenix platform thermal on\|off` | Temperature-based speed control (thermal guard); on by default |
+| `phoenix platform thermal limit 90` | Target maximum temperature, 60–100 °C (above it the speed steps down) |
+| `phoenix platform thermal hysteresis 5` | Speed steps back up this many °C below the limit |
+| `phoenix platform thermal step 100` / `poll 3` | MHz per step / seconds between checks |
 | `phoenix platform perf on` | **Performance mode**, after a reboot: turns off CPU vulnerability workarounds and some memory hardening. Much faster on old CPUs, but less protected against malicious websites and apps. It asks before turning on. |
 
 ## 6b. Optimized kernel

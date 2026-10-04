@@ -71,3 +71,16 @@ handles most cleanup automatically, so these are **supplements** for user contro
 - Crash dumps: [ChromeOS crash-reporting FAQ](https://new.chromium.org/chromium-os/packages/crash-reporting/faq)
 - Android cache: [Android ComponentCallbacks2](https://developer.android.com/reference/android/content/ComponentCallbacks2), [ARCVM memory management](https://chromium.googlesource.com/chromium/src/+/f9ef487d3e8736e259e1cb11b45e47fee17d48d3)
 - Log rotation: [ChromeOS log-rotate.conf](https://chromium.googlesource.com/chromiumos/platform2/+/HEAD/init/upstart/log-rotate.conf)
+
+## Throttle override and thermal guard (`phoenix-throttle` service)
+
+- **Throttle override** (`throttle_override`, default on): some firmware slows the CPU drastically
+  when the battery has failed or the charger is not recognised. On a Dell Vostro 3550 with a dead
+  battery that meant 800 MHz plus 1/8 duty cycling, about 418 MHz effective. Phoenix clears the
+  clock modulation (MSR 0x19A) and BD PROCHOT (MSR 0x1FC bit 0) whenever the firmware sets them.
+- **Thermal guard** (`thermal_guard`, default on): steps the maximum CPU frequency down by
+  `thermal_step` MHz while the package is at or above `thermal_limit` °C, and back up once it is
+  `thermal_hysteresis` °C below. It checks every `thermal_poll` seconds. The CPU's own protection at
+  TjMax always stays active.
+- The installer points out the override (on by default) and the case where it should be off: a
+  weaker replacement charger, where the firmware throttles to protect the charger.

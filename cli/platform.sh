@@ -11,6 +11,8 @@
 #   phoenix platform maintain [on|off]    enable/disable daily maintenance (TRIM, crash cleanup, health checks)
 #   phoenix platform maintain-menu interactive maintenance settings
 #   phoenix platform maintain-now  run maintenance tasks immediately
+#   phoenix platform throttle on|off          undo firmware throttling (dead battery, unrecognised charger)
+#   phoenix platform thermal on|off|limit N|hysteresis N|step MHZ|poll S   temperature-based speed control
 #   phoenix platform reset         back to the recommended settings for this machine
 set -e
 [ "${VERBOSE:-0}" = 1 ] && set -x
@@ -66,6 +68,7 @@ status(){
   echo "Sensors:"; sensors_report | grep . || echo "  (none reported yet)"
   echo
   echo "Speed:        disk tuning $io_tuning   performance mode $performance_mode$( perf_mode_active && echo ' (active)' || { [ "$performance_mode" = on ] && echo ' (after reboot)'; } )   Android animations $android_animations"
+  echo "Throttle:     override $throttle_override   thermal guard $thermal_guard (limit ${thermal_limit} C, -${thermal_hysteresis} C, ${thermal_step} MHz steps, every ${thermal_poll} s)   now: $(awk '{s+=$1} END{printf "%d MHz", s/NR/1000}' /sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq 2>/dev/null), max $(( $(cat /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq 2>/dev/null || echo 0) / 1000 )) MHz"
 }
 
 menu(){
@@ -75,6 +78,7 @@ menu(){
     echo "  e) enable a module    d) disable a module    a) show all catalog modules"
     echo "  c) CPU profile        f) fan mode            r) reset to recommended"
     echo "  p) performance mode   n) Android animations  s) speed details"
+    echo "  o) throttle override (dead battery / firmware throttling)   t) thermal guard (limit, steps)"
     echo "  q) quit"
     printf "> "; read -r k || exit 0
     case "$k" in
@@ -87,6 +91,8 @@ menu(){
       p) printf "Performance mode (on / off): "; read -r p; perf "$p"; pause ;;
       n) printf "Android animation speed (1 = normal, 0.5 = faster, 0 = off): "; read -r p; anim "$p"; pause ;;
       s) speed; pause ;;
+      o) printf "Throttle override (on / off): "; read -r p; throttle "$p"; pause ;;
+      t) printf "Thermal guard: on / off / limit C / hysteresis C / step MHZ / poll S: "; read -r a b; thermal "$a" "$b"; pause ;;
       q|"") exit 0 ;;
     esac
   done
@@ -177,6 +183,18 @@ perf(){
   fi
   save_conf conf_set performance_mode "$1"; apply_perf_mode && echo "Reboot to apply (sudo reboot)."
 }
+throttle(){ case "$1" in on|off) save_conf conf_set throttle_override "$1"; apply_throttle;; *) echo "use: on or off";; esac; }
+thermal(){
+  case "$1" in
+    on|off) save_conf conf_set thermal_guard "$1" ;;
+    limit)  [ "${2:-0}" -ge 60 ] 2>/dev/null && [ "$2" -le 100 ] && save_conf conf_set thermal_limit "$2" || { echo "limit: 60-100 C"; return; } ;;
+    hysteresis) [ "${2:-0}" -ge 1 ] 2>/dev/null && [ "$2" -le 20 ] && save_conf conf_set thermal_hysteresis "$2" || { echo "hysteresis: 1-20 C"; return; } ;;
+    step)   [ "${2:-0}" -ge 50 ] 2>/dev/null && [ "$2" -le 1000 ] && save_conf conf_set thermal_step "$2" || { echo "step: 50-1000 MHz"; return; } ;;
+    poll)   [ "${2:-0}" -ge 1 ] 2>/dev/null && [ "$2" -le 60 ] && save_conf conf_set thermal_poll "$2" || { echo "poll: 1-60 s"; return; } ;;
+    *) echo "use: on | off | limit C | hysteresis C | step MHZ | poll S"; return ;;
+  esac
+  apply_throttle
+}
 anim(){ case "$1" in 1|0.5|0) save_conf conf_set android_animations "$1"; apply_android || echo "(applies when Android is running)";; *) echo "use: 1, 0.5 or 0";; esac; }
 speed(){ conf_load; apply_io; echo "kernel: $(uname -r)"; echo "boot options: $(tr ' ' '\n' < /proc/cmdline | grep -E 'mitigations|init_on|watchdog' | tr '\n' ' ')"; grep -h . /sys/devices/system/cpu/vulnerabilities/* 2>/dev/null | sort | uniq -c | sed 's/^/  /' | head -6; }
 reset(){ save_conf sh -c ". $SHARE/platform/platform-lib.sh; conf_default > $PLATFORM_CONF"; apply_modules; apply_cpu; echo "Recommended settings restored."; }
@@ -193,6 +211,8 @@ case "${1:-status}" in
   speed)   speed ;;
   perf)    perf "${2:-}" ;;
   anim)    anim "${2:-}" ;;
+  throttle) throttle "${2:-}" ;;
+  thermal) thermal "${2:-}" "${3:-}" ;;
   maintain)     [ -z "$2" ] && maintain_status || maintain_toggle "$2" ;;
   maintain-menu) maintain_menu ;;
   maintain-now)  maintain_now ;;

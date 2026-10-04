@@ -141,6 +141,25 @@ TXT
 ask "Turn on performance mode? [y/N]: " PA
 case "$PA" in y|Y|yes|Yes) PERF=on; echo "Performance mode: ON";; *) echo "Performance mode: off";; esac
 [ -f "$PLCONF" ] && { grep -v '^performance_mode=' $PLCONF > $PLCONF.n; echo "performance_mode=\"$PERF\"" >> $PLCONF.n; mv $PLCONF.n $PLCONF; }
+# --- throttle override (on by default, pointed out)
+THR=on
+say "Throttle override (on by default)"
+cat <<'TXT'
+  Some computers' firmware slows the processor down drastically when the battery has failed or the
+  charger is not recognised. A Dell with a dead battery, for example, drops to about 400 MHz (a
+  tenth of normal speed). Phoenix undoes that throttling and instead watches the temperature itself:
+  if the processor gets hotter than 90 C it lowers the speed step by step, and raises it again as it
+  cools. The processor's own overheating protection always stays active. Computers whose firmware
+  does not throttle are not affected.
+
+  Turn it OFF if this computer is used with a weaker charger than it came with: the firmware may be
+  throttling to avoid overloading that charger, and without it a heavy load could make the computer
+  switch off. Change it any time: phoenix platform throttle on|off
+TXT
+ask "Keep the throttle override on? [Y/n]: " TA
+case "$TA" in n|N|no|No) THR=off; echo "Throttle override: off";; *) echo "Throttle override: on";; esac
+[ -f "$PLCONF" ] && { grep -v '^throttle_override=' $PLCONF > $PLCONF.n; echo "throttle_override=\"$THR\"" >> $PLCONF.n; mv $PLCONF.n $PLCONF; }
+
 # add/remove the boot options in a Brunch settings.cfg
 perf_settings(){ cur=$(sed -n 's/^cmdline_params="\(.*\)"$/\1/p' "$1"); new=""
   for w in $cur; do case "$w" in mitigations=off|init_on_alloc=0|nowatchdog) ;; *) new="$new $w";; esac; done
@@ -231,6 +250,6 @@ done
 say "Result"
 cgpt show "/dev/$T" | grep -E 'Label|EFI|RWFW|STATE|ROOT' | head -20
 echo
-echo "Hostname: $HN    Performance mode: $PERF"
+echo "Hostname: $HN    Performance mode: $PERF    Throttle override: $THR"
 echo "Done. Shut down (sudo poweroff), REMOVE the USB stick, then power on."
 echo "If the BIOS asks, choose the internal hard drive in the boot menu (F12)."
