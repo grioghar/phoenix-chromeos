@@ -49,6 +49,7 @@ phoenix diag           send diagnostics to the Phoenix server
 phoenix touchpad tune  stop pointer jumps during two-finger scrolling (ALPS touchpads)
 phoenix rootshell on   make phoenix commands work in the browser terminal (run once from the console)
 phoenix upgrade        move an existing install to the current Phoenix release
+phoenix kernel install use a kernel optimized for this CPU (stock kernel stays in the boot menu)
 phoenix update         update the phoenix command
 ```
 

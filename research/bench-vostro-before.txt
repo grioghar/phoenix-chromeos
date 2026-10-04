@@ -11,3 +11,4 @@ memtouch_1GB_ms=5146
 vm_exits_per_s=54323
 vm_cpu_pct=0
 cpu_pressure=some avg10=48.62 avg60=65.95 avg300=60.78
+vm_cpu_pct=57   (measured separately, 15:58, after fixing the measurement)

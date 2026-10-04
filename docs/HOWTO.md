@@ -126,6 +126,17 @@ Common changes:
 | `phoenix platform anim 0.5` | Android animations twice as fast (`0` = off) |
 | `phoenix platform perf on` | **Performance mode**, after a reboot: turns off CPU vulnerability workarounds and some memory hardening. Much faster on old CPUs, but less protected against malicious websites and apps. It asks before turning on. |
 
+## 6b. Optimized kernel
+
+`phoenix kernel install` installs a Phoenix build of Brunch's kernel compiled for your CPU family
+(e.g. `sandybridge`), if the build server has one. `phoenix kernel status` shows what is running;
+`phoenix kernel stock` goes back to Brunch's kernel. The first boot after a switch rebuilds the
+system once (a few minutes). Phoenix saves your fixes first and restores them during the rebuild.
+The boot menu always keeps **ChromeOS (stock kernel)** as a fallback.
+
+Expect a modest gain from the optimized kernel (a few percent). Performance mode makes the larger
+difference on older CPUs.
+
 ## 7. Touchpad, hostname
 
 ```bash

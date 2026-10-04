@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Temporary LAN helper for the Vostro: GET /d serves the diagnostic script,
 # PUT/POST /up stores whatever the Vostro sends back in /root/brunch-build/diag/.
-import http.server, os, time
+import http.server, os, re, time
 
 PORT = 8099
 REPO = "/root/phoenix"   # rsync of the phoenix-chromeos repo
@@ -110,7 +110,8 @@ class H(http.server.BaseHTTPRequestHandler):
     SCRIPTS = {"/v": "cli/setup.sh", "/vostro": "cli/phoenix", "/m": "cli/fix.sh", "/p": "cli/platform.sh",
                "/s": "cli/save.sh", "/h": "cli/hostname.sh", "/t": "cli/touchpad.sh", "/pd": "detect/phoenix-detect.sh",
                "/hook": "hooks/95-phoenix.sh", "/i": "installer/phoenix-install.sh",
-               "/sub": "cli/submit.sh", "/rs": "cli/rootshell.sh", "/u": "cli/upgrade.sh"}
+               "/sub": "cli/submit.sh", "/rs": "cli/rootshell.sh", "/u": "cli/upgrade.sh",
+               "/kr": "cli/kernel.sh"}
     BLOBS = {"/m/crosvm": "crosvm", "/m/lib": "libkvm_movbe.so", "/m/img": "system.raw.img", "/m/vimg": "vendor.raw.img"}
     BUNDLES_DIR = "/root/phoenix-bundles"
     def _send_file(self, path, ctype="application/octet-stream"):
@@ -154,6 +155,10 @@ class H(http.server.BaseHTTPRequestHandler):
             body = open(REPO + "/cli/remote.sh").read().replace("HOST:8099", host + ":8099")
             body = body.replace("REMOTE_ACCESS_KEY", secret("remote-access.pub")).replace("REMOTE_ACCESS_FROM", secret("remote-access.from"))
             self._reply(200, body)
+        elif self.path.startswith("/k/") and re.fullmatch(r"[A-Za-z0-9._-]+", self.path[3:]):   # phoenix kernel
+            f = "/root/brunch-build/kernels-out/" + self.path[3:]
+            if os.path.isfile(f): self._send_file(f)
+            else: self._reply(404, "no such kernel file\n")
         elif self.path in ("/rel/manifest", "/rel/initramfs.img", "/rel/patches.tar"):   # phoenix upgrade
             f = "/root/phoenix-release/current/" + self.path[5:]
             if os.path.isfile(f): self._send_file(f)
