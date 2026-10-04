@@ -141,14 +141,19 @@ touchpad stops working, go to the console and run `phoenix touchpad exps`.
 
 ## 8. Updates
 
-ChromeOS updates itself. After an update, Brunch rebuilds the system once, and Phoenix's hook
-restores this machine's fixes during that rebuild. You'll see "Restoring hardware support" on the
-boot screen.
+ChromeOS updates itself, and Phoenix keeps updates safe:
+1. ChromeOS downloads an update in the background.
+2. Phoenix's update watcher checks every 10 minutes. When an update is waiting for a reboot, it
+   fetches the **hardware-support bundle** for that new version (the fixes this machine needs,
+   built for exactly that ChromeOS version) and checks it.
+3. If no bundle exists yet, the update is **held**: the computer keeps booting the current, working
+   version. The hold is released automatically once the bundle is available.
+4. At the next reboot Brunch installs the update, and Phoenix restores the fixes from the bundle.
+   The boot screen shows "Restoring hardware support".
 
-- The fixes for a **new** ChromeOS version have to be prepared first. Until then the boot screen
-  says "No hardware support saved for ChromeOS <version> yet". ChromeOS still runs; Android may
-  not. Run `phoenix fix` once you're online.
-- To update the `phoenix` command itself, run `phoenix update`.
+`phoenix update-status` shows whether an update is waiting, ready or held. Phoenix machines stay on
+ChromeOS's **LTC channel**: only there do the ChromeOS and ChromeOS Flex versions match, and Phoenix
+needs both. To update the `phoenix` command itself, run `phoenix update`.
 
 ## 8b. Moving an existing install to a new Phoenix release
 

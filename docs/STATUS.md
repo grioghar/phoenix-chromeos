@@ -33,9 +33,10 @@ Read with: README.md, docs/HOWTO.md, docs/ARCHITECTURE.md, docs/FINDINGS.md, doc
    libcrypto patch identical, Vulkan off. Fixed on the way: Docker scratch on overlay, unpatched
    crosvm, two concatenated archives (plain tar skipped the Android images), pipefail+grep -q.
    Bundles served at /bundle/<version>.tar; daily timer phoenix-bundles installed.
-2. **Device-side update watcher**: fetch the bundle for the downloaded ChromeOS version BEFORE
-   reboot; hold the update if no bundle. Not built yet. Only LTC/LTR channels have matching
-   rammus/Flex versions → keep Phoenix machines on LTC.
+2. ~~Device-side update watcher~~ **DONE**: platform/update-watch.sh + phoenix-update service (every
+   10 min): fetches /bundle/<new version> before reboot, or HOLDS the update (KERN-B priority → 0,
+   restored when the bundle exists). Simulated hold/release/download on a test disk; on the Vostro
+   only the idle path ran (service not yet installed there: comes with `phoenix fix`).
 3. **Archive**: Brunch releases archived; Google image dirs exist but index shows 0 verified
    images — check /root/phoenix-archive/archive.log (download/verify step).
 4. **BIOS boot in the Brunch fork** (commits 7b92645..a591a8f, local only, NOT pushed): never

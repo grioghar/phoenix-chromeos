@@ -12,6 +12,7 @@
 #   phoenix upgrade      move this install to the current Phoenix release (boot screen etc.)
 #   phoenix rootshell on make phoenix commands work in the browser terminal (crosh); run once from VT2
 #   phoenix remote on    let your trusted computer log in for remote help (phoenix remote off)
+#   phoenix update-status  is a ChromeOS update waiting / held for missing hardware support?
 #   phoenix update       update this command
 #   add -v (--verbose) to any command to see every step
 H=HOST:8099
@@ -56,6 +57,8 @@ case "${CMD:-fix}" in
   rootshell) run rs $REST ;;
   remote)   run rm $REST ;;
   upgrade)  run u $REST ;;
+  update-status) cat /var/lib/phoenix/update-status 2>/dev/null || echo "update watcher has not run yet"
+            [ -f /var/lib/phoenix/held ] && echo "held: $(cat /var/lib/phoenix/held)"; update_engine_client --status 2>/dev/null | grep -E "CURRENT_OP|NEW_VERSION" ;;
   update)   run v ;;
-  *)        sed -n '3,16p' "$0" ;;
+  *)        sed -n '3,17p' "$0" ;;
 esac
