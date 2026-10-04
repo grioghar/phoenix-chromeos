@@ -5,6 +5,7 @@ import http.server, os, time
 
 PORT = 8099
 REPO = "/root/phoenix"   # rsync of the phoenix-chromeos repo
+BLOBDIR = "/root/brunch-build/movbe"   # built components (never in git)
 OUT = "/root/brunch-build/diag"
 SCRIPT = r'''#!/bin/sh
 {
@@ -72,38 +73,37 @@ class H(http.server.BaseHTTPRequestHandler):
     def _reply(self, code, body):
         self.send_response(code); self.send_header("Content-Type", "text/plain")
         self.end_headers(); self.wfile.write(body.encode())
+    # scripts served from the repo copy; HOST is replaced by the address the client used
+    SCRIPTS = {"/v": "cli/setup.sh", "/vostro": "cli/phoenix", "/m": "cli/fix.sh", "/p": "cli/platform.sh",
+               "/s": "cli/save.sh", "/h": "cli/hostname.sh", "/t": "cli/touchpad.sh", "/pd": "detect/phoenix-detect.sh",
+               "/hook": "hooks/95-phoenix.sh", "/i": "installer/phoenix-install.sh"}
+    BLOBS = {"/m/crosvm": "crosvm", "/m/lib": "libkvm_movbe.so", "/m/img": "system.raw.img", "/m/vimg": "vendor.raw.img"}
+    def _send_file(self, path, ctype="application/octet-stream"):
+        self.send_response(200); self.send_header("Content-Type", ctype)
+        self.send_header("Content-Length", str(os.path.getsize(path))); self.end_headers()
+        with open(path, "rb") as fh:
+            while True:
+                b = fh.read(1 << 20)
+                if not b: break
+                self.wfile.write(b)
     def do_GET(self):
-        if self.path == "/pd":
-            self._reply(200, open(REPO + "/detect/phoenix-detect.sh").read())
-        elif self.path == "/h":
-            host = self.headers.get("Host", "").split(":")[0]
-            self._reply(200, open(REPO + "/cli/hostname.sh").read().replace("HOST", host))
+        host = self.headers.get("Host", "").split(":")[0]
+        if self.path in self.SCRIPTS:
+            self._reply(200, open(REPO + "/" + self.SCRIPTS[self.path]).read().replace("HOST:8099", host + ":8099"))
+        elif self.path in self.BLOBS:
+            self._send_file(BLOBDIR + "/" + self.BLOBS[self.path])
+        elif self.path == "/share.tgz":   # /usr/share/phoenix: detection, platform layer, profiles, services
+            import io, tarfile
+            buf = io.BytesIO()
+            with tarfile.open(fileobj=buf, mode="w:gz") as t:
+                for d in ("detect", "platform", "profiles", "services"):
+                    t.add(REPO + "/" + d, arcname=d)
+            body = buf.getvalue()
+            self.send_response(200); self.send_header("Content-Type", "application/gzip")
+            self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body)
         elif self.path.startswith("/svc/") and "/" not in self.path[5:] and os.path.isfile(REPO + "/services/" + self.path[5:]):
             self._reply(200, open(REPO + "/services/" + self.path[5:]).read())
-        elif self.path == "/t":
-            self._reply(200, open("/root/brunch-build/touchpad.sh").read())
-        elif self.path in ("/v", "/vostro"):
-            host = self.headers.get("Host", "").split(":")[0]
-            f = "vostro-setup.sh" if self.path == "/v" else "vostro.sh"
-            self._reply(200, open("/root/brunch-build/" + f).read().replace("HOST", host))
-        elif self.path == "/m":
-            host = self.headers.get("Host", "").split(":")[0]
-            self._reply(200, open("/root/brunch-build/movbe/movbe-patch.sh").read().replace("HOST", host))
-        elif self.path in ("/m/crosvm", "/m/lib", "/m/img", "/m/vimg"):
-            f = {"/m/crosvm": "crosvm", "/m/lib": "libkvm_movbe.so", "/m/img": "system.raw.img", "/m/vimg": "vendor.raw.img"}[self.path]
-            path = "/root/brunch-build/movbe/" + f
-            self.send_response(200); self.send_header("Content-Type", "application/octet-stream")
-            self.send_header("Content-Length", str(os.path.getsize(path))); self.end_headers()
-            with open(path, "rb") as fh:
-                while True:
-                    b = fh.read(1 << 20)
-                    if not b: break
-                    self.wfile.write(b)
-        elif self.path == "/i":
-            host = self.headers.get("Host", "").split(":")[0]
-            self._reply(200, open(REPO + "/installer/phoenix-install.sh").read().replace("HOST:8099", host + ":8099"))
         elif self.path == "/d":
-            host = self.headers.get("Host", "").split(":")[0]
             self._reply(200, SCRIPT.replace("HOST", host))
         else:
             self._reply(404, "not found\n")

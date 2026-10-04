@@ -1,8 +1,11 @@
 #!/bin/sh
-# vostro fix: let the Android VM (Play Store) run on a Sandy Bridge CPU.
+# phoenix fix: bring this machine up to date with Phoenix.
+# Android VM (Play Store) on pre-Haswell CPUs / pre-Vulkan GPUs:
 #  1. crosvm + libkvm_movbe.so: the VM is told it has MOVBE, and KVM emulates it
 #  2. Android system image with BoringSSL's RDRAND calls disabled (Sandy Bridge has no RDRAND)
 #  3. Android draws with OpenGL instead of Vulkan (Intel HD 3000 has no Vulkan)
+#  4. Phoenix platform layer: platform modules, CPU profile, fan (see: phoenix platform)
+#  5. Saves the fixes so they survive ChromeOS updates and Brunch rebuilds (see: phoenix save)
 # Safe to run again: parts already installed are skipped.
 set -e
 [ "${VERBOSE:-0}" = 1 ] && set -x
@@ -39,7 +42,7 @@ echo "  Android image: checking (a few seconds)..."
 [ "$(sha $IMG)" = $IMG_SHA ] || NEED="$NEED img"
 [ "$(sha $VIMG)" = $VIMG_SHA ] || NEED="$NEED vimg"
 echo "  To do:${NEED:- nothing}"
-[ -n "$NEED" ] || { echo "Everything else is already up to date."; [ "${VOSTRO_INSTALL:-0}" = 1 ] && echo "Continuing with the hard-drive install..."; exit 0; }
+if [ -n "$NEED" ]; then
 
 step "Downloading"
 for p in $NEED; do
@@ -47,7 +50,7 @@ for p in $NEED; do
   [ "$(sha $f)" = $s ] && { echo "  $f already downloaded"; continue; }
   echo "Downloading $f..."
   curl -# -o $f http://$H/m/$p
-  [ "$(sha $f)" = $s ] && echo "  $f checksum OK" || { echo "Download of $f is damaged; run vostro fix again."; exit 1; }
+  [ "$(sha $f)" = $s ] && echo "  $f checksum OK" || { echo "Download of $f is damaged; run phoenix fix again."; exit 1; }
 done
 
 step "Making the system writable and stopping the VM service"
@@ -72,6 +75,21 @@ if ! /usr/bin/crosvm version >/dev/null 2>&1; then
 fi
 step "Cleaning up"
 mount -o remount,ro / 2>/dev/null || true
-rm -rf $W
 start vm_concierge 2>/dev/null || true
-if [ "${VOSTRO_INSTALL:-0}" = 1 ]; then echo "Fixes done. Continuing with the hard-drive install..."; else echo "Done. Reboot (sudo reboot), log in, and open the Play Store again."; fi
+else
+  echo "  Android fixes already up to date."
+fi
+rm -rf $W
+
+step "Phoenix platform layer (modules, CPU profile, fan)"
+curl -s http://$H/p | sh -s apply | sed 's/^/  /' || echo "  (platform layer could not be applied; try: phoenix platform)"
+
+if [ "${VOSTRO_INSTALL:-0}" = 1 ]; then echo; echo "Fixes done. Continuing with the hard-drive install..."; exit 0; fi
+
+VER=$(sed -n 's/^CHROMEOS_RELEASE_VERSION=//p' /etc/lsb-release)
+if [ -n "$NEED" ] || [ ! -f /mnt/stateful_partition/unencrypted/phoenix/bundles/$VER.tar ]; then
+  step "Saving fixes so they survive updates"
+  curl -s http://$H/s | sh | sed 's/^/  /'
+fi
+echo
+[ -n "$NEED" ] && echo "Done. Reboot (sudo reboot), log in, and open the Play Store again." || echo "Done."

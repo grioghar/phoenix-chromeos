@@ -93,6 +93,34 @@ while :; do
 done
 echo "Hostname: $HN"
 
+# --- platform modules (fans, sensors, hotkeys, keyboard backlight...) for this machine
+SHR=/tmp/phoenix-share PLCONF=/tmp/phoenix-platform.conf; rm -rf $SHR; mkdir -p $SHR
+if curl -s -m 20 "http://$SERVER/share.tgz" -o /tmp/phoenix-share.tgz && tar -xzf /tmp/phoenix-share.tgz -C $SHR 2>/dev/null; then
+  plib(){ PHOENIX_SHARE=$SHR CATALOG=$SHR/platform/catalog.conf PLATFORM_CONF=$PLCONF PHX_PROFILE="$PROFILE" \
+          sh -c ". $SHR/platform/platform-lib.sh; $1"; }
+  plib conf_default > $PLCONF
+  while :; do
+    say "Platform modules for this computer"
+    MODS=$(sed -n 's/^modules="\(.*\)"$/\1/p' $PLCONF)
+    for m in $MODS; do printf '  %-16s %s\n' "$m" "$(plib "catalog_field $m 3")"; done
+    [ -n "$MODS" ] || echo "  (none needed)"
+    echo "  CPU profile: $(sed -n 's/^cpu_profile=//p' $PLCONF)    Fan: $(sed -n 's/^fan_mode=//p' $PLCONF)  (change any time: phoenix platform)"
+    ask "Press Enter to use these, or +module / -module to add or remove (? lists all): " PM
+    [ -z "$PM" ] && break
+    if [ "$PM" = "?" ]; then plib catalog_lines | awk -F'|' '{printf "  %-16s %s\n", $1, $3}'; continue; fi
+    for t in $PM; do
+      case "$t" in
+        +*) MODS="$MODS ${t#+}" ;;
+        -*) MODS=$(echo " $MODS " | sed "s/ ${t#-} / /") ;;
+      esac
+    done
+    MODS=$(echo $MODS); sed -i "s/^modules=.*/modules=\"$MODS\"/" $PLCONF
+  done
+else
+  echo "(Phoenix server not reachable: platform modules can be set up later with: phoenix platform)"
+  rm -f $PLCONF
+fi
+
 # --- 1. Brunch's own installer copies the running system
 say "Installing ChromeOS with Brunch (several minutes)"
 chromeos-install -dst "/dev/$T"
@@ -138,7 +166,7 @@ say "Checking root partitions"
 FILES="usr/lib64/dri usr/share/glvnd usr/share/drirc.d
        usr/bin/crosvm usr/bin/crosh usr/bin/btmanagerd usr/bin/btadapterd usr/bin/btclient usr/bin/resourced
        usr/bin/vhost_user_starter usr/bin/chunneld usr/bin/9s usr/sbin/pdata_tools usr/bin/ippusb_bridge
-       opt/google/vms/android/system.raw.img opt/google/vms/android/vendor.raw.img usr/bin/vostro"
+       opt/google/vms/android/system.raw.img opt/google/vms/android/vendor.raw.img"
 FILES="$FILES $(cd / && ls -d usr/lib64/libEGL*.so* usr/lib64/libGLESv2.so* usr/lib64/libGLdispatch.so* usr/lib64/libOpenGL.so* \
                  usr/lib64/libglapi.so* usr/lib64/libdrm*.so* usr/lib64/libminigbm.so* usr/lib64/libgbm.so* usr/lib64/libkvm_movbe.so 2>/dev/null | tr '\n' ' ')"
 mkdir -p /tmp/vi/r
@@ -156,16 +184,21 @@ for p in 3 5; do
     rm -f /tmp/vi/r/usr/lib64/libEGL.so* /tmp/vi/r/usr/lib64/libGLESv2.so* /tmp/vi/r/usr/lib64/libglapi.so*
     tar --xattrs --xattrs-include='*' -C / -cf - $FILES | tar --xattrs --xattrs-include='*' -C /tmp/vi/r -xpf -
   fi
-  # Phoenix services: hostname (and the detection script, for later boots)
+  # Phoenix layer: hostname, detection, platform modules, services, the phoenix command
   mkdir -p /tmp/vi/r/etc/phoenix /tmp/vi/r/usr/share/phoenix/detect
   echo "$HN" > /tmp/vi/r/etc/phoenix/hostname
-  [ -s "$DET" ] && cp "$DET" /tmp/vi/r/usr/share/phoenix/detect/phoenix-detect.sh
   printf '%s\n' "$PROFILE" > /tmp/vi/r/etc/phoenix/profile.install
-  if curl -s -m 10 "http://$SERVER/svc/phoenix-hostname.conf" -o /tmp/vi/phoenix-hostname.conf && grep -q '^start on' /tmp/vi/phoenix-hostname.conf; then
-    cp /tmp/vi/phoenix-hostname.conf /tmp/vi/r/etc/init/phoenix-hostname.conf
-    setfattr -n security.selinux -v "$(getfattr --only-values -n security.selinux /tmp/vi/r/etc/init/shill.conf 2>/dev/null)" \
-      /tmp/vi/r/etc/init/phoenix-hostname.conf 2>/dev/null || true
-  else echo "  (could not fetch the hostname service; set it later with: vostro hostname $HN)"; fi
+  [ -f "$PLCONF" ] && cp "$PLCONF" /tmp/vi/r/etc/phoenix/platform.conf
+  if [ -d $SHR/platform ]; then cp -r $SHR/. /tmp/vi/r/usr/share/phoenix/
+  elif [ -s "$DET" ]; then cp "$DET" /tmp/vi/r/usr/share/phoenix/detect/phoenix-detect.sh; fi
+  LBL=$(getfattr --only-values -n security.selinux /tmp/vi/r/etc/init/shill.conf 2>/dev/null)
+  for svc in /tmp/vi/r/usr/share/phoenix/services/phoenix-*.conf; do
+    [ -f "$svc" ] || continue
+    cp "$svc" /tmp/vi/r/etc/init/; setfattr -n security.selinux -v "$LBL" "/tmp/vi/r/etc/init/$(basename "$svc")" 2>/dev/null || true
+  done
+  [ -f /tmp/vi/r/etc/init/phoenix-hostname.conf ] || echo "  (hostname service missing; set it later with: phoenix hostname $HN)"
+  if [ -x /usr/bin/phoenix ]; then cp /usr/bin/phoenix /tmp/vi/r/usr/bin/phoenix; ln -sfn phoenix /tmp/vi/r/usr/bin/vostro
+  elif [ -x /usr/bin/vostro ]; then cp /usr/bin/vostro /tmp/vi/r/usr/bin/vostro; fi
   sync; umount /tmp/vi/r
 done
 
