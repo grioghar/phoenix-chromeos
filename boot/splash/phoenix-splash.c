@@ -124,10 +124,19 @@ static void render(void) {
 
   /* details box (detected hardware etc.) */
   if (ndetails) {
-    int lh = 8 * sc + 6, bxw = W * 2 / 3, bxx = (W - bxw) / 2;
+    /* size the box to the longest line; shrink the text, then truncate, to fit 92% of the width */
+    int maxw = W * 92 / 100, longest = 0, dsc = sc;
+    for (int i = 0; i < ndetails; i++) if ((int)strlen(details[i]) > longest) longest = (int)strlen(details[i]);
+    while (dsc > 1 && longest * 8 * dsc + 40 > maxw) dsc--;
+    int fitc = (maxw - 40) / (8 * dsc);
+    int lh = 8 * dsc + 6, bxw = (longest < fitc ? longest : fitc) * 8 * dsc + 40, bxx = (W - bxw) / 2;
     fill(bxx, y, bxw, ndetails * lh + 20, 0x161B22);
     fill(bxx, y, 3, ndetails * lh + 20, 0xE8431B);
-    for (int i = 0; i < ndetails; i++) text(bxx + 20, y + 10 + i * lh, details[i], sc, 0xB8C0CC, 0xB8C0CC);
+    for (int i = 0; i < ndetails; i++) {
+      char l[LINE]; snprintf(l, sizeof l, "%s", details[i]);
+      if ((int)strlen(l) > fitc && fitc > 3) { l[fitc - 3] = '.'; l[fitc - 2] = '.'; l[fitc - 1] = '.'; l[fitc] = 0; }
+      text(bxx + 20, y + 10 + i * lh, l, dsc, 0xB8C0CC, 0xB8C0CC);
+    }
   }
 }
 
