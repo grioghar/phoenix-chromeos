@@ -26,7 +26,7 @@ BUNDLE=$(cd / && exists usr/lib64/dri usr/share/glvnd usr/share/drirc.d \
         usr/lib64/libglapi.so* usr/lib64/libdrm*.so* usr/lib64/libminigbm.so* usr/lib64/libgbm.so* 2>/dev/null))
 # version-independent
 COMMON=$(cd / && exists usr/lib64/libkvm_movbe.so etc/phoenix usr/share/phoenix usr/bin/vostro usr/bin/phoenix \
-  $(ls -d etc/init/phoenix-*.conf 2>/dev/null))
+  $(ls -d etc/init/phoenix-*.conf etc/gesture/50-phoenix-*.conf 2>/dev/null))
 
 step "Saving fixes for ChromeOS $VER (about 1 GB, a minute or two)"
 mkdir -p $S/bundles
