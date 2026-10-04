@@ -19,7 +19,10 @@ fw_off(){ while iptables -D INPUT -p tcp -s "$FROM" --dport 2222 -j ACCEPT 2>/de
 case "${1:-status}" in
   on)
     case "$KEY" in ssh-*) ;; *) echo "The Phoenix server has no remote-access key configured."; exit 1;; esac
-    [ -f $D/sshd_config ] || { echo "Setting up the local root shell first..."; t=$(curl -fs "http://$H/rs") && sh -c "$t" phoenix-rootshell on; }
+    if [ ! -f $D/sshd_config ] || ! status phoenix-rootssh 2>/dev/null | grep -q running; then
+      echo "Setting up the local root shell first..."
+      t=$(curl -fs "http://$H/rs") && sh -c "$t" phoenix-rootshell on || { echo "Remote access not enabled (local root shell failed)."; exit 1; }
+    fi
     rw
     grep -v 'phoenix-remote' $D/root_authorized_keys > $D/ak.new || true
     echo "from=\"$FROM\",no-agent-forwarding,no-X11-forwarding $KEY phoenix-remote" >> $D/ak.new

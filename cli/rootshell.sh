@@ -14,9 +14,9 @@ case "${1:-status}" in
     rw; mkdir -p $D; chmod 700 $D
     [ -f $D/ssh_host_ed25519_key ] || ssh-keygen -q -t ed25519 -N "" -f $D/ssh_host_ed25519_key
     mkdir -p $K; chown chronos:chronos $K; chmod 700 $K
-    [ -f $K/root_key ] || su chronos -s /bin/sh -c "ssh-keygen -q -t ed25519 -N '' -C phoenix-rootshell -f $K/root_key" 2>/dev/null \
-      || { ssh-keygen -q -t ed25519 -N "" -C phoenix-rootshell -f $K/root_key; chown chronos:chronos $K/root_key $K/root_key.pub; }
-    chmod 600 $K/root_key
+    # (ChromeOS has no su: create the key as root, then hand it to chronos)
+    [ -f $K/root_key ] || ssh-keygen -q -t ed25519 -N "" -C phoenix-rootshell -f $K/root_key
+    chown chronos:chronos $K/root_key $K/root_key.pub; chmod 600 $K/root_key
     cp $K/root_key.pub $D/root_authorized_keys; chmod 600 $D/root_authorized_keys
     cat > $D/sshd_config <<CFG
 # Phoenix local root shell (see: phoenix rootshell)
@@ -41,10 +41,14 @@ CFG
     ro
     restart phoenix-rootssh 2>/dev/null || start phoenix-rootssh
     sleep 1
-    if su chronos -s /bin/sh -c "ssh -q -p 2222 -i $K/root_key -o BatchMode=yes -o StrictHostKeyChecking=accept-new -o UserKnownHostsFile=$K/known_hosts root@127.0.0.1 id -u" 2>/dev/null | grep -q '^0$'; then
+    if ssh -q -p 2222 -i $K/root_key -o BatchMode=yes -o StrictHostKeyChecking=accept-new -o UserKnownHostsFile=/tmp/phoenix-kh root@127.0.0.1 id -u 2>/dev/null | grep -q '^0$'; then
       echo "Root shell ready: phoenix commands now work in the browser terminal (Ctrl+Alt+T, then: shell)."
     else
-      echo "The local root shell did not answer; check: status phoenix-rootssh"; exit 1
+      echo "The local root shell did not answer. Details:"
+      status phoenix-rootssh 2>&1 | sed 's/^/  /'
+      /usr/sbin/sshd -t -f $D/sshd_config 2>&1 | sed 's/^/  config: /'
+      grep -E "sshd|phoenix-rootssh" /var/log/messages 2>/dev/null | tail -6 | sed 's/^/  log: /'
+      exit 1
     fi
     ;;
   off)
