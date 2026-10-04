@@ -1,0 +1,13 @@
+label=after-perf-mode
+time=2026-10-04 16:02:29
+kernel=6.12.91-generic-brunch-sebanc
+cmdline_perf=mitigations=off init_on_alloc=0 nowatchdog 
+spectre_v2=Vulnerable; IBPB: disabled; STIBP: disabled; PBRSB-eIBRS: No
+load_before=19.18
+syscalls_2M_ms=2423
+forks_400_ms=3250
+pipes_200MB_ms=1875
+memtouch_1GB_ms=4263
+vm_exits_per_s=7423
+vm_cpu_pct=75
+cpu_pressure=some avg10=92.91 avg60=90.54 avg300=53.28
