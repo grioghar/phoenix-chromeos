@@ -52,7 +52,7 @@ EOF
 log "Building for -march=$MARCH with $JOBS jobs (this takes hours on small machines)"
 docker run --rm -v "$T:/k" -v "$OUT:/out" -w /k ubuntu:24.04 bash -c "
   set -e
-  apt-get update -qq >/dev/null; DEBIAN_FRONTEND=noninteractive apt-get install -y -qq gcc-12 make bc bison flex libelf-dev libssl-dev cpio kmod python3 >/dev/null 2>&1
+  apt-get update -qq >/dev/null; DEBIAN_FRONTEND=noninteractive apt-get install -y -qq gcc-12 make bc bison flex libelf-dev libssl-dev cpio kmod python3 xz-utils zstd >/dev/null 2>&1
   ln -sf /usr/bin/gcc-12 /usr/bin/gcc
   make O=out chromeos_defconfig >/dev/null
   if [ -f lean-modules.list ]; then
