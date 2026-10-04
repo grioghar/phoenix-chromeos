@@ -24,7 +24,16 @@ esac
 case "$VENDOR" in LENOVO) [ -n "$PVERSION" ] && MODEL="$PVERSION" || MODEL="$PRODUCT";; *) MODEL="$PRODUCT";; esac
 slug(){ echo "$1" | tr 'A-Z' 'a-z' | sed 's/[^a-z0-9]\{1,\}/-/g; s/^-//; s/-$//'; }
 VSLUG=$(slug "$(echo "$VENDOR" | awk '{print $1}')"); MSLUG=$(slug "$MODEL")
+BVENDOR=$(rd /sys/class/dmi/id/board_vendor)
 PROFILE_FILE=""; [ -f "$PROFILES/$VSLUG/$MSLUG.conf" ] && PROFILE_FILE="$PROFILES/$VSLUG/$MSLUG.conf"
+# whitebox / custom-built PCs report a placeholder system maker: identify them by their motherboard
+case "$VENDOR" in ""|"To Be Filled By O.E.M."|"System manufacturer"|"Default string"|"System Manufacturer"|"OEM"|"O.E.M.")
+  WHITEBOX=1
+  BSLUG=$(slug "$(echo "$BVENDOR" | awk '{print $1}')"); BMSLUG=$(slug "$BOARD")
+  [ -z "$PROFILE_FILE" ] && [ -f "$PROFILES/boards/$BSLUG/$BMSLUG.conf" ] && PROFILE_FILE="$PROFILES/boards/$BSLUG/$BMSLUG.conf"
+  [ -n "$BVENDOR" ] && MODEL="$BVENDOR $BOARD (motherboard)" ;;
+  *) WHITEBOX=0 ;;
+esac
 # Lenovo fallback: the machine type is the first 4 characters of product_name (e.g. 4236AT8 -> mt-4236)
 if [ -z "$PROFILE_FILE" ] && [ "$VSLUG" = lenovo ]; then
   MT=$(slug "$(echo "$PRODUCT" | cut -c1-4)"); [ -f "$PROFILES/lenovo/mt-$MT.conf" ] && PROFILE_FILE="$PROFILES/lenovo/mt-$MT.conf"
@@ -128,7 +137,8 @@ ANDROID=yes; [ "$VIRT" = 1 ] || ANDROID="no (CPU has no VT-x/AMD-V)"
 [ "$SSE42" = 1 ] || ANDROID="no (CPU lacks SSE4.2; ChromeOS itself will not run)"
 
 if [ "${1:-}" = --summary ]; then
-  echo "Machine:   ${VENDOR:-unknown} ${MODEL:-} (${CHASSIS}, $( [ "$PROFILE_KIND" = model ] && echo known model || echo generic profile))"
+  [ "$WHITEBOX" = 1 ] && SHOWV="Custom PC:" || SHOWV=${VENDOR:-unknown}
+  echo "Machine:   $SHOWV ${MODEL:-} (${CHASSIS}, $( [ "$PROFILE_KIND" = model ] && echo known model || echo generic profile))"
   echo "CPU:       ${CPUNAME:-unknown}, $THREADS threads$( [ "$MOVBE" = 0 ] && echo ', pre-Haswell')"
   echo "Graphics:  ${GPU_MAIN:-none} (${GPU_STACK:-?})$( [ "$VULKAN" = 0 ] && echo ', no Vulkan')"
   echo "Memory:    ${MEM_MB} MB    Firmware: $FIRMWARE    Touchpad: $TOUCHPAD"
@@ -139,7 +149,7 @@ if [ "${1:-}" = --summary ]; then
 fi
 
 kv machine.vendor "$VENDOR"; kv machine.model "$MODEL"; kv machine.product "$PRODUCT"; kv machine.board "$BOARD"
-kv machine.bios "$BIOS"; kv machine.chassis "$CHASSIS"; kv machine.id "$VSLUG/$MSLUG"; kv machine.profile "$PROFILE_FILE"; kv machine.profile_kind "$PROFILE_KIND"
+kv machine.bios "$BIOS"; kv machine.chassis "$CHASSIS"; kv machine.id "$VSLUG/$MSLUG"; kv machine.profile "$PROFILE_FILE"; kv machine.profile_kind "$PROFILE_KIND"; kv machine.whitebox "$WHITEBOX"; kv machine.board_vendor "$BVENDOR"
 kv cpu.vendor "$CPUVENDOR"; kv cpu.name "$CPUNAME"; kv cpu.threads "$THREADS"
 kv cpu.movbe "$MOVBE"; kv cpu.rdrand "$RDRAND"; kv cpu.avx "$AVX"; kv cpu.avx2 "$AVX2"; kv cpu.bmi2 "$BMI2"
 kv cpu.sse4_2 "$SSE42"; kv cpu.aes "$AES"; kv cpu.virt "$VIRT"; kv cpu.kvm "$KVMDEV"

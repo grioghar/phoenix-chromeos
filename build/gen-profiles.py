@@ -72,7 +72,8 @@ def main():
                     # Lenovo machine types (4 chars, e.g. 4180 / 20BU): matched via product_name prefix as mt-<type>
                     if slug(v.split()[0]) == "lenovo" and m != e.get("dmi_model") and re.fullmatch(r"[0-9A-Za-z]{4}", str(m)):
                         name = "mt-" + name
-                    path = os.path.join(ROOT, "profiles", slug(v.split()[0]), name + ".conf")
+                    sub = ["boards"] if e.get("match") == "board" else []   # whitebox motherboards
+                    path = os.path.join(ROOT, "profiles", *sub, slug(v.split()[0]), name + ".conf")
                     if path in seen:
                         if seen[path] != "x": print(f"note: {os.path.relpath(path, ROOT)} claimed twice; keeping the first")
                         continue
