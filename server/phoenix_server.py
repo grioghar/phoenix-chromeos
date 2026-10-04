@@ -4,12 +4,14 @@
 import http.server, os, time
 
 PORT = 8099
+REPO = "/root/phoenix"   # rsync of the phoenix-chromeos repo
 OUT = "/root/brunch-build/diag"
 SCRIPT = r'''#!/bin/sh
 {
 echo "## CPU / KVM"; grep -c vmx /proc/cpuinfo; ls -l /dev/kvm
 cat /sys/module/kvm_intel/parameters/ept /sys/module/kvm_intel/parameters/unrestricted_guest
 free -m | head -2; uname -r; grep -m1 "model name" /proc/cpuinfo
+echo "## phoenix detect"; curl -s http://HOST:8099/pd > /tmp/phoenix-detect.sh && sh /tmp/phoenix-detect.sh --summary && sh /tmp/phoenix-detect.sh
 echo "## input"; grep -E "^N: Name|^H: Handlers" /proc/bus/input/devices; grep -o "psmouse[^ ]*\|i8042[^ ]*" /proc/cmdline
 echo "## GPUs"; lspci -nn 2>/dev/null | grep -iE "vga|3d|display"; ls /sys/class/drm/
 echo "## boot disk"; rootdev -d -s
@@ -71,8 +73,13 @@ class H(http.server.BaseHTTPRequestHandler):
         self.send_response(code); self.send_header("Content-Type", "text/plain")
         self.end_headers(); self.wfile.write(body.encode())
     def do_GET(self):
-        if self.path == "/h":
-            self._reply(200, open("/root/brunch-build/hostname.sh").read())
+        if self.path == "/pd":
+            self._reply(200, open(REPO + "/detect/phoenix-detect.sh").read())
+        elif self.path == "/h":
+            host = self.headers.get("Host", "").split(":")[0]
+            self._reply(200, open(REPO + "/cli/hostname.sh").read().replace("HOST", host))
+        elif self.path.startswith("/svc/") and "/" not in self.path[5:] and os.path.isfile(REPO + "/services/" + self.path[5:]):
+            self._reply(200, open(REPO + "/services/" + self.path[5:]).read())
         elif self.path == "/t":
             self._reply(200, open("/root/brunch-build/touchpad.sh").read())
         elif self.path in ("/v", "/vostro"):
@@ -93,7 +100,8 @@ class H(http.server.BaseHTTPRequestHandler):
                     if not b: break
                     self.wfile.write(b)
         elif self.path == "/i":
-            self._reply(200, open("/root/brunch-build/vostro-install.sh").read())
+            host = self.headers.get("Host", "").split(":")[0]
+            self._reply(200, open(REPO + "/installer/phoenix-install.sh").read().replace("HOST:8099", host + ":8099"))
         elif self.path == "/d":
             host = self.headers.get("Host", "").split(":")[0]
             self._reply(200, SCRIPT.replace("HOST", host))

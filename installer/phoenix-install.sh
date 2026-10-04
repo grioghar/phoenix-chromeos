@@ -1,10 +1,12 @@
 #!/bin/bash
-# Install the running Brunch ChromeOS (booted from the USB stick) onto the Vostro's internal drive,
-# including the legacy-BIOS boot layer that Brunch itself does not create:
-#   - GRUB core.img in partition 11 (RWFW, typed BIOS-boot), boot code in the MBR
-#   - hybrid MBR: active FAT entry -> EFI partition 12, plus a GPT protective entry
-#   - Sandy Bridge fixes on both root partitions (Flex Mesa/crocus + Flex builds of crosvm etc.)
-# Run from the VT2 console (Ctrl+Alt+F2, user chronos):  sudo bash vostro-install.sh
+# Phoenix installer: install the running Brunch ChromeOS (booted from a USB stick) onto an internal
+# drive, with what Brunch itself does not do:
+#   - hardware detection summary (detect/phoenix-detect.sh)
+#   - hostname chosen at install time (applied at every boot by the phoenix-hostname service)
+#   - legacy-BIOS boot on BIOS-only machines: GRUB core.img in partition 11 (typed BIOS-boot),
+#     boot code in the MBR, hybrid MBR (active FAT entry -> EFI partition 12 + GPT protective entry)
+#   - the running system's hardware fixes copied onto both root partitions
+# Run from the VT2 console (Ctrl+Alt+F2, user chronos):  sudo bash phoenix-install.sh
 set -euo pipefail
 
 FORCE=0; [ "${1:-}" = "--anyway" ] && FORCE=1
@@ -29,6 +31,18 @@ poke(){ le "$3" "$4" | dd of="$1" bs=1 seek="$2" conv=notrunc status=none; }   #
 
 SRC=$(basename "$(rootdev -d -s)")
 say "Booted from: /dev/$SRC"
+
+# --- what is this machine? (detection script: bundled, else from the Phoenix server)
+SERVER=${PHOENIX_SERVER:-HOST:8099}
+DET=/usr/share/phoenix/detect/phoenix-detect.sh
+[ -r $DET ] || { curl -s -m 10 "http://$SERVER/pd" -o /tmp/phoenix-detect.sh && DET=/tmp/phoenix-detect.sh; }
+PROFILE=""
+if [ -s "$DET" ]; then
+  say "This computer"; sh "$DET" --summary | sed 's/^/  /'
+  PROFILE=$(sh "$DET")
+fi
+pget(){ printf '%s\n' "$PROFILE" | sed -n "s/^$1=//p" | head -1; }
+FIRMWARE=$(pget firmware); FIRMWARE=${FIRMWARE:-bios}
 
 # --- the running system must already have the Sandy Bridge fixes, or the install inherits the crash
 FIXED=1
@@ -68,12 +82,24 @@ for try in 1 2 3; do
   [ $try = 3 ] && die "cancelled"
 done
 
+# --- hostname: the name your router shows for this computer
+DEFHOST=$(pget machine.model | tr 'A-Z' 'a-z' | sed 's/[^a-z0-9]\{1,\}/-/g; s/^-//; s/-$//' | cut -c1-63)
+DEFHOST=${DEFHOST:-phoenix}
+while :; do
+  ask "Hostname for this computer [$DEFHOST]: " HN
+  HN=${HN:-$DEFHOST}
+  echo "$HN" | grep -Eq '^[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?$' && break
+  echo "Use only letters, digits and hyphens (not at the start or end), up to 63 characters."
+done
+echo "Hostname: $HN"
+
 # --- 1. Brunch's own installer copies the running system
 say "Installing ChromeOS with Brunch (several minutes)"
 chromeos-install -dst "/dev/$T"
 sync; partprobe "/dev/$T" 2>/dev/null || true; sleep 2
 
-# --- 2. BIOS boot layer
+# --- 2. BIOS boot layer (BIOS-only machines; UEFI machines boot Brunch's EFI loader directly)
+if [ "$FIRMWARE" = bios ]; then
 say "Adding legacy BIOS boot"
 S11=$(cgpt show -i 11 -b "/dev/$SRC"); T11=$(cgpt show -i 11 -b "/dev/$T")
 S11N=$(cgpt show -i 11 -s "/dev/$SRC"); T11N=$(cgpt show -i 11 -s "/dev/$T")
@@ -99,6 +125,13 @@ cp -a /tmp/vi/se/efi/grub /tmp/vi/te/efi/
 grep -q 'insmod png' /tmp/vi/te/efi/grub/grub.cfg || sed -i 's/^insmod gfxterm$/insmod gfxterm\ninsmod png/' /tmp/vi/te/efi/grub/grub.cfg
 cp /tmp/vi/se/efi/boot/settings.cfg /tmp/vi/te/efi/boot/settings.cfg
 sync; umount /tmp/vi/se /tmp/vi/te
+else
+  echo "UEFI firmware: using Brunch's EFI boot (no BIOS layer needed)"
+  mkdir -p /tmp/vi/se /tmp/vi/te
+  mount -o ro "$(part $SRC 12)" /tmp/vi/se; mount "$(part $T 12)" /tmp/vi/te
+  cp /tmp/vi/se/efi/boot/settings.cfg /tmp/vi/te/efi/boot/settings.cfg
+  sync; umount /tmp/vi/se /tmp/vi/te
+fi
 
 # --- 3. make sure both root partitions carry the Sandy Bridge fixes
 say "Checking root partitions"
@@ -115,17 +148,30 @@ for p in 3 5; do
   # compare by checksum (ChromeOS has no cmp)
   ok=1; for f in usr/bin/crosvm usr/lib64/dri/crocus_dri.so opt/google/vms/android/system.raw.img opt/google/vms/android/vendor.raw.img; do [ "$(sha256sum < "/$f")" = "$(sha256sum < "/tmp/vi/r/$f" 2>/dev/null)" ] || ok=0; done
   umount /tmp/vi/r
-  if [ $ok = 1 ]; then echo "partition $p: already fixed"; continue; fi
-  echo "partition $p: copying fixes"
   printf '\000' | dd of="$dev" bs=1 seek=$((0x464 + 3)) conv=notrunc status=none   # allow rw mount
   mount -o rw "$dev" /tmp/vi/r
-  rm -f /tmp/vi/r/usr/lib64/libEGL.so* /tmp/vi/r/usr/lib64/libGLESv2.so* /tmp/vi/r/usr/lib64/libglapi.so*
-  tar --xattrs --xattrs-include='*' -C / -cf - $FILES | tar --xattrs --xattrs-include='*' -C /tmp/vi/r -xpf -
+  if [ $ok = 1 ]; then echo "partition $p: fixes already present"
+  else
+    echo "partition $p: copying fixes"
+    rm -f /tmp/vi/r/usr/lib64/libEGL.so* /tmp/vi/r/usr/lib64/libGLESv2.so* /tmp/vi/r/usr/lib64/libglapi.so*
+    tar --xattrs --xattrs-include='*' -C / -cf - $FILES | tar --xattrs --xattrs-include='*' -C /tmp/vi/r -xpf -
+  fi
+  # Phoenix services: hostname (and the detection script, for later boots)
+  mkdir -p /tmp/vi/r/etc/phoenix /tmp/vi/r/usr/share/phoenix/detect
+  echo "$HN" > /tmp/vi/r/etc/phoenix/hostname
+  [ -s "$DET" ] && cp "$DET" /tmp/vi/r/usr/share/phoenix/detect/phoenix-detect.sh
+  printf '%s\n' "$PROFILE" > /tmp/vi/r/etc/phoenix/profile.install
+  if curl -s -m 10 "http://$SERVER/svc/phoenix-hostname.conf" -o /tmp/vi/phoenix-hostname.conf && grep -q '^start on' /tmp/vi/phoenix-hostname.conf; then
+    cp /tmp/vi/phoenix-hostname.conf /tmp/vi/r/etc/init/phoenix-hostname.conf
+    setfattr -n security.selinux -v "$(getfattr --only-values -n security.selinux /tmp/vi/r/etc/init/shill.conf 2>/dev/null)" \
+      /tmp/vi/r/etc/init/phoenix-hostname.conf 2>/dev/null || true
+  else echo "  (could not fetch the hostname service; set it later with: vostro hostname $HN)"; fi
   sync; umount /tmp/vi/r
 done
 
 say "Result"
 cgpt show "/dev/$T" | grep -E 'Label|EFI|RWFW|STATE|ROOT' | head -20
 echo
+echo "Hostname: $HN"
 echo "Done. Shut down (sudo poweroff), REMOVE the USB stick, then power on."
 echo "If the BIOS asks, choose the internal hard drive in the boot menu (F12)."
