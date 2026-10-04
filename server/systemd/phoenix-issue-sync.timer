@@ -1,0 +1,10 @@
+[Unit]
+Description=Phoenix: daily hardware-report intake
+
+[Timer]
+OnCalendar=*-*-* 06:17:00
+RandomizedDelaySec=15min
+Persistent=true
+
+[Install]
+WantedBy=timers.target

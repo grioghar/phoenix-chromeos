@@ -1,0 +1,10 @@
+[Unit]
+Description=Phoenix: pull new hardware reports from GitHub issues
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /root/phoenix/server/issue_sync.py
+StandardOutput=append:/root/phoenix-intake/sync.log
+StandardError=append:/root/phoenix-intake/sync.log

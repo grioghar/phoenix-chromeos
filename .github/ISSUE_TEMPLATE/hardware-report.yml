@@ -1,0 +1,37 @@
+name: Hardware report
+description: Your computer is missing support (no profile, a device or feature doesn't work). Made with `phoenix submit`.
+title: "Hardware report: <maker> <model>"
+labels: ["hardware-report"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping Phoenix support more computers. On the computer, open VT2 (Ctrl+Alt+F2),
+        log in as `chronos`, and run `phoenix submit`. It saves a report to Downloads with private
+        data (serial numbers, MAC/IP addresses, names) removed. Attach that file below.
+  - type: input
+    id: machine
+    attributes:
+      label: Computer (maker and model)
+      placeholder: Dell Vostro 3550
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is missing or not working?
+      placeholder: e.g. fan always loud, touchpad scrolling, Wi-Fi, keyboard backlight, Play Store error code...
+    validations:
+      required: true
+  - type: textarea
+    id: report
+    attributes:
+      label: Report file
+      description: Drag the phoenix-report-*.txt file from Downloads here.
+    validations:
+      required: true
+  - type: dropdown
+    id: install
+    attributes:
+      label: How is Phoenix running?
+      options: ["Installed on the internal drive", "From a USB stick", "Not installed yet (checking compatibility)"]

@@ -6,6 +6,7 @@
 #   phoenix hostname N   set the name your router sees for this computer
 #   phoenix touchpad M   switch touchpad mode: alps | alps2 | exps
 #   phoenix save         keep this system's fixes across ChromeOS updates and Brunch rebuilds
+#   phoenix submit       report this computer to the Phoenix project (missing support, problems)
 #   phoenix diag         collect logs and send them to the Phoenix server
 #   phoenix install      install ChromeOS + Phoenix onto the internal drive
 #   phoenix update       update this command
@@ -25,10 +26,11 @@ case "${CMD:-fix}" in
   hostname) curl -s http://$H/h | $SH -s $REST ;;
   touchpad) curl -s http://$H/t | $SH -s $REST ;;
   save)     curl -s http://$H/s | $SH ;;
+  submit)   curl -s http://$H/sub -o /tmp/phoenix-submit.sh && $SH /tmp/phoenix-submit.sh ;;   # interactive: needs the terminal
   diag)     curl -s http://$H/d | $SH ;;
   install)  curl -s http://$H/m | VOSTRO_INSTALL=1 $SH || exit 1   # make sure the running system has every fix first
             curl -s http://$H/i -o /tmp/phoenix-install.sh
             if [ $V = 1 ]; then bash -x /tmp/phoenix-install.sh $REST; else bash /tmp/phoenix-install.sh $REST; fi ;;
   update)   curl -s http://$H/v | $SH ;;
-  *)        sed -n '3,12p' "$0" ;;
+  *)        sed -n '3,13p' "$0" ;;
 esac

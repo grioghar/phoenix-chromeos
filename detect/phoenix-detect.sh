@@ -25,6 +25,10 @@ case "$VENDOR" in LENOVO) [ -n "$PVERSION" ] && MODEL="$PVERSION" || MODEL="$PRO
 slug(){ echo "$1" | tr 'A-Z' 'a-z' | sed 's/[^a-z0-9]\{1,\}/-/g; s/^-//; s/-$//'; }
 VSLUG=$(slug "$(echo "$VENDOR" | awk '{print $1}')"); MSLUG=$(slug "$MODEL")
 PROFILE_FILE=""; [ -f "$PROFILES/$VSLUG/$MSLUG.conf" ] && PROFILE_FILE="$PROFILES/$VSLUG/$MSLUG.conf"
+# Lenovo fallback: the machine type is the first 4 characters of product_name (e.g. 4236AT8 -> mt-4236)
+if [ -z "$PROFILE_FILE" ] && [ "$VSLUG" = lenovo ]; then
+  MT=$(slug "$(echo "$PRODUCT" | cut -c1-4)"); [ -f "$PROFILES/lenovo/mt-$MT.conf" ] && PROFILE_FILE="$PROFILES/lenovo/mt-$MT.conf"
+fi
 
 # ---------------------------------------------------------------- CPU
 CPUFLAGS=$(grep -m1 '^flags' "$SYS/proc/cpuinfo" 2>/dev/null | sed 's/^flags[^:]*: //')

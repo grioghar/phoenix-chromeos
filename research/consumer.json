@@ -1,0 +1,2009 @@
+[
+  {
+    "dmi_vendor": "ASUSTeK COMPUTER INC.",
+    "dmi_model": "K53",
+    "years": "2011",
+    "chassis": "laptop",
+    "cpus": "Intel 2nd gen Core i5/i7 (Sandy Bridge)",
+    "cpu_gen": "sandybridge",
+    "gpu": "Intel HD 3000",
+    "gpu_gen": "intel-gen6",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "elantech",
+    "wifi": "Intel 6205 / Atheros",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "asus-nb-wmi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Base K53 iGPU variant",
+    "confidence": "medium",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "ASUSTeK COMPUTER INC.",
+    "dmi_model": "K53SV",
+    "years": "2011-2012",
+    "chassis": "laptop",
+    "cpus": "Intel 2nd gen Core i5/i7 (Sandy Bridge)",
+    "cpu_gen": "sandybridge",
+    "gpu": "Intel HD 3000; NVIDIA GeForce GT 540M (Optimus)",
+    "gpu_gen": "intel-gen6",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "elantech",
+    "wifi": "Intel 6205 / Atheros AR9002WB",
+    "linux_quirks": [
+      "i8042.nomux=1 needed",
+      "Optimus driver support variable"
+    ],
+    "platform_modules": [
+      "asus-nb-wmi",
+      "asus_acpi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Popular gaming/enthusiast, good build quality, Optimus support",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org",
+      "https://wiki.archlinux.org/title/ASUS_K53SV"
+    ]
+  },
+  {
+    "dmi_vendor": "ASUSTeK COMPUTER INC.",
+    "dmi_model": "K55",
+    "years": "2012",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i5/i7 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD 4000",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "elantech",
+    "wifi": "Intel 6235 / Atheros",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "asus-nb-wmi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "K55 iGPU-only variant",
+    "confidence": "medium",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "ASUSTeK COMPUTER INC.",
+    "dmi_model": "K55VD",
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i5/i7 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD 4000; NVIDIA GeForce GT 650M (Optimus)",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "elantech",
+    "wifi": "Intel 6235 / Qualcomm Atheros AR9002WB",
+    "linux_quirks": [
+      "i8042.nomux=1",
+      "BIOS GPU switching may cause issues"
+    ],
+    "platform_modules": [
+      "asus-nb-wmi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Volume model, good Linux support, Optimus dGPU variant",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org",
+      "ASUS K55 series specifications"
+    ]
+  },
+  {
+    "dmi_vendor": "ASUSTeK COMPUTER INC.",
+    "dmi_model": "N53",
+    "years": "2011",
+    "chassis": "laptop",
+    "cpus": "Intel 2nd gen Core i5/i7 (Sandy Bridge)",
+    "cpu_gen": "sandybridge",
+    "gpu": "Intel HD 3000; NVIDIA GT 540M (Optimus)",
+    "gpu_gen": "intel-gen6",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "elantech",
+    "wifi": "Intel 6205 / Atheros",
+    "linux_quirks": [
+      "i8042.nomux=1",
+      "Optimus support"
+    ],
+    "platform_modules": [
+      "asus-nb-wmi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Gaming model, Optimus GPU switching",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "ASUSTeK COMPUTER INC.",
+    "dmi_model": "N55",
+    "years": "2012",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i5/i7 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD 4000; NVIDIA GT 630M/650M (Optimus)",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "elantech",
+    "wifi": "Intel 6235 / Atheros",
+    "linux_quirks": [
+      "i8042.nomux=1",
+      "Optimus support"
+    ],
+    "platform_modules": [
+      "asus-nb-wmi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Gaming Ivy Bridge variant",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "ASUSTeK COMPUTER INC.",
+    "dmi_model": "N56VZ",
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i5/i7 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD 4000; NVIDIA GeForce GTX 660M (Optimus)",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "elantech",
+    "wifi": "Intel 6235 / Atheros AR9002WB",
+    "linux_quirks": [
+      "i8042.nomux=1",
+      "Optimus Bumblebee support needed"
+    ],
+    "platform_modules": [
+      "asus-nb-wmi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "High-performance gaming model, dedicated GPU",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org",
+      "ArchWiki ASUS N56 page"
+    ]
+  },
+  {
+    "dmi_vendor": "ASUSTeK COMPUTER INC.",
+    "dmi_model": "UX305",
+    "years": "2014-2015",
+    "chassis": "laptop",
+    "cpus": "Intel 5th gen Core M (Broadwell)",
+    "cpu_gen": "broadwell",
+    "gpu": "Intel HD Graphics 5300",
+    "gpu_gen": "intel-gen8",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "elantech",
+    "wifi": "Intel 7265",
+    "linux_quirks": [
+      "Core M processor, low TDP"
+    ],
+    "platform_modules": [
+      "asus-nb-wmi"
+    ],
+    "fan_control": "fanless",
+    "notes": "Fanless Core M ultrabook",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "ASUSTeK COMPUTER INC.",
+    "dmi_model": "UX31A",
+    "years": "2012",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i5/i7 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD Graphics 4000",
+    "gpu_gen": "intel-gen7",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "elantech",
+    "wifi": "Intel 6235",
+    "linux_quirks": [
+      "Ultrabook, good UEFI support",
+      "acpi_backlight=vendor helpful"
+    ],
+    "platform_modules": [
+      "asus-nb-wmi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Premium ultrabook, excellent build quality",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org",
+      "ArchWiki ASUS UX31A page"
+    ]
+  },
+  {
+    "dmi_vendor": "ASUSTeK COMPUTER INC.",
+    "dmi_model": "UX32VD",
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i5/i7 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD 4000; optional NVIDIA GT 620M (Optimus)",
+    "gpu_gen": "intel-gen7",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "elantech",
+    "wifi": "Intel 6235",
+    "linux_quirks": [
+      "Ultrabook, UEFI boot"
+    ],
+    "platform_modules": [
+      "asus-nb-wmi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Premium ultrabook with GPU option",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "ASUSTeK COMPUTER INC.",
+    "dmi_model": "X200CA",
+    "years": "2012",
+    "chassis": "laptop",
+    "cpus": "Intel Celeron/Pentium (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD Graphics 4000",
+    "gpu_gen": "intel-gen7",
+    "firmware": "uefi",
+    "vtx": "no",
+    "touchpad": "elantech",
+    "wifi": "Intel 6235 / Broadcom BCM4313",
+    "linux_quirks": [
+      "Budget model, no VT-x",
+      "acpi_osi=!Windows 2012 may help"
+    ],
+    "platform_modules": [
+      "asus-nb-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Budget ultrabook, no VT-x support",
+    "confidence": "medium",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "ASUSTeK COMPUTER INC.",
+    "dmi_model": "X53",
+    "years": "2011",
+    "chassis": "laptop",
+    "cpus": "Intel 2nd gen Core i5/i7 (Sandy Bridge)",
+    "cpu_gen": "sandybridge",
+    "gpu": "Intel HD 3000",
+    "gpu_gen": "intel-gen6",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "elantech",
+    "wifi": "Intel 6205 / Atheros",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "asus-nb-wmi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "X53 iGPU Sandy Bridge",
+    "confidence": "medium",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "ASUSTeK COMPUTER INC.",
+    "dmi_model": "X54C",
+    "years": "2012",
+    "chassis": "laptop",
+    "cpus": "Intel Pentium B960/970",
+    "cpu_gen": "sandybridge",
+    "gpu": "Intel HD 2000",
+    "gpu_gen": "intel-gen6",
+    "firmware": "bios",
+    "vtx": "some-skus",
+    "touchpad": "elantech",
+    "wifi": "Intel 6205 / Broadcom BCM4313",
+    "linux_quirks": [
+      "Budget model, check VT-x",
+      "Limited CPU"
+    ],
+    "platform_modules": [
+      "asus-nb-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Budget netbook variant",
+    "confidence": "medium",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "ASUSTeK COMPUTER INC.",
+    "dmi_model": "X550CA",
+    "years": "2013",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i3/i5/i7 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD 4000",
+    "gpu_gen": "intel-gen7",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "elantech",
+    "wifi": "Intel 7260 / Broadcom BCM4313",
+    "linux_quirks": [
+      "acpi_osi parameter helpful",
+      "some BIOS versions restrict VT-x"
+    ],
+    "platform_modules": [
+      "asus-nb-wmi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Mainstream mainstream, early UEFI adoption",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org",
+      "ASUS X550 series docs"
+    ]
+  },
+  {
+    "dmi_vendor": "ASUSTeK COMPUTER INC.",
+    "dmi_model": "X550LA",
+    "years": "2013-2014",
+    "chassis": "laptop",
+    "cpus": "Intel 4th gen Core i5/i7 (Haswell)",
+    "cpu_gen": "haswell",
+    "gpu": "Intel HD Graphics 4400",
+    "gpu_gen": "intel-gen7",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "elantech",
+    "wifi": "Intel 7260 / Broadcom BCM43142",
+    "linux_quirks": [
+      "BIOS may hide VT-x",
+      "acpi_osi parameter"
+    ],
+    "platform_modules": [
+      "asus-nb-wmi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Popular consumer model, Haswell, good Linux support",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "Acer",
+    "dmi_model": "Aspire 5750",
+    "years": "2011-2012",
+    "chassis": "laptop",
+    "cpus": "Intel 2nd gen Core i3/i5/i7 (Sandy Bridge)",
+    "cpu_gen": "sandybridge",
+    "gpu": "Intel HD 3000; optional NVIDIA GT 540M/630M (Optimus)",
+    "gpu_gen": "intel-gen6",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "elantech",
+    "wifi": "Intel 6205 / Broadcom BCM4313",
+    "linux_quirks": [
+      "i8042.nomux=1 for touchpad",
+      "acpi_osi parameter may help"
+    ],
+    "platform_modules": [
+      "acer-wmi",
+      "acer-acpi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Very common consumer model, Optimus support variable by SKU",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org",
+      "https://wiki.archlinux.org/title/Acer_Aspire_5750"
+    ]
+  },
+  {
+    "dmi_vendor": "Acer",
+    "dmi_model": "Aspire 5755",
+    "years": "2012",
+    "chassis": "laptop",
+    "cpus": "Intel 2nd gen Core i5/i7 (Sandy Bridge)",
+    "cpu_gen": "sandybridge",
+    "gpu": "Intel HD 3000; optional NVIDIA GT 630M",
+    "gpu_gen": "intel-gen6",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "elantech",
+    "wifi": "Intel 6205 / Broadcom BCM4313",
+    "linux_quirks": [
+      "i8042.nomux=1 for touchpad"
+    ],
+    "platform_modules": [
+      "acer-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Mid-cycle refresh of 5750, Sandy Bridge",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "Acer",
+    "dmi_model": "Aspire E1-531",
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel Pentium/Celeron B960/970 (Sandy Bridge)",
+    "cpu_gen": "sandybridge",
+    "gpu": "Intel HD 2000",
+    "gpu_gen": "intel-gen6",
+    "firmware": "bios",
+    "vtx": "some-skus",
+    "touchpad": "elantech",
+    "wifi": "Broadcom BCM4313 / Realtek",
+    "linux_quirks": [
+      "Budget CPU, check VT-x",
+      "acpi_osi parameter"
+    ],
+    "platform_modules": [
+      "acer-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Budget model, Pentium tier, limited CPU",
+    "confidence": "medium",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "Acer",
+    "dmi_model": "Aspire E1-571",
+    "years": "2013",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i5/i7 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD Graphics 4000",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "elantech",
+    "wifi": "Intel 6235 / Broadcom BCM43142",
+    "linux_quirks": [
+      "acpi_osi parameter helpful"
+    ],
+    "platform_modules": [
+      "acer-wmi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "E-series budget line, Ivy Bridge",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "Acer",
+    "dmi_model": "Aspire E5-571",
+    "years": "2014-2015",
+    "chassis": "laptop",
+    "cpus": "Intel 5th gen Core i3/i5/i7 (Broadwell)",
+    "cpu_gen": "broadwell",
+    "gpu": "Intel HD Graphics 5500; optional NVIDIA GeForce 920M",
+    "gpu_gen": "intel-gen8",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "elantech",
+    "wifi": "Intel 3160/7260 / Broadcom BCM43142",
+    "linux_quirks": [
+      "acpi_osi parameter",
+      "some BIOS versions hide VT-x"
+    ],
+    "platform_modules": [
+      "acer-wmi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "High-volume model, good Linux support, post-Haswell",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org",
+      "ArchWiki Acer Aspire E5 page"
+    ]
+  },
+  {
+    "dmi_vendor": "Acer",
+    "dmi_model": "Aspire E5-573",
+    "years": "2015-2016",
+    "chassis": "laptop",
+    "cpus": "Intel 5th gen Core i5/i7 (Broadwell)",
+    "cpu_gen": "broadwell",
+    "gpu": "Intel HD Graphics 5500",
+    "gpu_gen": "intel-gen8",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "elantech",
+    "wifi": "Intel 3160/7260 / Broadcom BCM43142",
+    "linux_quirks": [
+      "acpi_osi parameter"
+    ],
+    "platform_modules": [
+      "acer-wmi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "E5 series refresh, Broadwell, good Linux support",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "Acer",
+    "dmi_model": "Aspire E5-575",
+    "years": "2016-2017",
+    "chassis": "laptop",
+    "cpus": "Intel 6th gen Core i3/i5/i7 (Skylake)",
+    "cpu_gen": "skylake",
+    "gpu": "Intel HD Graphics 520/540",
+    "gpu_gen": "intel-gen9",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "elantech",
+    "wifi": "Intel 3165/7265 / Realtek RTL8723BE",
+    "linux_quirks": [
+      "Realtek RTL8723BE has poor Linux driver",
+      "acpi_osi parameter"
+    ],
+    "platform_modules": [
+      "acer-wmi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Latest in E5 series, Skylake, some Wi-Fi issues on Linux",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org",
+      "Kernel i8k driver Acer quirks"
+    ]
+  },
+  {
+    "dmi_vendor": "Acer",
+    "dmi_model": "Aspire One 725",
+    "years": "2012",
+    "chassis": "laptop",
+    "cpus": "AMD E-Series (E1-1200 / E2-1800)",
+    "cpu_gen": "amd-jaguar",
+    "gpu": "AMD Radeon HD 7340",
+    "gpu_gen": "amd-gcn1",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "unknown",
+    "wifi": "Broadcom BCM4313 / Realtek",
+    "linux_quirks": [
+      "AMD netbook, limited CPU",
+      "may lack SSE4.2"
+    ],
+    "platform_modules": [
+      "acer-wmi"
+    ],
+    "fan_control": "unknown",
+    "notes": "Netbook-class, lower CPU; verify SSE4.2 support",
+    "confidence": "medium",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "Acer",
+    "dmi_model": "Aspire One 756",
+    "years": "2012",
+    "chassis": "laptop",
+    "cpus": "Intel Atom N2800/D2500",
+    "cpu_gen": "unknown",
+    "gpu": "Intel GMA 4500MHD",
+    "gpu_gen": "intel-gen3",
+    "firmware": "bios",
+    "vtx": "no",
+    "touchpad": "unknown",
+    "wifi": "Broadcom BCM4313 / Realtek",
+    "linux_quirks": [
+      "Atom-based, no SSE4.2, legacy only"
+    ],
+    "platform_modules": [
+      "acer-wmi"
+    ],
+    "fan_control": "unknown",
+    "notes": "Netbook, Atom N-series; excluded from main profiles",
+    "confidence": "low",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "Acer",
+    "dmi_model": "Aspire V3-571",
+    "aliases": [
+      "Aspire V3-571G"
+    ],
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i3/i5/i7 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD 4000; optional NVIDIA GT 630M/650M (Optimus)",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "elantech",
+    "wifi": "Intel 6205/6235 / Broadcom BCM4313",
+    "linux_quirks": [
+      "i8042.nomux=1 common",
+      "acpi_backlight=vendor may help"
+    ],
+    "platform_modules": [
+      "acer-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Popular mid-range, Optimus on G variant",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org",
+      "Kernel drivers/platform/x86/acer-wmi.c DMI table"
+    ]
+  },
+  {
+    "dmi_vendor": "Acer",
+    "dmi_model": "Aspire V3-571G",
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i5/i7 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD 4000; NVIDIA GeForce GT 650M/750M (Optimus)",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "elantech",
+    "wifi": "Intel 6235 / Broadcom BCM4313",
+    "linux_quirks": [
+      "i8042.nomux=1 common",
+      "Optimus support variable"
+    ],
+    "platform_modules": [
+      "acer-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "G variant with dedicated GPU, Optimus",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "Acer",
+    "dmi_model": "Aspire V5-571",
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i5/i7 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD Graphics 4000",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "elantech",
+    "wifi": "Intel 6235 / Broadcom BCM4313",
+    "linux_quirks": [
+      "acpi_osi parameter"
+    ],
+    "platform_modules": [
+      "acer-wmi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "V5 series ultraslim, good Linux support",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "Acer",
+    "dmi_model": "TravelMate P253",
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel 2nd/3rd gen Core i3/i5 (Sandy/Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD 3000/4000",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "elantech",
+    "wifi": "Intel 6205 / Broadcom BCM4313",
+    "linux_quirks": [
+      "i8042.nomux=1 for touchpad stability"
+    ],
+    "platform_modules": [
+      "acer-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Business netbook, compact form",
+    "confidence": "medium",
+    "sources": [
+      "https://linux-hardware.org",
+      "Acer TravelMate spec sheets"
+    ]
+  },
+  {
+    "dmi_vendor": "Acer",
+    "dmi_model": "TravelMate P453",
+    "years": "2013-2014",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i3/i5 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD 4000",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "elantech",
+    "wifi": "Intel 6235 / Broadcom BCM4313",
+    "linux_quirks": [
+      "Business line, good BIOS"
+    ],
+    "platform_modules": [
+      "acer-wmi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Business ultrabook, compact",
+    "confidence": "medium",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "FUJITSU",
+    "dmi_model": "LIFEBOOK A512",
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel 2nd/3rd gen Core i3/i5 (Sandy/Ivy Bridge)",
+    "cpu_gen": "sandybridge",
+    "gpu": "Intel HD 3000/4000",
+    "gpu_gen": "intel-gen6",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "alps",
+    "wifi": "Intel 6205/6235 / Broadcom BCM4313",
+    "linux_quirks": [
+      "fujitsu-laptop platform module",
+      "Good overall BIOS"
+    ],
+    "platform_modules": [
+      "fujitsu-laptop",
+      "fujitsu_haps"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Business/consumer hybrid, wide CPU range",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org",
+      "Kernel drivers/platform/x86/fujitsu-laptop.c"
+    ]
+  },
+  {
+    "dmi_vendor": "FUJITSU",
+    "dmi_model": "LIFEBOOK A532",
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i3/i5 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD Graphics 4000",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "alps",
+    "wifi": "Intel 6235 / Broadcom BCM4313",
+    "linux_quirks": [
+      "fujitsu-laptop driver support"
+    ],
+    "platform_modules": [
+      "fujitsu-laptop"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Updated A512, Ivy Bridge",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "FUJITSU",
+    "dmi_model": "LIFEBOOK A544",
+    "years": "2013-2014",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd/4th gen Core i5/i7 (Ivy/Haswell)",
+    "cpu_gen": "haswell",
+    "gpu": "Intel HD Graphics 4400",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "alps",
+    "wifi": "Intel 7260 / Broadcom BCM43142",
+    "linux_quirks": [
+      "Business line, good BIOS"
+    ],
+    "platform_modules": [
+      "fujitsu-laptop"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Business Ivy/Haswell hybrid",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "FUJITSU",
+    "dmi_model": "LIFEBOOK A555",
+    "years": "2014-2015",
+    "chassis": "laptop",
+    "cpus": "Intel 4th/5th gen Core i5/i7 (Haswell/Broadwell)",
+    "cpu_gen": "broadwell",
+    "gpu": "Intel HD Graphics 5500",
+    "gpu_gen": "intel-gen8",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "alps",
+    "wifi": "Intel 7265 / Broadcom BCM43142",
+    "linux_quirks": [
+      "Haswell/Broadwell support good"
+    ],
+    "platform_modules": [
+      "fujitsu-laptop"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Business Broadwell model",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "FUJITSU",
+    "dmi_model": "LIFEBOOK E544",
+    "years": "2014",
+    "chassis": "laptop",
+    "cpus": "Intel 4th gen Core i5/i7 (Haswell)",
+    "cpu_gen": "haswell",
+    "gpu": "Intel HD Graphics 4400",
+    "gpu_gen": "intel-gen7",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "alps",
+    "wifi": "Intel 7260 / Broadcom BCM43142",
+    "linux_quirks": [
+      "fujitsu-laptop driver",
+      "UEFI native"
+    ],
+    "platform_modules": [
+      "fujitsu-laptop"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Business Haswell, Ultrabook-like",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "FUJITSU",
+    "dmi_model": "LIFEBOOK E734",
+    "years": "2013-2014",
+    "chassis": "laptop",
+    "cpus": "Intel 4th gen Core i5/i7 (Haswell)",
+    "cpu_gen": "haswell",
+    "gpu": "Intel HD Graphics 4400",
+    "gpu_gen": "intel-gen7",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "alps",
+    "wifi": "Intel 7260 / Broadcom BCM43142",
+    "linux_quirks": [
+      "Business ultrabook, Haswell"
+    ],
+    "platform_modules": [
+      "fujitsu-laptop"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Compact business Ultrabook",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "FUJITSU",
+    "dmi_model": "LIFEBOOK S752",
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i5/i7 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD Graphics 4000",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "alps",
+    "wifi": "Intel 6235 / Broadcom BCM4313",
+    "linux_quirks": [
+      "Business ultrabook, premium"
+    ],
+    "platform_modules": [
+      "fujitsu-laptop"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Premium business ultrabook",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "FUJITSU",
+    "dmi_model": "LIFEBOOK S762",
+    "years": "2013",
+    "chassis": "laptop",
+    "cpus": "Intel 4th gen Core i5/i7 (Haswell)",
+    "cpu_gen": "haswell",
+    "gpu": "Intel HD Graphics 4200",
+    "gpu_gen": "intel-gen7",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "alps",
+    "wifi": "Intel 7260",
+    "linux_quirks": [
+      "Premium business ultrabook"
+    ],
+    "platform_modules": [
+      "fujitsu-laptop"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Premium Haswell ultrabook",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "FUJITSU",
+    "dmi_model": "LIFEBOOK S904",
+    "years": "2014",
+    "chassis": "convertible",
+    "cpus": "Intel 4th gen Core i5/i7 (Haswell)",
+    "cpu_gen": "haswell",
+    "gpu": "Intel HD Graphics 4200/4400",
+    "gpu_gen": "intel-gen7",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "alps",
+    "wifi": "Intel 7260",
+    "linux_quirks": [
+      "Tablet convertible, limited touchscreen support"
+    ],
+    "platform_modules": [
+      "fujitsu-laptop"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Convertible tablet/laptop, Haswell",
+    "confidence": "medium",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "Micro-Star International Co., Ltd.",
+    "dmi_model": "CX41",
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i5/i7 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD Graphics 4000",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6235 / Broadcom BCM4313",
+    "linux_quirks": [
+      "msi-wmi platform module"
+    ],
+    "platform_modules": [
+      "msi-laptop",
+      "msi-wmi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Consumer budget Ivy Bridge",
+    "confidence": "medium",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "Micro-Star International Co., Ltd.",
+    "dmi_model": "CX61",
+    "years": "2013-2014",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd/4th gen Core i5/i7 (Ivy/Haswell)",
+    "cpu_gen": "haswell",
+    "gpu": "Intel HD Graphics 4400; optional AMD Radeon HD 8670M",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6235/7260 / Broadcom BCM4313/43142",
+    "linux_quirks": [
+      "msi-wmi platform module"
+    ],
+    "platform_modules": [
+      "msi-laptop",
+      "msi-wmi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Consumer gaming, AMD GPU option",
+    "confidence": "medium",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "Micro-Star International Co., Ltd.",
+    "dmi_model": "GE60",
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i7 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD Graphics 4000; NVIDIA GeForce GTX 660M (Optimus)",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6235 / Broadcom BCM4313",
+    "linux_quirks": [
+      "msi-laptop platform module",
+      "Gaming model, thermal tuning needed"
+    ],
+    "platform_modules": [
+      "msi-laptop",
+      "msi-wmi"
+    ],
+    "module_options": {
+      "msi-wmi": "force=1"
+    },
+    "fan_control": "software-ok",
+    "notes": "Gaming laptop, Optimus, good community support",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org",
+      "ArchWiki MSI GE60 page",
+      "Kernel drivers/platform/x86/msi-laptop.c"
+    ]
+  },
+  {
+    "dmi_vendor": "Micro-Star International Co., Ltd.",
+    "dmi_model": "GE60 0NC",
+    "years": "2012",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i7 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD Graphics 4000; NVIDIA GTX 660M (Optimus)",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6235 / Broadcom BCM4313",
+    "linux_quirks": [
+      "msi-wmi driver support"
+    ],
+    "platform_modules": [
+      "msi-laptop",
+      "msi-wmi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Gaming variant code 0NC",
+    "confidence": "medium",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "Micro-Star International Co., Ltd.",
+    "dmi_model": "GE70",
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i7 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD Graphics 4000; NVIDIA GeForce GTX 660M/765M (Optimus)",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6235 / Broadcom BCM4313",
+    "linux_quirks": [
+      "msi-wmi driver",
+      "Larger gaming model"
+    ],
+    "platform_modules": [
+      "msi-laptop",
+      "msi-wmi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "17-inch gaming laptop, Optimus",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "Micro-Star International Co., Ltd.",
+    "dmi_model": "GP60",
+    "years": "2013-2014",
+    "chassis": "laptop",
+    "cpus": "Intel 4th gen Core i7 (Haswell)",
+    "cpu_gen": "haswell",
+    "gpu": "Intel HD Graphics 4600; NVIDIA GeForce GTX 750M (Optimus)",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 7260 / Broadcom BCM43142",
+    "linux_quirks": [
+      "msi-wmi driver",
+      "Haswell gaming"
+    ],
+    "platform_modules": [
+      "msi-laptop",
+      "msi-wmi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Gaming with Haswell, successor to GE60",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "Micro-Star International Co., Ltd.",
+    "dmi_model": "GP70",
+    "years": "2013-2014",
+    "chassis": "laptop",
+    "cpus": "Intel 4th gen Core i7 (Haswell)",
+    "cpu_gen": "haswell",
+    "gpu": "Intel HD Graphics 4600; NVIDIA GeForce GTX 850M (Optimus)",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 7260 / Broadcom BCM43142",
+    "linux_quirks": [
+      "msi-wmi driver"
+    ],
+    "platform_modules": [
+      "msi-laptop",
+      "msi-wmi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "17-inch gaming Haswell",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "SAMSUNG ELECTRONICS CO., LTD.",
+    "dmi_model": "NP300E5A",
+    "aliases": [
+      "300E5A"
+    ],
+    "years": "2011-2012",
+    "chassis": "laptop",
+    "cpus": "Intel 2nd gen Core i3/i5/i7 (Sandy Bridge)",
+    "cpu_gen": "sandybridge",
+    "gpu": "Intel HD 3000",
+    "gpu_gen": "intel-gen6",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6205 / Broadcom BCM4313",
+    "linux_quirks": [
+      "samsung-laptop driver support",
+      "Good overall Linux compat"
+    ],
+    "platform_modules": [
+      "samsung-laptop",
+      "samsung-sabi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Series 3, consumer model, Sandy Bridge",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org",
+      "Kernel drivers/platform/x86/samsung-laptop.c"
+    ]
+  },
+  {
+    "dmi_vendor": "SAMSUNG ELECTRONICS CO., LTD.",
+    "dmi_model": "NP300E5C",
+    "years": "2013",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i5/i7 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD Graphics 4000",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6235 / Broadcom BCM4313",
+    "linux_quirks": [
+      "Later Series 3, good Linux support"
+    ],
+    "platform_modules": [
+      "samsung-laptop"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Consumer model, updated Series 3 line",
+    "confidence": "medium",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "SAMSUNG ELECTRONICS CO., LTD.",
+    "dmi_model": "NP350V5C",
+    "aliases": [
+      "350V5C"
+    ],
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i5/i7 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD Graphics 4000",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6235 / Broadcom BCM4313",
+    "linux_quirks": [
+      "samsung-laptop platform module",
+      "acpi_osi parameter helpful"
+    ],
+    "platform_modules": [
+      "samsung-laptop"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Series 5, mid-range consumer, Ivy Bridge",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org",
+      "Samsung Series 5 specs"
+    ]
+  },
+  {
+    "dmi_vendor": "SAMSUNG ELECTRONICS CO., LTD.",
+    "dmi_model": "NP530U3",
+    "aliases": [
+      "530U3"
+    ],
+    "years": "2012",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i5/i7 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD Graphics 4000",
+    "gpu_gen": "intel-gen7",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6235",
+    "linux_quirks": [
+      "Ultrabook, UEFI native boot"
+    ],
+    "platform_modules": [
+      "samsung-laptop"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Premium ultrabook, thin design",
+    "confidence": "medium",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "SAMSUNG ELECTRONICS CO., LTD.",
+    "dmi_model": "NP900X3",
+    "years": "2012",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i5/i7 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD Graphics 4000",
+    "gpu_gen": "intel-gen7",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6235",
+    "linux_quirks": [
+      "Series 9, premium ultrabook"
+    ],
+    "platform_modules": [
+      "samsung-laptop"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Premium line, excellent build quality, UEFI",
+    "confidence": "medium",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "SAMSUNG ELECTRONICS CO., LTD.",
+    "dmi_model": "RV511",
+    "years": "2010-2011",
+    "chassis": "laptop",
+    "cpus": "Intel 1st/2nd gen Core i3/i5 (Nehalem/Sandy)",
+    "cpu_gen": "sandybridge",
+    "gpu": "Intel HD Graphics / ATI Radeon HD 6470M",
+    "gpu_gen": "amd-gcn1",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 5100/6205 / Broadcom BCM4313",
+    "linux_quirks": [
+      "AMD GPU variant, driver support variable"
+    ],
+    "platform_modules": [
+      "samsung-laptop"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Older series with AMD GPU option",
+    "confidence": "medium",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "SAMSUNG ELECTRONICS CO., LTD.",
+    "dmi_model": "RV515",
+    "years": "2011",
+    "chassis": "laptop",
+    "cpus": "Intel 2nd gen Pentium/Core i3 (Sandy Bridge)",
+    "cpu_gen": "sandybridge",
+    "gpu": "Intel HD 2000/3000",
+    "gpu_gen": "intel-gen6",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6205 / Broadcom BCM4313",
+    "linux_quirks": [
+      "Budget Sandy Bridge"
+    ],
+    "platform_modules": [
+      "samsung-laptop"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Budget Sandy Bridge series",
+    "confidence": "medium",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "SAMSUNG ELECTRONICS CO., LTD.",
+    "dmi_model": "RV520",
+    "years": "2011-2012",
+    "chassis": "laptop",
+    "cpus": "Intel 2nd gen Core i5/i7 (Sandy Bridge)",
+    "cpu_gen": "sandybridge",
+    "gpu": "Intel HD 3000; optional AMD Radeon HD 6700M",
+    "gpu_gen": "intel-gen6",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6205 / Broadcom BCM4313",
+    "linux_quirks": [
+      "AMD GPU support variable"
+    ],
+    "platform_modules": [
+      "samsung-laptop"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Mid-range Sandy Bridge with GPU options",
+    "confidence": "medium",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "Sony Corporation",
+    "dmi_model": "SVE14A2V2ES",
+    "aliases": [
+      "SVE14"
+    ],
+    "years": "2013",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i3/i5/i7 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD Graphics 4000",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6235 / Broadcom BCM4313",
+    "linux_quirks": [
+      "VAIO later model, good Linux support"
+    ],
+    "platform_modules": [
+      "sony-laptop"
+    ],
+    "fan_control": "software-ok",
+    "notes": "VAIO 14-inch, consumer mid-range",
+    "confidence": "medium",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "Sony Corporation",
+    "dmi_model": "SVE15113FXS",
+    "aliases": [
+      "SVE15"
+    ],
+    "years": "2013",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i5/i7 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD Graphics 4000; optional NVIDIA GeForce GT 750M",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6235 / Broadcom BCM43142",
+    "linux_quirks": [
+      "Larger 15-inch model, Optimus available"
+    ],
+    "platform_modules": [
+      "sony-laptop"
+    ],
+    "fan_control": "software-ok",
+    "notes": "VAIO 15-inch, performance variant",
+    "confidence": "medium",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "Sony Corporation",
+    "dmi_model": "SVF15",
+    "years": "2014",
+    "chassis": "laptop",
+    "cpus": "Intel 4th gen Core i5/i7 (Haswell)",
+    "cpu_gen": "haswell",
+    "gpu": "Intel HD Graphics 4400",
+    "gpu_gen": "intel-gen7",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 7260 / Broadcom BCM43142",
+    "linux_quirks": [
+      "VAIO Fit line, Haswell, UEFI"
+    ],
+    "platform_modules": [
+      "sony-laptop"
+    ],
+    "fan_control": "software-ok",
+    "notes": "VAIO Fit, newer ultraslim design",
+    "confidence": "medium",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "Sony Corporation",
+    "dmi_model": "VPCEB",
+    "years": "2010-2011",
+    "chassis": "laptop",
+    "cpus": "Intel 1st gen Core i3/i5 (Nehalem)",
+    "cpu_gen": "nehalem",
+    "gpu": "Intel HD Graphics / NVIDIA GT 325M",
+    "gpu_gen": "intel-gen5",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 5100 / Broadcom BCM4313",
+    "linux_quirks": [
+      "Older Nehalem generation"
+    ],
+    "platform_modules": [
+      "sony-laptop"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Earlier VAIO generation",
+    "confidence": "medium",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "Sony Corporation",
+    "dmi_model": "VPCEE",
+    "years": "2011",
+    "chassis": "laptop",
+    "cpus": "Intel 2nd gen Core i5/i7 (Sandy Bridge)",
+    "cpu_gen": "sandybridge",
+    "gpu": "Intel HD 3000; optional NVIDIA GT 540M",
+    "gpu_gen": "intel-gen6",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6205 / Broadcom BCM4313",
+    "linux_quirks": [
+      "i8042.nomux=1 for touchpad"
+    ],
+    "platform_modules": [
+      "sony-laptop"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Sandy Bridge VAIO with GPU options",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "Sony Corporation",
+    "dmi_model": "VPCEG",
+    "years": "2011-2012",
+    "chassis": "laptop",
+    "cpus": "Intel 2nd gen Core i5/i7 (Sandy Bridge)",
+    "cpu_gen": "sandybridge",
+    "gpu": "Intel HD 3000; optional NVIDIA GT 540M",
+    "gpu_gen": "intel-gen6",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6205 / Broadcom BCM4313",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "sony-laptop"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Sandy Bridge variant",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "Sony Corporation",
+    "dmi_model": "VPCEH1S1E",
+    "aliases": [
+      "VPCEH"
+    ],
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i3/i5/i7 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD Graphics 4000; optional NVIDIA GeForce GT 630M (Optimus)",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6235 / Broadcom BCM4313",
+    "linux_quirks": [
+      "sony-laptop platform module",
+      "Optimus variable support"
+    ],
+    "platform_modules": [
+      "sony-laptop",
+      "sony_acpi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "VAIO premium consumer, some Optimus variants",
+    "confidence": "medium",
+    "sources": [
+      "https://linux-hardware.org",
+      "Kernel drivers/platform/x86/sony-laptop.c"
+    ]
+  },
+  {
+    "dmi_vendor": "Sony Corporation",
+    "dmi_model": "VPCSA",
+    "years": "2011-2012",
+    "chassis": "laptop",
+    "cpus": "Intel 2nd gen Core i5/i7 (Sandy Bridge)",
+    "cpu_gen": "sandybridge",
+    "gpu": "Intel HD 3000",
+    "gpu_gen": "intel-gen6",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6205 / Broadcom BCM4313",
+    "linux_quirks": [
+      "Premium line"
+    ],
+    "platform_modules": [
+      "sony-laptop"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Premium compact VAIO",
+    "confidence": "medium",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "TOSHIBA",
+    "dmi_model": "PORTEGE R830",
+    "years": "2011-2012",
+    "chassis": "laptop",
+    "cpus": "Intel 2nd gen Core i5/i7 (Sandy Bridge)",
+    "cpu_gen": "sandybridge",
+    "gpu": "Intel HD 3000",
+    "gpu_gen": "intel-gen6",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "alps",
+    "wifi": "Intel 6205 / Broadcom BCM4313",
+    "linux_quirks": [
+      "Business ultrabook, good Linux support"
+    ],
+    "platform_modules": [
+      "toshiba_acpi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Business ultraportable, excellent build",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org",
+      "ArchWiki Toshiba Port\u00e9g\u00e9 page"
+    ]
+  },
+  {
+    "dmi_vendor": "TOSHIBA",
+    "dmi_model": "PORTEGE R930",
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i5/i7 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD Graphics 4000",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "alps",
+    "wifi": "Intel 6235 / Broadcom BCM4313",
+    "linux_quirks": [
+      "Excellent Linux support"
+    ],
+    "platform_modules": [
+      "toshiba_acpi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Premium business ultrabook",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "TOSHIBA",
+    "dmi_model": "PORTEGE Z830",
+    "years": "2012",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i5/i7 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD Graphics 4000",
+    "gpu_gen": "intel-gen7",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "alps",
+    "wifi": "Intel 6235",
+    "linux_quirks": [
+      "Premium ultrabook, UEFI"
+    ],
+    "platform_modules": [
+      "toshiba_acpi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Ultrabook Z-series, excellent design",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "TOSHIBA",
+    "dmi_model": "PORTEGE Z930",
+    "years": "2013",
+    "chassis": "laptop",
+    "cpus": "Intel 4th gen Core i5/i7 (Haswell)",
+    "cpu_gen": "haswell",
+    "gpu": "Intel HD Graphics 4200",
+    "gpu_gen": "intel-gen7",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "alps",
+    "wifi": "Intel 7260",
+    "linux_quirks": [
+      "Haswell ultrabook"
+    ],
+    "platform_modules": [
+      "toshiba_acpi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Z-series Haswell variant",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "TOSHIBA",
+    "dmi_model": "SATELLITE C660",
+    "years": "2011",
+    "chassis": "laptop",
+    "cpus": "Intel 2nd gen Pentium/Celeron (Sandy Bridge)",
+    "cpu_gen": "sandybridge",
+    "gpu": "Intel HD 2000",
+    "gpu_gen": "intel-gen6",
+    "firmware": "bios",
+    "vtx": "some-skus",
+    "touchpad": "synaptics",
+    "wifi": "Broadcom BCM4313 / Realtek",
+    "linux_quirks": [
+      "Budget line, limited CPU"
+    ],
+    "platform_modules": [
+      "toshiba_acpi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Budget Sandy Bridge Pentium",
+    "confidence": "medium",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "TOSHIBA",
+    "dmi_model": "SATELLITE C850",
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i3/i5 (Ivy Bridge); AMD E/A6",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD Graphics 4000; optional AMD Radeon HD 7670M",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6235 / Broadcom BCM4313",
+    "linux_quirks": [
+      "Budget variant, limited thermal design"
+    ],
+    "platform_modules": [
+      "toshiba_acpi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Budget variant of L850",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "TOSHIBA",
+    "dmi_model": "SATELLITE C855",
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i3/i5 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD Graphics 4000",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6235 / Broadcom BCM4313",
+    "linux_quirks": [
+      "Budget Ivy Bridge"
+    ],
+    "platform_modules": [
+      "toshiba_acpi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Updated C850, Ivy Bridge",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "TOSHIBA",
+    "dmi_model": "SATELLITE L655",
+    "years": "2010-2011",
+    "chassis": "laptop",
+    "cpus": "Intel 1st gen Core i3/i5 (Nehalem)",
+    "cpu_gen": "nehalem",
+    "gpu": "Intel HD Graphics / NVIDIA GT 315M",
+    "gpu_gen": "intel-gen5",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 5100 / Broadcom BCM4313",
+    "linux_quirks": [
+      "Pre-Sandy, legacy"
+    ],
+    "platform_modules": [
+      "toshiba_acpi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Older model, Nehalem gen",
+    "confidence": "medium",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "TOSHIBA",
+    "dmi_model": "SATELLITE L745",
+    "years": "2011",
+    "chassis": "laptop",
+    "cpus": "Intel 2nd gen Core i5/i7 (Sandy Bridge)",
+    "cpu_gen": "sandybridge",
+    "gpu": "Intel HD 3000",
+    "gpu_gen": "intel-gen6",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6205 / Broadcom BCM4313",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "toshiba_acpi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Sandy Bridge consumer",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "TOSHIBA",
+    "dmi_model": "SATELLITE L750",
+    "years": "2011-2012",
+    "chassis": "laptop",
+    "cpus": "Intel 2nd gen Core i5/i7 (Sandy Bridge)",
+    "cpu_gen": "sandybridge",
+    "gpu": "Intel HD 3000; optional GT 540M/630M",
+    "gpu_gen": "intel-gen6",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6205 / Broadcom BCM4313",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "toshiba_acpi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Sandy Bridge with GPU options",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  },
+  {
+    "dmi_vendor": "TOSHIBA",
+    "dmi_model": "SATELLITE L755",
+    "years": "2011-2012",
+    "chassis": "laptop",
+    "cpus": "Intel 2nd gen Core i3/i5/i7 (Sandy Bridge)",
+    "cpu_gen": "sandybridge",
+    "gpu": "Intel HD 3000; optional NVIDIA GT 540M/630M",
+    "gpu_gen": "intel-gen6",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6205 / Broadcom BCM4313",
+    "linux_quirks": [
+      "i8042.nomux=1 for touchpad",
+      "toshiba_acpi platform module"
+    ],
+    "platform_modules": [
+      "toshiba_acpi",
+      "toshiba_haps"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Common consumer model, Optimus variant available",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org",
+      "Kernel drivers/platform/x86/toshiba_acpi.c"
+    ]
+  },
+  {
+    "dmi_vendor": "TOSHIBA",
+    "dmi_model": "SATELLITE L850",
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel 3rd gen Core i5/i7 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD Graphics 4000; optional NVIDIA GeForce GT 630M/650M",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6235 / Broadcom BCM4313",
+    "linux_quirks": [
+      "i8042.nomux=1",
+      "BIOS power management may need tuning"
+    ],
+    "platform_modules": [
+      "toshiba_acpi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Premium consumer, good build quality",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org",
+      "Toshiba Satellite L850 spec sheets"
+    ]
+  },
+  {
+    "dmi_vendor": "TOSHIBA",
+    "dmi_model": "SATELLITE S55",
+    "years": "2013-2014",
+    "chassis": "laptop",
+    "cpus": "Intel 4th gen Core i7 (Haswell)",
+    "cpu_gen": "haswell",
+    "gpu": "Intel HD Graphics 4400; optional NVIDIA GTX 750M/765M",
+    "gpu_gen": "intel-gen7",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 7260 / Broadcom BCM43142",
+    "linux_quirks": [
+      "Early UEFI, Haswell support good"
+    ],
+    "platform_modules": [
+      "toshiba_acpi"
+    ],
+    "fan_control": "software-ok",
+    "notes": "Premium consumer model, high-res display options",
+    "confidence": "high",
+    "sources": [
+      "https://linux-hardware.org"
+    ]
+  }
+]

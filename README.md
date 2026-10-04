@@ -12,10 +12,19 @@ a Mesa transplant, and OpenGL instead of Vulkan. See [docs/FINDINGS.md](docs/FIN
 
 - [Architecture](docs/ARCHITECTURE.md)
 - `installer/`: install to an internal disk, including legacy-BIOS boot
-- `cli/`: the `phoenix` command (`fix`, `diag`, `install`, `touchpad`, `hostname`, `update`)
+- `cli/`: the `phoenix` command (`fix`, `platform`, `detect`, `submit`, `save`, `diag`, `install`, `touchpad`, `hostname`, `update`)
+- `detect/`, `profiles/`, `platform/`: hardware detection, per-model profiles, platform modules (fans, sensors, hotkeys)
+- `research/`: sourced hardware research that `build/gen-profiles.py` turns into profiles
 - `server/`: the build/diagnostics server (serves scripts and components, receives diagnostics)
 - `shim/`: crosvm CPUID shim (MOVBE emulation, hides AVX from the Android VM)
 - `build/`: image build and Android image patching
 
 This repository holds scripts and sources only. Google's binaries (ChromeOS recovery and Flex
 images, Android images) are downloaded or built on demand, never stored here.
+
+## Your computer isn't supported well?
+
+Run `phoenix submit` on it (VT2: Ctrl+Alt+F2, log in as `chronos`). It profiles the hardware, asks what's
+missing, removes private data (serial numbers, MAC/IP addresses, names) and files a
+[hardware report](https://github.com/grioghar/phoenix-chromeos/issues?q=label%3Ahardware-report) here.
+Reports are pulled daily by the Phoenix build server and turned into draft machine profiles for review.

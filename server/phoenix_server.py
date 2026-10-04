@@ -26,6 +26,8 @@ top -b -n 1 | head -15
 echo "## kvm emulated instructions (5 s trace: count rip bytes)"
 T=/sys/kernel/debug/tracing
 if [ -w $T/events/kvm/kvm_emulate_insn/enable ]; then
+  # always switch tracing off again, even if this script is interrupted (it slows the VM down)
+  trap 'echo 0 > $T/events/kvm/kvm_emulate_insn/enable; echo > $T/trace' EXIT INT TERM HUP
   echo > $T/trace; echo 1 > $T/events/kvm/kvm_emulate_insn/enable; sleep 5; echo 0 > $T/events/kvm/kvm_emulate_insn/enable
   grep -o 'kvm_emulate_insn: .*' $T/trace | sed 's/kvm_emulate_insn: //' | sort | uniq -c | sort -rn | head -400
   echo "total: $(grep -c kvm_emulate_insn $T/trace)"; echo > $T/trace
@@ -69,6 +71,33 @@ cp /tmp/arc-diag.txt /home/chronos/user/MyFiles/Downloads/arc-diag.txt 2>/dev/nu
 curl -s -T /tmp/arc-diag.txt http://HOST:8099/up && echo "Sent to Claude." || echo "Upload failed; the file is in Downloads as arc-diag.txt"
 '''
 
+# --- GitHub issues for `phoenix submit` reports. The token (fine-grained, this repo only,
+# Issues: read and write) lives outside the repo; without it, reports are only stored locally.
+GH_REPO = "grioghar/phoenix-chromeos"
+GH_TOKEN_FILE = "/root/phoenix-secrets/github-token"
+
+def github_issue(report):
+    import json, re, urllib.request
+    if not os.path.isfile(GH_TOKEN_FILE): return None
+    token = open(GH_TOKEN_FILE).read().strip()
+    field = lambda k: (re.search(r"^%s: (.*)$" % k, report, re.M) or [None, "?"])[1].strip()
+    vendor, model = field("sys_vendor"), field("product_name")
+    if field("sys_vendor") == "LENOVO": model = field("product_version")
+    problem = field("problem")
+    title = ("Hardware report: %s %s" % (vendor, model))[:120]
+    if problem not in ("?", "not given"): title += " - " + problem[:80]
+    assess = re.search(r"## phoenix assessment\n(.*?)\n## ", report, re.S)
+    body = ("Submitted with `phoenix submit` (private data removed on the device).\n\n"
+            "**Problem:** %s\n**Details:** %s\n\n### Phoenix assessment\n```\n%s\n```\n\n"
+            "<details><summary>Full report</summary>\n\n```\n%s\n```\n</details>\n"
+            % (problem, field("details"), assess.group(1).strip() if assess else "?", report[:60000]))
+    req = urllib.request.Request("https://api.github.com/repos/%s/issues" % GH_REPO, method="POST",
+        data=json.dumps({"title": title, "body": body, "labels": ["hardware-report"]}).encode(),
+        headers={"Authorization": "Bearer " + token, "Accept": "application/vnd.github+json",
+                 "X-GitHub-Api-Version": "2022-11-28", "User-Agent": "phoenix-server"})
+    with urllib.request.urlopen(req, timeout=30) as r:
+        return json.load(r).get("html_url")
+
 class H(http.server.BaseHTTPRequestHandler):
     def _reply(self, code, body):
         self.send_response(code); self.send_header("Content-Type", "text/plain")
@@ -76,7 +105,8 @@ class H(http.server.BaseHTTPRequestHandler):
     # scripts served from the repo copy; HOST is replaced by the address the client used
     SCRIPTS = {"/v": "cli/setup.sh", "/vostro": "cli/phoenix", "/m": "cli/fix.sh", "/p": "cli/platform.sh",
                "/s": "cli/save.sh", "/h": "cli/hostname.sh", "/t": "cli/touchpad.sh", "/pd": "detect/phoenix-detect.sh",
-               "/hook": "hooks/95-phoenix.sh", "/i": "installer/phoenix-install.sh"}
+               "/hook": "hooks/95-phoenix.sh", "/i": "installer/phoenix-install.sh",
+               "/sub": "cli/submit.sh"}
     BLOBS = {"/m/crosvm": "crosvm", "/m/lib": "libkvm_movbe.so", "/m/img": "system.raw.img", "/m/vimg": "vendor.raw.img"}
     def _send_file(self, path, ctype="application/octet-stream"):
         self.send_response(200); self.send_header("Content-Type", ctype)
@@ -114,6 +144,24 @@ class H(http.server.BaseHTTPRequestHandler):
         path = os.path.join(OUT, time.strftime("diag-%H%M%S.txt"))
         open(path, "wb").write(data)
         self._reply(200, "received %d bytes\n" % len(data))
-    do_PUT = do_POST = lambda self: self._store() if self.path == "/up" else self._reply(404, "not found\n")
+    def _submit(self):   # hardware reports from `phoenix submit`
+        n = int(self.headers.get("Content-Length", 0) or 0)
+        if not 0 < n <= 4 << 20: return self._reply(400, "bad size\n")
+        data = self.rfile.read(n)
+        d = os.path.join(os.path.dirname(OUT), "submissions"); os.makedirs(d, exist_ok=True)
+        path = os.path.join(d, time.strftime("report-%Y%m%d-%H%M%S.txt"))
+        open(path, "wb").write(data)
+        msg = "received %d bytes\n" % len(data)
+        try:
+            url = github_issue(data.decode("utf-8", "replace"))
+            if url: msg += "issue: %s\n" % url
+        except Exception as e:
+            open(path + ".error", "w").write(repr(e))
+        self._reply(200, msg)
+    def _route_put(self):
+        if self.path == "/up": return self._store()
+        if self.path == "/submit": return self._submit()
+        self._reply(404, "not found\n")
+    do_PUT = do_POST = _route_put
 
 http.server.ThreadingHTTPServer(("0.0.0.0", PORT), H).serve_forever()
