@@ -4,6 +4,10 @@ Step-by-step instructions for running Phoenix. Commands go in the ChromeOS conso
 To open it, press **Ctrl+Alt+F2** and log in as `chronos` (no password). **Ctrl+Alt+F1** returns
 to the desktop.
 
+> Use the console (Ctrl+Alt+F2), not the browser terminal. Ctrl+Alt+T and `shell` give a Linux
+> shell too, but current ChromeOS starts it with the "no new privileges" flag, so `sudo` (which
+> every `phoenix` command needs) fails there with *"The no new privileges flag is set"*.
+
 > Phoenix is early. Today a Phoenix USB image is built on the Phoenix build server; a
 > download-and-flash image for any PC is on the roadmap. Steps marked *(build server)* need it.
 
