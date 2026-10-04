@@ -14,6 +14,10 @@ cat /sys/module/kvm_intel/parameters/ept /sys/module/kvm_intel/parameters/unrest
 free -m | head -2; uname -r; grep -m1 "model name" /proc/cpuinfo
 echo "## phoenix detect"; curl -s http://HOST:8099/pd > /tmp/phoenix-detect.sh && sh /tmp/phoenix-detect.sh --summary && sh /tmp/phoenix-detect.sh
 echo "## input"; grep -E "^N: Name|^H: Handlers" /proc/bus/input/devices; grep -o "psmouse[^ ]*\|i8042[^ ]*" /proc/cmdline
+echo "## touchpad detail"; dmesg | grep -iE "alps|psmouse|elantech|synaptics" | tail -20
+awk '/Name=.*(ALPS|Alps|Synaptics|SynPS|Elan|ETPS|Touchpad|TouchPad)/,/^$/' /proc/bus/input/devices
+ls /etc/gesture/ 2>&1; grep -l -i -E "alps|semi" /etc/gesture/*.conf 2>/dev/null
+for f in /etc/gesture/*.conf; do grep -n -i -B2 -A12 "alps" "$f" 2>/dev/null | head -60; done
 echo "## GPUs"; lspci -nn 2>/dev/null | grep -iE "vga|3d|display"; ls /sys/class/drm/
 echo "## boot disk"; rootdev -d -s
 echo "## kvm emulation rate (10 s sample)"
@@ -106,8 +110,9 @@ class H(http.server.BaseHTTPRequestHandler):
     SCRIPTS = {"/v": "cli/setup.sh", "/vostro": "cli/phoenix", "/m": "cli/fix.sh", "/p": "cli/platform.sh",
                "/s": "cli/save.sh", "/h": "cli/hostname.sh", "/t": "cli/touchpad.sh", "/pd": "detect/phoenix-detect.sh",
                "/hook": "hooks/95-phoenix.sh", "/i": "installer/phoenix-install.sh",
-               "/sub": "cli/submit.sh"}
+               "/sub": "cli/submit.sh", "/rs": "cli/rootshell.sh", "/u": "cli/upgrade.sh"}
     BLOBS = {"/m/crosvm": "crosvm", "/m/lib": "libkvm_movbe.so", "/m/img": "system.raw.img", "/m/vimg": "vendor.raw.img"}
+    BUNDLES_DIR = "/root/phoenix-bundles"
     def _send_file(self, path, ctype="application/octet-stream"):
         self.send_response(200); self.send_header("Content-Type", ctype)
         self.send_header("Content-Length", str(os.path.getsize(path))); self.end_headers()
@@ -117,7 +122,18 @@ class H(http.server.BaseHTTPRequestHandler):
                 if not b: break
                 self.wfile.write(b)
     def do_GET(self):
+        import re
         host = self.headers.get("Host", "").split(":")[0]
+        # Bundle route: GET /bundle/<version>.tar or .sha256
+        bundle_match = re.match(r'^/bundle/([0-9]+\.[0-9]+\.[0-9]+)\.(tar|sha256)$', self.path)
+        if bundle_match:
+            version = bundle_match.group(1)
+            ext = bundle_match.group(2)
+            bundle_path = os.path.join(self.BUNDLES_DIR, f"{version}.{ext}")
+            if os.path.isfile(bundle_path):
+                return self._send_file(bundle_path, "application/octet-stream" if ext == "tar" else "text/plain")
+            else:
+                return self._reply(404, f"Bundle not found for version {version}\n")
         if self.path in self.SCRIPTS:
             self._reply(200, open(REPO + "/" + self.SCRIPTS[self.path]).read().replace("HOST:8099", host + ":8099"))
         elif self.path in self.BLOBS:
@@ -131,6 +147,19 @@ class H(http.server.BaseHTTPRequestHandler):
             body = buf.getvalue()
             self.send_response(200); self.send_header("Content-Type", "application/gzip")
             self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body)
+        elif self.path == "/rm":   # phoenix remote: trusted key/address injected from the server's secrets
+            def secret(n):
+                p = "/root/phoenix-secrets/" + n
+                return open(p).read().strip() if os.path.isfile(p) else ""
+            body = open(REPO + "/cli/remote.sh").read().replace("HOST:8099", host + ":8099")
+            body = body.replace("REMOTE_ACCESS_KEY", secret("remote-access.pub")).replace("REMOTE_ACCESS_FROM", secret("remote-access.from"))
+            self._reply(200, body)
+        elif self.path in ("/rel/manifest", "/rel/initramfs.img", "/rel/patches.tar"):   # phoenix upgrade
+            f = "/root/phoenix-release/current/" + self.path[5:]
+            if os.path.isfile(f): self._send_file(f)
+            else: self._reply(404, "no release published\n")
+        elif self.path.startswith("/gesture/") and "/" not in self.path[9:] and os.path.isfile(REPO + "/platform/gesture/" + self.path[9:]):
+            self._reply(200, open(REPO + "/platform/gesture/" + self.path[9:]).read())
         elif self.path.startswith("/svc/") and "/" not in self.path[5:] and os.path.isfile(REPO + "/services/" + self.path[5:]):
             self._reply(200, open(REPO + "/services/" + self.path[5:]).read())
         elif self.path == "/d":

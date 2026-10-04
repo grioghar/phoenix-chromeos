@@ -9,28 +9,52 @@
 #   phoenix submit       report this computer to the Phoenix project (missing support, problems)
 #   phoenix diag         collect logs and send them to the Phoenix server
 #   phoenix install      install ChromeOS + Phoenix onto the internal drive
+#   phoenix upgrade      move this install to the current Phoenix release (boot screen etc.)
+#   phoenix rootshell on make phoenix commands work in the browser terminal (crosh); run once from VT2
+#   phoenix remote on    let your trusted computer log in for remote help (phoenix remote off)
 #   phoenix update       update this command
 #   add -v (--verbose) to any command to see every step
 H=HOST:8099
-[ "$(id -u)" = 0 ] || exec sudo "$0" "$@"
+if [ "$(id -u)" != 0 ]; then
+  # crosh (browser terminal) sets "no new privileges": sudo cannot work there. Use Phoenix's
+  # local root shell instead when it is set up (phoenix rootshell on, once from VT2).
+  if sudo -n true 2>/dev/null; then exec sudo "$0" "$@"; fi
+  K=/home/chronos/.phoenix
+  if [ -r $K/root_key ]; then
+    exec ssh -q -t -p 2222 -i $K/root_key -o StrictHostKeyChecking=accept-new -o UserKnownHostsFile=$K/known_hosts \
+      root@127.0.0.1 /usr/bin/phoenix "$@"
+  fi
+  if grep -q '^NoNewPrivs:[[:space:]]*1' /proc/self/status 2>/dev/null; then
+    echo "This terminal blocks sudo. Once, from the console (Ctrl+Alt+F2, user chronos), run:"
+    echo "  phoenix rootshell on"
+    echo "Then phoenix commands work here too."; exit 1
+  fi
+  exec sudo "$0" "$@"
+fi
 V=0; CMD=""; REST=""
 for a in "$@"; do
   case "$a" in -v|--verbose) V=1 ;; *) [ -z "$CMD" ] && CMD=$a || REST="$REST $a" ;; esac
 done
 export VERBOSE=$V PHOENIX_SERVER=$H
 SH="sh"; [ $V = 1 ] && SH="sh -x"
+# download a Phoenix script and run it with the terminal as stdin (so its prompts work)
+run(){ u=$1; shift; f=$(mktemp /tmp/phoenix.XXXXXX); curl -fs "http://$H/$u" -o "$f" || { echo "Cannot reach the Phoenix server ($H)."; rm -f "$f"; exit 1; }
+       $SH "$f" "$@"; r=$?; rm -f "$f"; return $r; }
 case "${CMD:-fix}" in
-  fix)      curl -s http://$H/m | $SH ;;
-  platform) curl -s http://$H/p | $SH -s $REST ;;
-  detect)   curl -s http://$H/pd | $SH -s --summary ;;
-  hostname) curl -s http://$H/h | $SH -s $REST ;;
-  touchpad) curl -s http://$H/t | $SH -s $REST ;;
-  save)     curl -s http://$H/s | $SH ;;
-  submit)   curl -s http://$H/sub -o /tmp/phoenix-submit.sh && $SH /tmp/phoenix-submit.sh ;;   # interactive: needs the terminal
-  diag)     curl -s http://$H/d | $SH ;;
-  install)  curl -s http://$H/m | VOSTRO_INSTALL=1 $SH || exit 1   # make sure the running system has every fix first
+  fix)      run m ;;
+  platform) run p $REST ;;
+  detect)   run pd --summary ;;
+  hostname) run h $REST ;;
+  touchpad) run t $REST ;;
+  save)     run s ;;
+  submit)   run sub ;;
+  diag)     run d ;;
+  install)  VOSTRO_INSTALL=1 run m || exit 1   # make sure the running system has every fix first
             curl -s http://$H/i -o /tmp/phoenix-install.sh
             if [ $V = 1 ]; then bash -x /tmp/phoenix-install.sh $REST; else bash /tmp/phoenix-install.sh $REST; fi ;;
-  update)   curl -s http://$H/v | $SH ;;
-  *)        sed -n '3,13p' "$0" ;;
+  rootshell) run rs $REST ;;
+  remote)   run rm $REST ;;
+  upgrade)  run u $REST ;;
+  update)   run v ;;
+  *)        sed -n '3,16p' "$0" ;;
 esac
