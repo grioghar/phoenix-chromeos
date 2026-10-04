@@ -121,6 +121,32 @@ else
   rm -f $PLCONF
 fi
 
+# --- performance mode (optional, explained, off unless chosen)
+PERF=off
+say "Performance mode (optional)"
+cat <<'TXT'
+  Older processors (roughly 2008-2018) slow down a lot because of the security workarounds that
+  protect them against CPU design flaws (Spectre, Meltdown, L1TF, MDS...). Performance mode turns
+  those workarounds off, plus some memory hardening and the lockup watchdog
+  (boot options: mitigations=off init_on_alloc=0 nowatchdog).
+
+  You gain: a noticeably faster machine, especially web pages and Android apps.
+  You give up: protection against those CPU flaws. A malicious web page or app could, in theory,
+  read memory belonging to other programs (passwords, keys, other tabs). The risk is real but needs
+  a targeted attack; it matters most if you visit untrusted sites or install unknown apps.
+
+  Recommended for machines used with trusted software. You can change it any time:
+  phoenix platform perf on|off (applies after a reboot).
+TXT
+ask "Turn on performance mode? [y/N]: " PA
+case "$PA" in y|Y|yes|Yes) PERF=on; echo "Performance mode: ON";; *) echo "Performance mode: off";; esac
+[ -f "$PLCONF" ] && { grep -v '^performance_mode=' $PLCONF > $PLCONF.n; echo "performance_mode=\"$PERF\"" >> $PLCONF.n; mv $PLCONF.n $PLCONF; }
+# add/remove the boot options in a Brunch settings.cfg
+perf_settings(){ cur=$(sed -n 's/^cmdline_params="\(.*\)"$/\1/p' "$1"); new=""
+  for w in $cur; do case "$w" in mitigations=off|init_on_alloc=0|nowatchdog) ;; *) new="$new $w";; esac; done
+  [ "$PERF" = on ] && new="$new mitigations=off init_on_alloc=0 nowatchdog"
+  new=$(echo $new); sed -i "s|^cmdline_params=.*|cmdline_params=\"$new\"|" "$1"; }
+
 # --- 1. Brunch's own installer copies the running system
 say "Installing ChromeOS with Brunch (several minutes)"
 chromeos-install -dst "/dev/$T"
@@ -151,13 +177,13 @@ mount -o ro "$(part $SRC 12)" /tmp/vi/se; mount "$(part $T 12)" /tmp/vi/te
 cp -a /tmp/vi/se/efi/grub /tmp/vi/te/efi/
 # PNG support for Brunch's boot background (fixes "bitmap ... unknown format")
 grep -q 'insmod png' /tmp/vi/te/efi/grub/grub.cfg || sed -i 's/^insmod gfxterm$/insmod gfxterm\ninsmod png/' /tmp/vi/te/efi/grub/grub.cfg
-cp /tmp/vi/se/efi/boot/settings.cfg /tmp/vi/te/efi/boot/settings.cfg
+cp /tmp/vi/se/efi/boot/settings.cfg /tmp/vi/te/efi/boot/settings.cfg; perf_settings /tmp/vi/te/efi/boot/settings.cfg
 sync; umount /tmp/vi/se /tmp/vi/te
 else
   echo "UEFI firmware: using Brunch's EFI boot (no BIOS layer needed)"
   mkdir -p /tmp/vi/se /tmp/vi/te
   mount -o ro "$(part $SRC 12)" /tmp/vi/se; mount "$(part $T 12)" /tmp/vi/te
-  cp /tmp/vi/se/efi/boot/settings.cfg /tmp/vi/te/efi/boot/settings.cfg
+  cp /tmp/vi/se/efi/boot/settings.cfg /tmp/vi/te/efi/boot/settings.cfg; perf_settings /tmp/vi/te/efi/boot/settings.cfg
   sync; umount /tmp/vi/se /tmp/vi/te
 fi
 
@@ -205,6 +231,6 @@ done
 say "Result"
 cgpt show "/dev/$T" | grep -E 'Label|EFI|RWFW|STATE|ROOT' | head -20
 echo
-echo "Hostname: $HN"
+echo "Hostname: $HN    Performance mode: $PERF"
 echo "Done. Shut down (sudo poweroff), REMOVE the USB stick, then power on."
 echo "If the BIOS asks, choose the internal hard drive in the boot menu (F12)."

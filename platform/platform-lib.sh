@@ -105,9 +105,9 @@ apply_cpu(){
 }
 
 # ---------------------------------------------------------------- sensors and fans
-hwmon_dirs(){ for h in /sys/class/hwmon/hwmon*; do [ -r "$h/name" ] && echo "$h"; done; }
+hwmon_dirs(){ for h in /sys/class/hwmon/hwmon*; do [ -r "$h/name" ] && echo "$h"; done; return 0; }
 max_temp_c(){ t=0; for f in /sys/class/hwmon/hwmon*/temp*_input; do [ -r "$f" ] || continue; v=$(( $(cat "$f") / 1000 )); [ $v -gt $t ] && t=$v; done; echo $t; }
-fan_pwm(){ for f in /sys/class/hwmon/hwmon*/pwm1; do [ -w "$f" ] && { echo "$f"; return; }; done; }
+fan_pwm(){ for f in /sys/class/hwmon/hwmon*/pwm1; do [ -w "$f" ] && { echo "$f"; return 0; }; done; return 0; }
 sensors_report(){
   for h in $(hwmon_dirs); do
     n=$(cat "$h/name"); line=""

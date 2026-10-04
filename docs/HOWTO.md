@@ -91,8 +91,13 @@ The installer walks you through it:
 3. **Hostname:** the name your router shows. Press Enter to accept the suggested name.
 4. **Platform modules:** the drivers recommended for your model. Press Enter to accept, or type
    `+module` / `-module` to add or remove one; `?` lists all of them.
-5. Installation. Brunch copies the system, which takes several minutes.
-6. **BIOS boot** (BIOS-only computers), then the fixes are copied onto the drive.
+5. **Performance mode** (optional, off unless you choose it): turns off the CPU security
+   workarounds that slow down older processors. Faster, especially web pages and Android apps, but
+   less protected against malicious sites or apps exploiting CPU flaws (Spectre, Meltdown and
+   others). The installer explains the trade-off before asking. Change it later with
+   `phoenix platform perf on|off`.
+6. Installation. Brunch copies the system, which takes several minutes.
+7. **BIOS boot** (BIOS-only computers), then the fixes are copied onto the drive.
 
 When it says Done, run `sudo poweroff`, **remove the USB stick**, and power on. If the computer
 doesn't start from the drive by itself, open the boot menu and pick the internal drive. On the

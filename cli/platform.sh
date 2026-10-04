@@ -34,7 +34,7 @@ ensure_share(){
 # keep the settings across Brunch rebuilds/updates (phoenix save's version-independent archive)
 persist(){
   S=/mnt/stateful_partition/unencrypted/phoenix; mkdir -p $S
-  C=$(cd / && for f in usr/lib64/libkvm_movbe.so etc/phoenix usr/share/phoenix usr/bin/vostro usr/bin/phoenix etc/init/phoenix-*.conf etc/gesture/50-phoenix-*.conf; do [ -e "$f" ] && echo "$f"; done)
+  C=$(cd / && for f in usr/lib64/libkvm_movbe.so etc/phoenix usr/share/phoenix usr/bin/vostro usr/bin/phoenix etc/init/phoenix-*.conf etc/gesture/50-phoenix-*.conf; do [ -e "$f" ] && echo "$f"; done; true)
   (cd / && tar --xattrs --xattrs-include='*' -cf $S/common.tar.new $C) && mv -f $S/common.tar.new $S/common.tar
 }
 ensure_share

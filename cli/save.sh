@@ -9,7 +9,7 @@ H=${PHOENIX_SERVER:-HOST:8099}
 S=/mnt/stateful_partition/unencrypted/phoenix
 VER=$(sed -n 's/^CHROMEOS_RELEASE_VERSION=//p' /etc/lsb-release)
 n=0; step(){ n=$((n+1)); echo; echo "[$n] $*"; }
-exists(){ for f in "$@"; do [ -e "/$f" ] || [ -L "/$f" ] && echo "$f"; done; }
+exists(){ for f in "$@"; do [ -e "/$f" ] || [ -L "/$f" ] && echo "$f"; done; true; }   # (true: a missing last item must not fail under set -e)
 
 step "Checking this system is fixed"
 if [ ! -e /usr/lib64/dri/crocus_dri.so ] && [ ! -e /usr/lib64/libkvm_movbe.so ]; then
