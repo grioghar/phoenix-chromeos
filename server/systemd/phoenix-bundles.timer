@@ -1,0 +1,11 @@
+[Unit]
+Description=Phoenix Bundle Builder Timer - Run daily
+Requires=phoenix-bundles.service
+
+[Timer]
+OnBootSec=10min
+OnUnitActiveSec=1d
+AccuracySec=5min
+
+[Install]
+WantedBy=timers.target

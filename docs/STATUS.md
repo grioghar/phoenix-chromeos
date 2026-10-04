@@ -28,9 +28,11 @@ Read with: README.md, docs/HOWTO.md, docs/ARCHITECTURE.md, docs/FINDINGS.md, doc
 - Release `phoenix-r150-3e129ef` published for `phoenix upgrade` (/root/phoenix-release/current).
 
 ## Open problems / next steps
-1. **Bundle pipeline** (build/make-bundle.sh, from an agent, uncommitted): fails in Docker with
-   "overlay ... wrong fs type" (patch-android.sh scratch dir must be a bind-mounted host path, not
-   inside the container). Fix, build 16700.65.0, verify vs the Vostro image, commit, install timer.
+1. ~~Bundle pipeline~~ **DONE 2026-10-04**: build/make-bundle.sh builds 16700.65.0 (1.1 GB); verified
+   against the live Vostro: crosvm byte-identical (patched), all Flex files identical, Android
+   libcrypto patch identical, Vulkan off. Fixed on the way: Docker scratch on overlay, unpatched
+   crosvm, two concatenated archives (plain tar skipped the Android images), pipefail+grep -q.
+   Bundles served at /bundle/<version>.tar; daily timer phoenix-bundles installed.
 2. **Device-side update watcher**: fetch the bundle for the downloaded ChromeOS version BEFORE
    reboot; hold the update if no bundle. Not built yet. Only LTC/LTR channels have matching
    rammus/Flex versions → keep Phoenix machines on LTC.

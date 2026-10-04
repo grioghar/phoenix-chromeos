@@ -103,6 +103,39 @@ One script that:
 - Android: hide CPU features whose code paths are emulated (AVX+MOVBE); later, rewrite
   MOVBE in hot Android libraries.
 
+## 7. Update pipeline
+
+An automated server-side pipeline builds Phoenix bundles for new ChromeOS versions. The pipeline runs
+on the build server (`/root/phoenix` and `/root/phoenix-bundles` on dockervm):
+
+1. **Bundle builder** (`build/make-bundle.sh <version> <out_dir>`):
+   - Fetches Google's recovery image lists and locates the rammus and reven images for the version.
+   - Downloads (and caches in `/root/brunch-build/recovery`) the recovery images.
+   - Extracts the Mesa graphics stack and Rust binaries from the reven (Flex) image.
+   - Patches Android system and vendor images from the rammus image using `build/patch-android.sh`
+     (RDRAND → clc; Vulkan disabled; FIPS hash recomputed).
+   - Produces `<out_dir>/<version>.tar` with xattrs preserved (same as `cli/save.sh` on a fixed machine),
+     plus `.sha256` and `.manifest` files.
+
+2. **Version monitor** (`build/watch-versions.py`):
+   - Runs on a daily systemd timer (`phoenix-bundles.{service,timer}`).
+   - Reads the recovery JSON lists and finds rammus versions newer than what's in the bundle store
+     (`/root/phoenix-bundles`).
+   - For each new version with a matching reven, invokes the bundle builder.
+   - Limits to 5 builds per run to avoid overloading the build server.
+   - Logs to syslog with prefix `phoenix-watch-versions`.
+
+3. **Bundle server** (`server/phoenix_server.py`):
+   - New route: `GET /bundle/<version>.tar` and `.sha256`.
+   - Streams bundles from `/root/phoenix-bundles` to devices that need them after a ChromeOS update.
+   - Device requests are made BEFORE rebooting into the update (the rebuild runs in initramfs with no network;
+     the lead is building that pre-update fetch mechanism).
+
+Bundles contain version-specific components (Mesa, Rust binaries, patched Android images) and are
+fetched before the system reboots into a new ChromeOS version. If a bundle is not available, the machine
+falls back to building components from recovery images at runtime during the Brunch rebuild, but will be
+marked to retry after login (`/etc/phoenix/needs-fix`).
+
 ## Limits
 
 - **No VT-x/AMD-V:** ChromeOS works, but Android (ARCVM) cannot run. Phoenix says so up front.

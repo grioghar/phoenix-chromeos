@@ -1,0 +1,12 @@
+[Unit]
+Description=Phoenix Bundle Builder - Monitor and build ChromeOS fix bundles
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/root/phoenix/build/watch-versions.py --repo-dir /root/phoenix --bundles-dir /root/phoenix-bundles --once
+User=root
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=phoenix-bundles
