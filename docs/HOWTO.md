@@ -4,9 +4,11 @@ Step-by-step instructions for running Phoenix. Commands go in the ChromeOS conso
 To open it, press **Ctrl+Alt+F2** and log in as `chronos` (no password). **Ctrl+Alt+F1** returns
 to the desktop.
 
-> Use the console (Ctrl+Alt+F2), not the browser terminal. Ctrl+Alt+T and `shell` give a Linux
-> shell too, but current ChromeOS starts it with the "no new privileges" flag, so `sudo` (which
-> every `phoenix` command needs) fails there with *"The no new privileges flag is set"*.
+> **Browser terminal:** Ctrl+Alt+T, then `shell`, also gives a Linux shell. But ChromeOS starts it
+> with the "no new privileges" flag, so `sudo` fails there (*"The no new privileges flag is set"*).
+> Run `phoenix rootshell on` once from the console (Ctrl+Alt+F2). After that, every `phoenix`
+> command also works in the browser terminal: it uses a private, key-only SSH login on
+> 127.0.0.1:2222. `phoenix rootshell off` removes it.
 
 > Phoenix is early. Today a Phoenix USB image is built on the Phoenix build server; a
 > download-and-flash image for any PC is on the roadmap. Steps marked *(build server)* need it.
@@ -133,6 +135,10 @@ Touchpad modes are `alps` (native driver with two-finger scroll; try it first), 
 without the i8042 tweaks) and `exps` (basic mode, always works). Reboot after changing it. If the
 touchpad stops working, go to the console and run `phoenix touchpad exps`.
 
+**Pointer jumps when you scroll with two fingers** (ALPS touchpads on many Dell laptops): run
+`phoenix touchpad tune`, then log out and back in. It installs ChromeOS touchpad settings for
+"semi-multitouch" pads. `phoenix touchpad untune` removes them.
+
 ## 8. Updates
 
 ChromeOS updates itself. After an update, Brunch rebuilds the system once, and Phoenix's hook
@@ -143,6 +149,14 @@ boot screen.
   says "No hardware support saved for ChromeOS <version> yet". ChromeOS still runs; Android may
   not. Run `phoenix fix` once you're online.
 - To update the `phoenix` command itself, run `phoenix update`.
+
+## 8b. Moving an existing install to a new Phoenix release
+
+`phoenix upgrade` installs the current Phoenix boot environment on an existing install: the boot
+screen, hardware detection at boot, the Brunch fork's patches and the update-survival hook. It
+saves this machine's fixes first, keeps Brunch's originals, and the next boot rebuilds the system
+once. `phoenix upgrade --rollback` undoes it. `--verbose-boot` / `--quiet-boot` switch between
+Brunch's text log and the boot screen.
 
 ## 9. Something doesn't work
 
@@ -167,5 +181,9 @@ addresses and names removed), and, after you confirm, files it at
 - **Profiles from research:** `python3 build/gen-profiles.py` (hand-written profiles are never overwritten)
 - **Server:** `server/phoenix_server.py` runs as the systemd unit `phoenix-server` on the build
   server. A daily `phoenix-issue-sync` timer pulls hardware reports into `/root/phoenix-intake/`.
+- **Image archive:** `build/archive.py` (daily timer `phoenix-archive` on the build server) keeps
+  verified copies of the ChromeOS (rammus) and ChromeOS Flex recovery images and the Brunch
+  releases in `/root/phoenix-archive`, so installs keep working if Google or GitHub pull a version.
+  These are local copies for your own installs. Phoenix images never contain Google's files.
 - **GitHub token for automatic issues** (fine-grained, this repo only, Issues read and write) goes
   in `/root/phoenix-secrets/github-token` on the server.

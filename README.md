@@ -46,6 +46,9 @@ phoenix install        install to the internal drive
 phoenix save           keep fixes across ChromeOS updates
 phoenix hostname NAME  the name your router sees
 phoenix diag           send diagnostics to the Phoenix server
+phoenix touchpad tune  stop pointer jumps during two-finger scrolling (ALPS touchpads)
+phoenix rootshell on   make phoenix commands work in the browser terminal (run once from the console)
+phoenix upgrade        move an existing install to the current Phoenix release
 phoenix update         update the phoenix command
 ```
 
@@ -95,7 +98,8 @@ images, Android images) are downloaded or built on demand, never stored here.
 - [x] Boot screen; update-survival hook; hardware reports to GitHub issues
 - [ ] Automatic fix bundles for each new ChromeOS version (in progress)
 - [ ] BIOS boot built into the Brunch fork's installer (in progress; upstream PR candidate)
-- [ ] Upgrade path for existing installs (`phoenix upgrade`)
+- [x] Upgrade path for existing installs (`phoenix upgrade`; needs a first real-machine run)
+- [x] Local, verified archive of Google recovery images and Brunch releases
 - [ ] CPU-optimized kernels, chosen at install or boot (first build in progress)
 - [ ] Keep-it-fresh maintenance and low-memory tuning (in progress)
 - [ ] General installer image for any PC (download, flash, boot)
