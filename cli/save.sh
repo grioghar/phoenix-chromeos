@@ -41,7 +41,7 @@ mkdir -p /tmp/phoenix-rootc
 mount "$C" /tmp/phoenix-rootc
 curl -s -m 20 http://$H/hook -o /tmp/phoenix-hook.sh && grep -q '^# Phoenix patch hook' /tmp/phoenix-hook.sh \
   || { umount /tmp/phoenix-rootc; echo "  Could not download the hook"; exit 1; }
-if [ "$(sha256sum < /tmp/phoenix-hook.sh)" = "$(sha256sum < /tmp/phoenix-rootc/patches/95-phoenix.sh 2>/dev/null)" ]; then
+if [ -f /tmp/phoenix-rootc/patches/95-phoenix.sh ] && [ "$(sha256sum < /tmp/phoenix-hook.sh)" = "$(sha256sum < /tmp/phoenix-rootc/patches/95-phoenix.sh)" ]; then
   echo "  Hook already installed"
 else
   cp /tmp/phoenix-hook.sh /tmp/phoenix-rootc/patches/95-phoenix.sh; chmod 755 /tmp/phoenix-rootc/patches/95-phoenix.sh
