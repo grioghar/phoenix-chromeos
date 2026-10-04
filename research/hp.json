@@ -1,0 +1,1993 @@
+[
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP EliteBook 2530p",
+    "years": "2008-2009",
+    "chassis": "laptop",
+    "cpus": "Intel Core 2 Duo T9400/T9500 (Penryn), L9400/L9500, SL9400 (low-power)",
+    "cpu_gen": "penryn",
+    "gpu": "Intel GMA 4500MHD",
+    "gpu_gen": "intel-gen4",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 5100 ABG / Broadcom BCM4313",
+    "linux_quirks": [
+      "i8042.nomux=1 for touchpad",
+      "libata.nohcc=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "First EliteBook generation, lightweight design",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Elitebook",
+      "https://linux-hardware.org/index.php?model=HP+EliteBook"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP EliteBook 2540p",
+    "years": "2009-2010",
+    "chassis": "laptop",
+    "cpus": "Intel Core 2 Duo T9550/SL9400/L9400 (Penryn), Celeron SU2300",
+    "cpu_gen": "penryn",
+    "gpu": "Intel GMA 4500MHD",
+    "gpu_gen": "intel-gen4",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 5100 ABG / Broadcom BCM4313",
+    "linux_quirks": [
+      "i8042.nomux=1",
+      "libata.nohcc=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Ultraportable, up to 4GB RAM, 12.1-inch screen",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Elitebook"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP EliteBook 2560p",
+    "years": "2011-2012",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-2520M / i7-2620M (Sandy Bridge)",
+    "cpu_gen": "sandybridge",
+    "gpu": "Intel HD 3000",
+    "gpu_gen": "intel-gen6",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6205 AGN / Broadcom BCM4313",
+    "linux_quirks": [
+      "i8042.nomux=1",
+      "psmouse.proto=imps"
+    ],
+    "platform_modules": [
+      "hp-wmi",
+      "hp_accel"
+    ],
+    "module_options": {
+      "hp_accel": "ignore_init=1"
+    },
+    "fan_control": "bios-only",
+    "notes": "12.5-inch ultraportable, built-in 3G modem option",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Elitebook"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP EliteBook 2570p",
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-3210M / i7-3520M (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD 4000",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6205 / 6235 / 7260 AGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi",
+      "hp_accel"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Successor to 2560p with Ivy Bridge, integrated accelerometer",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Elitebook"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP EliteBook 8440p",
+    "years": "2010-2011",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-520M / i7-620M / Core 2 Duo P8600 (Nehalem/Westmere)",
+    "cpu_gen": "westmere",
+    "gpu": "Intel HD Graphics / NVIDIA NVS 3100M (Optimus on i5/i7)",
+    "gpu_gen": "intel-gen5",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 5100 / 6205 / Broadcom BCM4313",
+    "linux_quirks": [
+      "i8042.nomux=1",
+      "modeset=0 for NVIDIA Optimus"
+    ],
+    "platform_modules": [
+      "hp-wmi",
+      "hp_accel"
+    ],
+    "module_options": {
+      "hp_accel": "ignore_init=1"
+    },
+    "fan_control": "bios-only",
+    "notes": "14-inch business laptop, common NVIDIA Optimus setup",
+    "confidence": "high",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Elitebook_8440p",
+      "https://linux-hardware.org/"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP EliteBook 8460p",
+    "years": "2011-2012",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-2410M / i5-2430M / i7-2630QM / Core i7-2720QM (Sandy Bridge)",
+    "cpu_gen": "sandybridge",
+    "gpu": "Intel HD 3000; optional NVIDIA NVS 4200M (Optimus)",
+    "gpu_gen": "intel-gen6",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6205 AGN / Centrino Ultimate-N 6300 / Broadcom BCM4313",
+    "linux_quirks": [
+      "i8042.nomux=1",
+      "i8042.reset=1 on some units",
+      "acpi_osi=Linux for fan control"
+    ],
+    "platform_modules": [
+      "hp-wmi",
+      "hp_accel",
+      "lis3lv02d"
+    ],
+    "module_options": {
+      "hp_accel": "ignore_init=1"
+    },
+    "fan_control": "bios-only",
+    "notes": "Popular Sandy Bridge business laptop, widely used in enterprises",
+    "confidence": "high",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Elitebook_8460p",
+      "https://linux-hardware.org/index.php?model=HP+EliteBook+8460p",
+      "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/platform/x86/hp/"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP EliteBook 8470p",
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-3210M / i5-3320M / i7-3520M / i7-3540M (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD 4000; optional NVIDIA NVS 5200M (Optimus)",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6205 / Centrino Advanced-N 6235 / Centrino Wireless-N 2230",
+    "linux_quirks": [
+      "i8042.nomux=1",
+      "acpi_osi=Linux"
+    ],
+    "platform_modules": [
+      "hp-wmi",
+      "hp_accel",
+      "lis3lv02d"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Ivy Bridge refresh of 8460p, better GPU with Optimus support",
+    "confidence": "high",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Elitebook_8470p",
+      "https://linux-hardware.org/"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP EliteBook 8540w",
+    "years": "2010-2011",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-520M / i7-620M / Core 2 Duo P8700 (Westmere)",
+    "cpu_gen": "westmere",
+    "gpu": "NVIDIA Quadro NVS 5100M / NVS 5200M",
+    "gpu_gen": "nvidia-fermi",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 5100 / 6205 / Broadcom BCM4313",
+    "linux_quirks": [
+      "i8042.nomux=1",
+      "acpi_backlight=vendor"
+    ],
+    "platform_modules": [
+      "hp-wmi",
+      "hp_accel"
+    ],
+    "fan_control": "bios-only",
+    "notes": "15.6-inch workstation with dedicated Quadro GPU, no Optimus",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Elitebook"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP EliteBook 8560p",
+    "years": "2011-2012",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-2410M / i5-2430M / i7-2630QM (Sandy Bridge)",
+    "cpu_gen": "sandybridge",
+    "gpu": "Intel HD 3000; optional NVIDIA NVS 4200M (Optimus)",
+    "gpu_gen": "intel-gen6",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6205 / Centrino Ultimate-N 6300",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi",
+      "hp_accel"
+    ],
+    "fan_control": "bios-only",
+    "notes": "15.6-inch version of 8460p, same Sandy Bridge specs",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Elitebook"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP EliteBook 8570p",
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-3210M / i5-3320M / i7-3520M (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD 4000; optional NVIDIA NVS 5200M (Optimus)",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6205 / Centrino Advanced-N 6235",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi",
+      "hp_accel"
+    ],
+    "fan_control": "bios-only",
+    "notes": "15.6-inch Ivy Bridge refresh of 8560p",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Elitebook"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP EliteBook 8560w",
+    "years": "2011-2012",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-2410M / i5-2430M / i7-2630QM / i7-2720QM (Sandy Bridge)",
+    "cpu_gen": "sandybridge",
+    "gpu": "NVIDIA Quadro NVS 5100M",
+    "gpu_gen": "nvidia-fermi",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6205 / Centrino Ultimate-N 6300",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi",
+      "hp_accel"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Workstation version of 8560p with dedicated Quadro, no Optimus",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Elitebook"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP EliteBook 8570w",
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel Core i7-3520M / i7-3540M / i7-3630QM (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "NVIDIA Quadro K1000M / K2000M",
+    "gpu_gen": "nvidia-kepler",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6205 / Centrino Advanced-N 6235",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi",
+      "hp_accel"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Ivy Bridge workstation with Kepler Quadro, powerful GPU",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Elitebook"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP EliteBook 840 G1",
+    "years": "2013-2014",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-4200U / i7-4600U (Haswell)",
+    "cpu_gen": "haswell",
+    "gpu": "Intel HD Graphics 4400",
+    "gpu_gen": "intel-gen8",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 7260 / 7265 NGN / Broadcom BCM43224",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "14-inch ultrabook, Haswell generation, first with UEFI",
+    "confidence": "high",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Elitebook_840_G1",
+      "https://linux-hardware.org/"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP EliteBook 840 G2",
+    "years": "2014-2015",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-5200U / i7-5600U (Broadwell)",
+    "cpu_gen": "broadwell",
+    "gpu": "Intel HD Graphics 5500",
+    "gpu_gen": "intel-gen9",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 7260 / 8260 NGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Broadwell refresh, improved battery life",
+    "confidence": "high",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Elitebook_840_G2"
+    ]
+  },
+  {
+    "dmi_vendor": [
+      "Hewlett-Packard",
+      "HP"
+    ],
+    "dmi_model": "HP EliteBook 840 G3",
+    "years": "2015-2016",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-6200U / i7-6600U (Skylake)",
+    "cpu_gen": "skylake",
+    "gpu": "Intel HD Graphics 520",
+    "gpu_gen": "intel-gen9",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 8260 NGN / 8265 NGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Skylake generation, transition from Hewlett-Packard to HP in DMI",
+    "confidence": "high",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Elitebook_840_G3",
+      "https://linux-hardware.org/"
+    ]
+  },
+  {
+    "dmi_vendor": "HP",
+    "dmi_model": "HP EliteBook 840 G4",
+    "years": "2016-2017",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-7200U / i7-7600U (Kaby Lake)",
+    "cpu_gen": "kabylake",
+    "gpu": "Intel HD Graphics 620",
+    "gpu_gen": "intel-gen9",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 8260 / 8265 NGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Kaby Lake generation, supports Thunderbolt 3",
+    "confidence": "high",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Elitebook_840_G4"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP EliteBook 820 G1",
+    "years": "2013-2014",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-4200U / i7-4600U (Haswell)",
+    "cpu_gen": "haswell",
+    "gpu": "Intel HD Graphics 4400",
+    "gpu_gen": "intel-gen8",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 7260 / 7265 NGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "12.5-inch ultraportable variant of 840 G1",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Elitebook"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP EliteBook 820 G2",
+    "years": "2014-2015",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-5200U / i7-5600U (Broadwell)",
+    "cpu_gen": "broadwell",
+    "gpu": "Intel HD Graphics 5500",
+    "gpu_gen": "intel-gen9",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 7260 / 8260 NGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Broadwell 12.5-inch ultraportable",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Elitebook"
+    ]
+  },
+  {
+    "dmi_vendor": [
+      "Hewlett-Packard",
+      "HP"
+    ],
+    "dmi_model": "HP EliteBook 820 G3",
+    "years": "2015-2016",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-6200U / i7-6600U (Skylake)",
+    "cpu_gen": "skylake",
+    "gpu": "Intel HD Graphics 520",
+    "gpu_gen": "intel-gen9",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 8260 / 8265 NGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Skylake 12.5-inch variant",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Elitebook"
+    ]
+  },
+  {
+    "dmi_vendor": "HP",
+    "dmi_model": "HP EliteBook 820 G4",
+    "years": "2016-2017",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-7200U / i7-7600U (Kaby Lake)",
+    "cpu_gen": "kabylake",
+    "gpu": "Intel HD Graphics 620",
+    "gpu_gen": "intel-gen9",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 8260 / 8265 NGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Kaby Lake 12.5-inch ultraportable",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Elitebook"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP EliteBook 850 G1",
+    "years": "2013-2014",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-4200M / i7-4700MQ (Haswell)",
+    "cpu_gen": "haswell",
+    "gpu": "Intel HD Graphics 4600",
+    "gpu_gen": "intel-gen8",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 7260 / 7265 NGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "15.6-inch performance variant, Haswell generation",
+    "confidence": "high",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Elitebook_850_G1",
+      "https://linux-hardware.org/"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP EliteBook 850 G2",
+    "years": "2014-2015",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-5200M / i5-5300M / i7-5600M (Broadwell)",
+    "cpu_gen": "broadwell",
+    "gpu": "Intel HD Graphics 5500",
+    "gpu_gen": "intel-gen9",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 7260 / 8260 NGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Broadwell 15.6-inch performance laptop",
+    "confidence": "high",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Elitebook_850_G2"
+    ]
+  },
+  {
+    "dmi_vendor": [
+      "Hewlett-Packard",
+      "HP"
+    ],
+    "dmi_model": "HP EliteBook 850 G3",
+    "years": "2015-2016",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-6200M / i7-6600M (Skylake)",
+    "cpu_gen": "skylake",
+    "gpu": "Intel HD Graphics 520",
+    "gpu_gen": "intel-gen9",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 8260 / 8265 NGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Skylake 15.6-inch performance variant",
+    "confidence": "high",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Elitebook_850_G3",
+      "https://linux-hardware.org/"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP Folio 9470m",
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-3317U / i7-3517U (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD Graphics 4000",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6205 / Centrino Advanced-N 6235",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "14-inch ultrabook, Ivy Bridge generation",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Folio"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP Folio 9480m",
+    "years": "2013-2014",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-4200U / i7-4600U (Haswell)",
+    "cpu_gen": "haswell",
+    "gpu": "Intel HD Graphics 4400",
+    "gpu_gen": "intel-gen8",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 7260 / 7265 NGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Haswell 14-inch ultrabook, first with UEFI",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Folio"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP Elitebook Folio 1040 G1",
+    "years": "2013-2014",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-4200U / i7-4600U (Haswell)",
+    "cpu_gen": "haswell",
+    "gpu": "Intel HD Graphics 4400",
+    "gpu_gen": "intel-gen8",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 7260 / 7265 NGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "14-inch ultrabook, branded as Elitebook Folio",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Folio"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP Elitebook Folio 1040 G2",
+    "years": "2014-2015",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-5200U / i7-5600U (Broadwell)",
+    "cpu_gen": "broadwell",
+    "gpu": "Intel HD Graphics 5500",
+    "gpu_gen": "intel-gen9",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 7260 / 8260 NGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Broadwell 14-inch ultrabook variant",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Folio"
+    ]
+  },
+  {
+    "dmi_vendor": [
+      "Hewlett-Packard",
+      "HP"
+    ],
+    "dmi_model": "HP Elitebook Folio 1040 G3",
+    "years": "2015-2016",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-6200U / i7-6600U (Skylake)",
+    "cpu_gen": "skylake",
+    "gpu": "Intel HD Graphics 520",
+    "gpu_gen": "intel-gen9",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 8260 / 8265 NGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Skylake 14-inch ultrabook",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Folio"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP ProBook 4310s",
+    "years": "2009-2010",
+    "chassis": "laptop",
+    "cpus": "Intel Celeron T3100 / Core 2 Duo T6600/T6700 (Penryn)",
+    "cpu_gen": "penryn",
+    "gpu": "Intel GMA 4500M",
+    "gpu_gen": "intel-gen4",
+    "firmware": "bios",
+    "vtx": "no",
+    "touchpad": "synaptics",
+    "wifi": "Intel 5100 ABG / Broadcom BCM43224",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Budget 13.3-inch notebook, no VT-x",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_ProBook"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP ProBook 4510s",
+    "years": "2009-2010",
+    "chassis": "laptop",
+    "cpus": "Intel Celeron T3100 / Core 2 Duo T6600 (Penryn)",
+    "cpu_gen": "penryn",
+    "gpu": "Intel GMA 4500M",
+    "gpu_gen": "intel-gen4",
+    "firmware": "bios",
+    "vtx": "no",
+    "touchpad": "synaptics",
+    "wifi": "Intel 5100 ABG / Broadcom BCM43224",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Budget 15.6-inch notebook, Penryn generation",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_ProBook"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP ProBook 4520s",
+    "years": "2010-2011",
+    "chassis": "laptop",
+    "cpus": "Intel Core 2 Duo P7350 / i3-330M (Westmere)",
+    "cpu_gen": "westmere",
+    "gpu": "Intel GMA HD Graphics / Intel HD Graphics",
+    "gpu_gen": "intel-gen5",
+    "firmware": "bios",
+    "vtx": "some-skus",
+    "touchpad": "synaptics",
+    "wifi": "Intel 5100 / 6205 AGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Westmere 15.6-inch, some SKUs have i3 without VT-x",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_ProBook"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP ProBook 4530s",
+    "years": "2011-2012",
+    "chassis": "laptop",
+    "cpus": "Intel Core i3-2310M / i5-2410M / i7-2630QM (Sandy Bridge)",
+    "cpu_gen": "sandybridge",
+    "gpu": "Intel HD 3000",
+    "gpu_gen": "intel-gen6",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6205 AGN / Broadcom BCM4313",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Sandy Bridge 15.6-inch mainstream",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_ProBook"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP ProBook 4540s",
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel Core i3-3120M / i5-3210M / i7-3520M (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD 4000",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6205 / Centrino Advanced-N 6235",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Ivy Bridge 15.6-inch, common ProBook model",
+    "confidence": "high",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_ProBook_4540s",
+      "https://linux-hardware.org/"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP ProBook 6450b",
+    "years": "2010-2011",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-520M / i7-620M (Westmere)",
+    "cpu_gen": "westmere",
+    "gpu": "NVIDIA NVS 3100M (Optimus)",
+    "gpu_gen": "nvidia-fermi",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 5100 / 6205 / Broadcom BCM4313",
+    "linux_quirks": [
+      "i8042.nomux=1",
+      "modeset=0 for NVIDIA"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Westmere 14-inch with Optimus",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_ProBook"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP ProBook 6460b",
+    "years": "2011-2012",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-2410M / i5-2430M / i7-2630QM (Sandy Bridge)",
+    "cpu_gen": "sandybridge",
+    "gpu": "NVIDIA NVS 4200M (Optimus)",
+    "gpu_gen": "nvidia-fermi",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6205 AGN / Broadcom BCM4313",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Sandy Bridge 14-inch with NVIDIA Optimus",
+    "confidence": "high",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_ProBook_6460b",
+      "https://linux-hardware.org/"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP ProBook 6470b",
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-3210M / i7-3520M (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "NVIDIA NVS 5200M (Optimus)",
+    "gpu_gen": "nvidia-kepler",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6205 / Centrino Advanced-N 6235",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Ivy Bridge 14-inch with Kepler GPU",
+    "confidence": "high",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_ProBook_6470b"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP ProBook 6560b",
+    "years": "2011-2012",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-2410M / i5-2430M / i7-2630QM (Sandy Bridge)",
+    "cpu_gen": "sandybridge",
+    "gpu": "NVIDIA NVS 4200M (Optimus)",
+    "gpu_gen": "nvidia-fermi",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6205 AGN / Broadcom BCM4313",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Sandy Bridge 15.6-inch with NVIDIA Optimus",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_ProBook"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP ProBook 6570b",
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-3210M / i7-3520M (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "NVIDIA NVS 5200M (Optimus)",
+    "gpu_gen": "nvidia-kepler",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6205 / Centrino Advanced-N 6235",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Ivy Bridge 15.6-inch with Kepler GPU",
+    "confidence": "high",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_ProBook_6570b",
+      "https://linux-hardware.org/"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP ProBook 640 G1",
+    "years": "2013-2014",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-4200M / i7-4700MQ (Haswell)",
+    "cpu_gen": "haswell",
+    "gpu": "Intel HD Graphics 4600",
+    "gpu_gen": "intel-gen8",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 7260 / 7265 NGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "14-inch Haswell generation ProBook",
+    "confidence": "high",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_ProBook_640_G1"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP ProBook 640 G2",
+    "years": "2014-2015",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-5200M / i7-5600M (Broadwell)",
+    "cpu_gen": "broadwell",
+    "gpu": "Intel HD Graphics 5500",
+    "gpu_gen": "intel-gen9",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 7260 / 8260 NGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Broadwell 14-inch ProBook",
+    "confidence": "high",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_ProBook_640_G2"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP ProBook 650 G1",
+    "years": "2013-2014",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-4200M / i7-4700MQ (Haswell)",
+    "cpu_gen": "haswell",
+    "gpu": "Intel HD Graphics 4600",
+    "gpu_gen": "intel-gen8",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 7260 / 7265 NGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "15.6-inch Haswell ProBook",
+    "confidence": "high",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_ProBook_650_G1",
+      "https://linux-hardware.org/"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP ProBook 650 G2",
+    "years": "2014-2015",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-5200M / i7-5600M (Broadwell)",
+    "cpu_gen": "broadwell",
+    "gpu": "Intel HD Graphics 5500",
+    "gpu_gen": "intel-gen9",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 7260 / 8260 NGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Broadwell 15.6-inch ProBook",
+    "confidence": "high",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_ProBook_650_G2"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP ProBook 450 G1",
+    "years": "2013-2014",
+    "chassis": "laptop",
+    "cpus": "Intel Core i3-4000M / i5-4200M / i7-4700MQ (Haswell)",
+    "cpu_gen": "haswell",
+    "gpu": "Intel HD Graphics 4600",
+    "gpu_gen": "intel-gen8",
+    "firmware": "uefi",
+    "vtx": "some-skus",
+    "touchpad": "synaptics",
+    "wifi": "Intel 7260 / 7265 NGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "15.6-inch Haswell, i3 SKUs may lack VT-x",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_ProBook"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP ProBook 450 G2",
+    "years": "2014-2015",
+    "chassis": "laptop",
+    "cpus": "Intel Core i3-5005U / i5-5200M / i7-5600M (Broadwell)",
+    "cpu_gen": "broadwell",
+    "gpu": "Intel HD Graphics 5500",
+    "gpu_gen": "intel-gen9",
+    "firmware": "uefi",
+    "vtx": "some-skus",
+    "touchpad": "synaptics",
+    "wifi": "Intel 7260 / 8260 NGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Broadwell 15.6-inch budget variant",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_ProBook"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP ProBook 450 G3",
+    "years": "2015-2016",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-6200U / i7-6600U (Skylake)",
+    "cpu_gen": "skylake",
+    "gpu": "Intel HD Graphics 520",
+    "gpu_gen": "intel-gen9",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 8260 / 8265 NGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Skylake 15.6-inch mainstream",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_ProBook"
+    ]
+  },
+  {
+    "dmi_vendor": "HP",
+    "dmi_model": "HP ProBook 450 G4",
+    "years": "2016-2017",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-7200U / i7-7600U (Kaby Lake)",
+    "cpu_gen": "kabylake",
+    "gpu": "Intel HD Graphics 620",
+    "gpu_gen": "intel-gen9",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 8260 / 8265 NGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Kaby Lake 15.6-inch mainstream",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_ProBook"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP ProBook 430 G1",
+    "years": "2013-2014",
+    "chassis": "laptop",
+    "cpus": "Intel Core i3-4000M / i5-4200M / i7-4700MQ (Haswell)",
+    "cpu_gen": "haswell",
+    "gpu": "Intel HD Graphics 4600",
+    "gpu_gen": "intel-gen8",
+    "firmware": "uefi",
+    "vtx": "some-skus",
+    "touchpad": "synaptics",
+    "wifi": "Intel 7260 / 7265 NGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "13.3-inch Haswell, i3 SKUs may lack VT-x",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_ProBook"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP ProBook 430 G2",
+    "years": "2014-2015",
+    "chassis": "laptop",
+    "cpus": "Intel Core i3-5005U / i5-5200U (Broadwell)",
+    "cpu_gen": "broadwell",
+    "gpu": "Intel HD Graphics 5500",
+    "gpu_gen": "intel-gen9",
+    "firmware": "uefi",
+    "vtx": "some-skus",
+    "touchpad": "synaptics",
+    "wifi": "Intel 7260 / 8260 NGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Broadwell 13.3-inch ultraportable",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_ProBook"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP ProBook 430 G3",
+    "years": "2015-2016",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-6200U / i7-6600U (Skylake)",
+    "cpu_gen": "skylake",
+    "gpu": "Intel HD Graphics 520",
+    "gpu_gen": "intel-gen9",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 8260 / 8265 NGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Skylake 13.3-inch ultraportable",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_ProBook"
+    ]
+  },
+  {
+    "dmi_vendor": "HP",
+    "dmi_model": "HP ProBook 430 G4",
+    "years": "2016-2017",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-7200U / i7-7600U (Kaby Lake)",
+    "cpu_gen": "kabylake",
+    "gpu": "Intel HD Graphics 620",
+    "gpu_gen": "intel-gen9",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 8260 / 8265 NGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Kaby Lake 13.3-inch ultraportable",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_ProBook"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP ProBook 455 G1",
+    "years": "2013-2014",
+    "chassis": "laptop",
+    "cpus": "AMD A-Series (A6-5350M, A10-5750M) Richland",
+    "cpu_gen": "amd-piledriver",
+    "gpu": "AMD Radeon HD 8350 / 8550 / 8650",
+    "gpu_gen": "amd-gcn1",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Broadcom BCM43142 / Intel 6205 AGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "15.6-inch AMD Richland APU variant",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_ProBook"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP ProBook 455 G2",
+    "years": "2014-2015",
+    "chassis": "laptop",
+    "cpus": "AMD A-Series (A8-7100, A10-7300) Kaveri",
+    "cpu_gen": "amd-steamroller",
+    "gpu": "AMD Radeon R5 / R7 Graphics",
+    "gpu_gen": "amd-gcn1",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Broadcom BCM43142 / Intel 7260 AGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "AMD Kaveri 15.6-inch APU",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_ProBook"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP ProBook 455 G3",
+    "years": "2015-2016",
+    "chassis": "laptop",
+    "cpus": "AMD A-Series (A10-8700P, A12-8800B) Carrizo",
+    "cpu_gen": "amd-excavator",
+    "gpu": "AMD Radeon R7 Graphics",
+    "gpu_gen": "amd-gcn2",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Broadcom BCM43142 / Intel 8260 NGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "AMD Carrizo 15.6-inch APU",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_ProBook"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP Pavilion dv6-1000",
+    "years": "2009-2010",
+    "chassis": "laptop",
+    "cpus": "Intel Core 2 Duo T5800/T6400/T6600 / Pentium T4200 (Penryn)",
+    "cpu_gen": "penryn",
+    "gpu": "Intel GMA 4500M",
+    "gpu_gen": "intel-gen4",
+    "firmware": "bios",
+    "vtx": "no",
+    "touchpad": "synaptics",
+    "wifi": "Intel 5100 ABG / Broadcom BCM43224",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "15.6-inch Penryn consumer laptop, no VT-x",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Pavilion"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP Pavilion dv7-1000",
+    "years": "2008-2009",
+    "chassis": "laptop",
+    "cpus": "Intel Core 2 Duo T5500/T5600 / Pentium T3000 (Penryn)",
+    "cpu_gen": "penryn",
+    "gpu": "Intel GMA 4500M",
+    "gpu_gen": "intel-gen4",
+    "firmware": "bios",
+    "vtx": "no",
+    "touchpad": "synaptics",
+    "wifi": "Intel 5100 ABG / Broadcom BCM43224",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "17.3-inch Penryn consumer laptop",
+    "confidence": "low",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Pavilion"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP Pavilion g6-1000",
+    "years": "2010-2011",
+    "chassis": "laptop",
+    "cpus": "Intel Core 2 Duo P7350 / i3-330M / i5-430M (Westmere)",
+    "cpu_gen": "westmere",
+    "gpu": "Intel GMA HD Graphics / Intel HD Graphics",
+    "gpu_gen": "intel-gen5",
+    "firmware": "bios",
+    "vtx": "some-skus",
+    "touchpad": "synaptics",
+    "wifi": "Intel 5100 / 6205 AGN / Broadcom BCM43224",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "15.6-inch Westmere consumer, common budget laptop",
+    "confidence": "high",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Pavilion_g6",
+      "https://linux-hardware.org/"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP Pavilion g7-1000",
+    "years": "2010-2011",
+    "chassis": "laptop",
+    "cpus": "Intel Core 2 Duo P7350 / i3-330M / i5-430M (Westmere)",
+    "cpu_gen": "westmere",
+    "gpu": "Intel GMA HD Graphics / Intel HD Graphics",
+    "gpu_gen": "intel-gen5",
+    "firmware": "bios",
+    "vtx": "some-skus",
+    "touchpad": "synaptics",
+    "wifi": "Intel 5100 / 6205 AGN / Broadcom BCM43224",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "17.3-inch Westmere consumer laptop",
+    "confidence": "high",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Pavilion_g7",
+      "https://linux-hardware.org/"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP Pavilion 15-n000",
+    "years": "2013-2014",
+    "chassis": "laptop",
+    "cpus": "Intel Core i3-3110M / i5-3210M / i7-3520M (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD 4000",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Broadcom BCM43228 / Intel 6205 AGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "15.6-inch Ivy Bridge consumer notebook",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Pavilion"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP Pavilion 15-p000",
+    "years": "2014-2015",
+    "chassis": "laptop",
+    "cpus": "Intel Core i3-4005U / i5-4210U / i7-4510U (Haswell)",
+    "cpu_gen": "haswell",
+    "gpu": "Intel HD Graphics 4400 / 4600",
+    "gpu_gen": "intel-gen8",
+    "firmware": "uefi",
+    "vtx": "some-skus",
+    "touchpad": "synaptics",
+    "wifi": "Broadcom BCM43228 / Intel 7260 NGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "15.6-inch Haswell consumer notebook",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Pavilion"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP Pavilion 15-ab000",
+    "years": "2015-2016",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-5200U / i7-5500U (Broadwell)",
+    "cpu_gen": "broadwell",
+    "gpu": "Intel HD Graphics 5500",
+    "gpu_gen": "intel-gen9",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 8260 / Broadcom BCM43142",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "15.6-inch Broadwell consumer notebook",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Pavilion"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP Envy 13-1000",
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel Core i5-3317U / i7-3517U (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD Graphics 4000",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6205 / Centrino Advanced-N 6235",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "13.3-inch premium ultrabook, Ivy Bridge",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Envy"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP Envy 15-1000",
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel Core i7-3517U (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD Graphics 4000",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6205 / Centrino Advanced-N 6235",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "15.6-inch premium laptop, Ivy Bridge",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Envy"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP Envy 17-1000",
+    "years": "2012-2013",
+    "chassis": "laptop",
+    "cpus": "Intel Core i7-3517U (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD Graphics 4000",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "synaptics",
+    "wifi": "Intel 6205 / Centrino Advanced-N 6235",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "17.3-inch premium laptop, Ivy Bridge",
+    "confidence": "low",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Envy"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP Compaq Presario CQ56",
+    "years": "2009-2010",
+    "chassis": "laptop",
+    "cpus": "Intel Pentium T4200 / Core 2 Duo T5700/T6400 (Penryn)",
+    "cpu_gen": "penryn",
+    "gpu": "Intel GMA 4500M",
+    "gpu_gen": "intel-gen4",
+    "firmware": "bios",
+    "vtx": "no",
+    "touchpad": "synaptics",
+    "wifi": "Broadcom BCM4313 / Intel 5100",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "15.6-inch budget Penryn Presario",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Compaq"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP Compaq Presario CQ57",
+    "years": "2010-2011",
+    "chassis": "laptop",
+    "cpus": "Intel Celeron T3100 / Core 2 Duo T6400 / Pentium P6100 (Penryn/Westmere)",
+    "cpu_gen": "westmere",
+    "gpu": "Intel GMA HD Graphics / Intel HD Graphics",
+    "gpu_gen": "intel-gen5",
+    "firmware": "bios",
+    "vtx": "some-skus",
+    "touchpad": "synaptics",
+    "wifi": "Broadcom BCM43224 / Intel 5100",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "15.6-inch budget Westmere Presario",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Compaq"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP Compaq Presario CQ62",
+    "years": "2010-2011",
+    "chassis": "laptop",
+    "cpus": "Intel Celeron T3100 / Core 2 Duo T6400 / i3-330M (Westmere)",
+    "cpu_gen": "westmere",
+    "gpu": "Intel GMA HD Graphics / Intel HD Graphics",
+    "gpu_gen": "intel-gen5",
+    "firmware": "bios",
+    "vtx": "some-skus",
+    "touchpad": "synaptics",
+    "wifi": "Broadcom BCM43224 / Intel 5100 / 6205 AGN",
+    "linux_quirks": [
+      "i8042.nomux=1"
+    ],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "15.6-inch Westmere Presario, widespread model",
+    "confidence": "high",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Compaq_Presario_CQ62",
+      "https://linux-hardware.org/"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP Elite 8100",
+    "years": "2009-2011",
+    "chassis": "desktop",
+    "cpus": "Intel Core i3-530 / i5-650 / i7-860 (Westmere)",
+    "cpu_gen": "westmere",
+    "gpu": "Intel HD Graphics (integrated)",
+    "gpu_gen": "intel-gen5",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "none",
+    "wifi": "none (wired only)",
+    "linux_quirks": [],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "SFF desktop, Westmere generation",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Elite"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP Elite 8200",
+    "years": "2011-2012",
+    "chassis": "desktop",
+    "cpus": "Intel Core i3-2100 / i5-2400 / i7-2600 (Sandy Bridge)",
+    "cpu_gen": "sandybridge",
+    "gpu": "Intel HD 2000 / HD 3000 (integrated)",
+    "gpu_gen": "intel-gen6",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "none",
+    "wifi": "none (wired only)",
+    "linux_quirks": [],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "SFF desktop, Sandy Bridge generation",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Elite"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP Elite 8300",
+    "years": "2012-2013",
+    "chassis": "desktop",
+    "cpus": "Intel Core i3-3220 / i5-3470 / i7-3770 (Ivy Bridge)",
+    "cpu_gen": "ivybridge",
+    "gpu": "Intel HD 2500 / HD 4000 (integrated)",
+    "gpu_gen": "intel-gen7",
+    "firmware": "bios",
+    "vtx": "yes",
+    "touchpad": "none",
+    "wifi": "none (wired only)",
+    "linux_quirks": [],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "SFF desktop, Ivy Bridge generation",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_Elite"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP EliteDesk 800 G1",
+    "years": "2013-2014",
+    "chassis": "desktop",
+    "cpus": "Intel Core i3-4130 / i5-4570 / i7-4770 (Haswell)",
+    "cpu_gen": "haswell",
+    "gpu": "Intel HD 4400 / 4600 (integrated)",
+    "gpu_gen": "intel-gen8",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "none",
+    "wifi": "none (wired only)",
+    "linux_quirks": [],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "SFF desktop, Haswell generation, first with UEFI",
+    "confidence": "high",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_EliteDesk_800_G1",
+      "https://linux-hardware.org/"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP EliteDesk 800 G2",
+    "years": "2014-2015",
+    "chassis": "desktop",
+    "cpus": "Intel Core i3-6100 / i5-6500 / i7-6700 (Skylake)",
+    "cpu_gen": "skylake",
+    "gpu": "Intel HD 530 / 630 (integrated)",
+    "gpu_gen": "intel-gen9",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "none",
+    "wifi": "none (wired only)",
+    "linux_quirks": [],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "SFF desktop, Skylake generation",
+    "confidence": "high",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_EliteDesk_800_G2"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP ProDesk 400 G1",
+    "years": "2013-2014",
+    "chassis": "desktop",
+    "cpus": "Intel Core i3-4130 / i5-4570 (Haswell)",
+    "cpu_gen": "haswell",
+    "gpu": "Intel HD 4400 / 4600 (integrated)",
+    "gpu_gen": "intel-gen8",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "none",
+    "wifi": "none (wired only)",
+    "linux_quirks": [],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "SFF desktop, Haswell budget variant",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_ProDesk"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP ProDesk 400 G2",
+    "years": "2014-2015",
+    "chassis": "desktop",
+    "cpus": "Intel Core i3-4150 / i5-4590 (Haswell/Broadwell)",
+    "cpu_gen": "broadwell",
+    "gpu": "Intel HD 4400 / 4600 (integrated)",
+    "gpu_gen": "intel-gen8",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "none",
+    "wifi": "none (wired only)",
+    "linux_quirks": [],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "SFF desktop, mixed Haswell/Broadwell generation",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_ProDesk"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP ProDesk 600 G1",
+    "years": "2013-2014",
+    "chassis": "desktop",
+    "cpus": "Intel Core i3-4130 / i5-4570 / i7-4770 (Haswell)",
+    "cpu_gen": "haswell",
+    "gpu": "Intel HD 4400 / 4600 (integrated)",
+    "gpu_gen": "intel-gen8",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "none",
+    "wifi": "none (wired only)",
+    "linux_quirks": [],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Tower desktop, Haswell generation",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_ProDesk"
+    ]
+  },
+  {
+    "dmi_vendor": "Hewlett-Packard",
+    "dmi_model": "HP ProDesk 600 G2",
+    "years": "2014-2015",
+    "chassis": "desktop",
+    "cpus": "Intel Core i3-6100 / i5-6500 / i7-6700 (Skylake)",
+    "cpu_gen": "skylake",
+    "gpu": "Intel HD 530 / 630 (integrated)",
+    "gpu_gen": "intel-gen9",
+    "firmware": "uefi",
+    "vtx": "yes",
+    "touchpad": "none",
+    "wifi": "none (wired only)",
+    "linux_quirks": [],
+    "platform_modules": [
+      "hp-wmi"
+    ],
+    "fan_control": "bios-only",
+    "notes": "Tower desktop, Skylake generation",
+    "confidence": "medium",
+    "sources": [
+      "https://wiki.archlinux.org/title/HP_ProDesk"
+    ]
+  }
+]
