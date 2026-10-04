@@ -37,8 +37,9 @@ Read with: README.md, docs/HOWTO.md, docs/ARCHITECTURE.md, docs/FINDINGS.md, doc
    10 min): fetches /bundle/<new version> before reboot, or HOLDS the update (KERN-B priority → 0,
    restored when the bundle exists). Simulated hold/release/download on a test disk; on the Vostro
    only the idle path ran (service not yet installed there: comes with `phoenix fix`).
-3. **Archive**: Brunch releases archived; Google image dirs exist but index shows 0 verified
-   images — check /root/phoenix-archive/archive.log (download/verify step).
+3. ~~Archive~~ **DONE**: Google lists the SHA-1/MD5 of the .zip (not the image inside); fixed.
+   /root/phoenix-archive holds verified rammus + Flex recovery zips (LTC, LTR, stable) and Brunch
+   r149-r152; daily timer phoenix-archive.
 4. **BIOS boot in the Brunch fork** (commits 7b92645..a591a8f, local only, NOT pushed): never
    boot-tested; agent limited it to block devices (must also work for image files). Test in QEMU
    (SeaBIOS + OVMF) before pushing; then upstream PR drafts in docs/upstream/ (ask the user first).

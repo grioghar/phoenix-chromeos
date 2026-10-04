@@ -9,7 +9,7 @@ Archived (default ARCHIVE=/root/phoenix-archive):
   brunch/<tag>/<asset>                                    Brunch releases (GitHub sebanc/brunch)
   index.json                                              everything archived, with checksums
 
-Verification: Google publishes the SHA-1 of the unzipped image and the zip size; Brunch assets
+Verification: Google publishes the SHA-1 (and MD5) of each .zip and its size; Brunch assets
 are checked against GitHub's size. A file only enters the archive after it verifies.
 These are personal/local copies for your own installs, not for redistribution.
 
@@ -40,13 +40,12 @@ def download(url, dest, size=None):
     os.replace(tmp, dest)
     return True
 
-def sha1_of_zip_member(path):
+def sha1_of(path):
+    """Google's recovery list gives the SHA-1 (and MD5) of the .zip file itself."""
     h = hashlib.sha1()
-    with zipfile.ZipFile(path) as z:
-        name = [n for n in z.namelist() if n.endswith(".bin")][0]
-        with z.open(name) as f:
-            for b in iter(lambda: f.read(1 << 22), b""):
-                h.update(b)
+    with open(path, "rb") as f:
+        for b in iter(lambda: f.read(1 << 22), b""):
+            h.update(b)
     return h.hexdigest()
 
 def board_of(entry):
@@ -71,11 +70,13 @@ def archive_google(boards, channels, dry):
             log(f"{list_board} {e['version']} ({e['channel']}): {e['file']}  {e['zipfilesize'] / 1e9:.1f} GB")
             if dry: continue
             seed = os.path.join(SEED, os.path.basename(e["url"]))   # already downloaded on this server?
-            if os.path.isfile(seed) and os.path.getsize(seed) == e.get("zipfilesize"):
+            if os.path.isfile(dest) and os.path.getsize(dest) == e.get("zipfilesize"):
+                log("  already downloaded")
+            elif os.path.isfile(seed) and os.path.getsize(seed) == e.get("zipfilesize"):
                 os.makedirs(d, exist_ok=True); shutil.copyfile(seed, dest); log("  copied from " + SEED)
             elif not download(e["url"], dest, e.get("zipfilesize")): continue
-            log("  verifying SHA-1 of the image ...")
-            got = sha1_of_zip_member(dest)
+            log("  verifying SHA-1 ...")
+            got = sha1_of(dest)
             if got != e["sha1"]:
                 log(f"  SHA-1 MISMATCH ({got}); not archived"); os.rename(dest, dest + ".bad"); continue
             e = dict(e, archived=time.strftime("%Y-%m-%d"), verified_sha1=got, path=os.path.relpath(dest, ARCHIVE))
