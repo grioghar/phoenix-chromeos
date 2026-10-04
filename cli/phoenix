@@ -1,0 +1,28 @@
+#!/bin/sh
+# vostro: helper for the Vostro ChromeOS build. Fetches the current scripts from the build server.
+#   vostro fix      apply the latest fix from the build server (default)
+#   vostro diag     collect logs and send them to the build server
+#   vostro install  apply the latest fix, then install ChromeOS onto the internal hard drive
+#   vostro touchpad alps|alps2|exps   switch touchpad mode (alps = two-finger scroll)
+#   vostro hostname NAME   set the name your router sees for this computer
+#   vostro update   update this command
+#   add -v (or --verbose) to any command to see every step as it runs
+H=HOST:8099
+[ "$(id -u)" = 0 ] || exec sudo "$0" "$@"
+V=0; CMD=""; REST=""
+for a in "$@"; do
+  case "$a" in -v|--verbose) V=1 ;; *) [ -z "$CMD" ] && CMD=$a || REST="$REST $a" ;; esac
+done
+export VERBOSE=$V
+SH="sh"; [ $V = 1 ] && SH="sh -x"
+case "${CMD:-fix}" in
+  fix)     curl -s http://$H/m | $SH ;;
+  diag)    curl -s http://$H/d | $SH ;;
+  install) curl -s http://$H/m | VOSTRO_INSTALL=1 $SH || exit 1          # make sure the running system has every fix first
+           curl -s http://$H/i -o /tmp/vostro-install.sh
+           if [ $V = 1 ]; then bash -x /tmp/vostro-install.sh $REST; else bash /tmp/vostro-install.sh $REST; fi ;;
+  touchpad) curl -s http://$H/t | $SH -s $REST ;;
+  hostname) curl -s http://$H/h | $SH -s $REST ;;
+  update)  curl -s http://$H/v | $SH ;;
+  *)       sed -n '3,10p' "$0" ;;
+esac

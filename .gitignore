@@ -1,0 +1,10 @@
+*.img
+*.bin
+*.zip
+*.zst
+*.tgz
+*.tar.gz
+*.so
+diag/
+ptmp/
+__pycache__/
