@@ -1,0 +1,13 @@
+label=before-perf-mode
+time=2026-10-04 15:53:46
+kernel=6.12.91-generic-brunch-sebanc
+cmdline_perf=
+spectre_v2=Mitigation: Retpolines; IBPB: conditional; IBRS_FW; RSB fill
+load_before=8.58
+syscalls_2M_ms=4420
+forks_400_ms=2726
+pipes_200MB_ms=798
+memtouch_1GB_ms=5146
+vm_exits_per_s=54323
+vm_cpu_pct=0
+cpu_pressure=some avg10=48.62 avg60=65.95 avg300=60.78
