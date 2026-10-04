@@ -1,0 +1,15 @@
+[Unit]
+Description=Phoenix server (scripts, components, diagnostics and hardware reports)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+WorkingDirectory=/root/brunch-build
+ExecStart=/usr/bin/python3 /root/phoenix/server/phoenix_server.py
+Restart=always
+RestartSec=3
+StandardOutput=append:/root/brunch-build/diag_server.log
+StandardError=append:/root/brunch-build/diag_server.log
+
+[Install]
+WantedBy=multi-user.target

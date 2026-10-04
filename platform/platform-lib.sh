@@ -7,6 +7,9 @@
 #   opt_<module_with_underscores>="..."    module options (e.g. opt_dell_smm_hwmon="ignore_dmi=1")
 #   cpu_profile=balanced|performance|quiet
 #   fan_mode=bios|auto|quiet|max           bios = leave the fan to the firmware
+#   io_tuning=auto|off                     disk scheduler/read-ahead by disk type
+#   performance_mode=off|on                boot options trading hardening for speed (needs reboot)
+#   android_animations=1|0.5|0             Android animation speed (0.5 = twice as fast)
 
 PHOENIX_SHARE=${PHOENIX_SHARE:-/usr/share/phoenix}
 PLATFORM_CONF=${PLATFORM_CONF:-/etc/phoenix/platform.conf}
@@ -49,7 +52,7 @@ module_loaded(){ [ -d "/sys/module/$(echo "$1" | tr - _)" ]; }
 
 # ---------------------------------------------------------------- config
 conf_load(){
-  modules=""; cpu_profile=balanced; fan_mode=bios
+  modules=""; cpu_profile=balanced; fan_mode=bios; io_tuning=auto; performance_mode=off; android_animations=1
   [ -r "$PLATFORM_CONF" ] && . "$PLATFORM_CONF"
 }
 # conf_default: a new config for this machine (recommended modules + catalog/profile options)
@@ -124,4 +127,44 @@ fan_step(){
     *)     if [ $t -ge 72 ]; then v=255; elif [ $t -ge 55 ]; then v=128; else v=0; fi ;;   # auto
   esac
   echo $v > "$pwm" 2>/dev/null
+}
+
+# ---------------------------------------------------------------- speed tuning
+# Disks: BFQ keeps the desktop responsive on spinning disks under load; SSDs use mq-deadline.
+apply_io(){
+  conf_load; [ "$io_tuning" = off ] && return 0
+  for q in /sys/block/sd*/queue /sys/block/nvme*/queue /sys/block/mmcblk*/queue; do
+    [ -w "$q/scheduler" ] || continue
+    if [ "$(cat $q/rotational)" = 1 ]; then s=bfq; ra=1024; else s=mq-deadline; ra=256; fi
+    grep -qw "$s" "$q/scheduler" && echo "$s" > "$q/scheduler" 2>/dev/null
+    echo "$ra" > "$q/read_ahead_kb" 2>/dev/null
+    echo "$(basename "$(dirname "$q")"): $s, read-ahead ${ra} KB"
+  done
+  # write back dirty pages sooner on slow disks: shorter stalls when memory fills
+  sysctl -q -w vm.dirty_background_ratio=5 vm.dirty_ratio=15 2>/dev/null || true
+}
+# Performance mode: kernel options in Brunch's settings.cfg (EFI partition), applied at next boot.
+#   mitigations=off   no CPU-vulnerability workarounds (big win on pre-2018 Intel, esp. for the Android VM)
+#   init_on_alloc=0   don't zero every memory allocation
+#   nowatchdog        no lockup-detector timers
+PERF_PARAMS="mitigations=off init_on_alloc=0 nowatchdog"
+settings_cfg(){   # mount the EFI partition of the boot disk and run "$@" on settings.cfg
+  d=$(rootdev -d -s 2>/dev/null); case "$d" in *[0-9]) e=${d}p12;; *) e=${d}12;; esac
+  mkdir -p /tmp/phoenix-efi; mount "$e" /tmp/phoenix-efi || return 1
+  "$@" /tmp/phoenix-efi/efi/boot/settings.cfg; r=$?; sync; umount /tmp/phoenix-efi; return $r
+}
+_perf_edit(){   # $1=on|off  $2=settings.cfg
+  cur=$(sed -n 's/^cmdline_params="\(.*\)"$/\1/p' "$2"); new=""
+  for w in $cur; do case " $PERF_PARAMS " in *" $w "*) ;; *) new="$new $w";; esac; done
+  [ "$1" = on ] && new="$new $PERF_PARAMS"
+  new=$(echo $new); sed -i "s|^cmdline_params=.*|cmdline_params=\"$new\"|" "$2"; echo "boot options: $new"
+}
+apply_perf_mode(){ conf_load; settings_cfg _perf_edit "$performance_mode"; }
+perf_mode_active(){ for p in $PERF_PARAMS; do grep -qw "$p" /proc/cmdline || return 1; done; }
+# Android: animation speed through the Android VM's settings (kept by Android across reboots)
+apply_android(){
+  conf_load; command -v android-sh >/dev/null || return 0
+  for k in window_animation_scale transition_animation_scale animator_duration_scale; do
+    timeout 20 android-sh -c "settings put global $k $android_animations" >/dev/null 2>&1 || return 0
+  done; echo "android animations: $android_animations"
 }

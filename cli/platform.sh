@@ -5,6 +5,9 @@
 #   phoenix platform enable MOD    load MOD now and at every boot     (disable MOD: stop doing so)
 #   phoenix platform cpu  balanced|performance|quiet
 #   phoenix platform fan  bios|auto|quiet|max
+#   phoenix platform speed         speed settings: disk tuning, performance mode, Android animations
+#   phoenix platform perf on|off   performance mode (faster, less hardened; applies after reboot)
+#   phoenix platform anim 1|0.5|0  Android animation speed
 #   phoenix platform reset         back to the recommended settings for this machine
 set -e
 [ "${VERBOSE:-0}" = 1 ] && set -x
@@ -58,6 +61,8 @@ status(){
   done
   echo
   echo "Sensors:"; sensors_report | grep . || echo "  (none reported yet)"
+  echo
+  echo "Speed:        disk tuning $io_tuning   performance mode $performance_mode$( perf_mode_active && echo ' (active)' || { [ "$performance_mode" = on ] && echo ' (after reboot)'; } )   Android animations $android_animations"
 }
 
 menu(){
@@ -66,6 +71,7 @@ menu(){
     echo "=== Phoenix platform settings ==="; echo; status; echo
     echo "  e) enable a module    d) disable a module    a) show all catalog modules"
     echo "  c) CPU profile        f) fan mode            r) reset to recommended"
+    echo "  p) performance mode   n) Android animations  s) speed details"
     echo "  q) quit"
     printf "> "; read -r k || exit 0
     case "$k" in
@@ -75,6 +81,9 @@ menu(){
       c) printf "CPU profile (balanced / performance / quiet): "; read -r p; cpu "$p"; pause ;;
       f) printf "Fan mode (bios / auto / quiet / max): "; read -r p; fan "$p"; pause ;;
       r) reset; pause ;;
+      p) printf "Performance mode (on / off): "; read -r p; perf "$p"; pause ;;
+      n) printf "Android animation speed (1 = normal, 0.5 = faster, 0 = off): "; read -r p; anim "$p"; pause ;;
+      s) speed; pause ;;
       q|"") exit 0 ;;
     esac
   done
@@ -100,6 +109,19 @@ fan(){
   if [ "$1" = bios ]; then stop phoenix-fan 2>/dev/null || true; else restart phoenix-fan 2>/dev/null || start phoenix-fan 2>/dev/null || true; fi
   echo "fan mode: $1"
 }
+perf(){
+  case "$1" in on|off) ;; *) echo "use: on or off"; return;; esac
+  if [ "$1" = on ]; then
+    echo "Performance mode turns off CPU vulnerability workarounds (Spectre/Meltdown class) and some"
+    echo "memory hardening. It makes older machines noticeably faster, especially Android apps, but a"
+    echo "malicious website or app could exploit those CPU flaws. Recommended only for machines used"
+    echo "with trusted software."
+    printf "Turn it on? [y/N]: "; read -r ok; case "$ok" in y|Y|yes) ;; *) echo "unchanged"; return;; esac
+  fi
+  save_conf conf_set performance_mode "$1"; apply_perf_mode && echo "Reboot to apply (sudo reboot)."
+}
+anim(){ case "$1" in 1|0.5|0) save_conf conf_set android_animations "$1"; apply_android || echo "(applies when Android is running)";; *) echo "use: 1, 0.5 or 0";; esac; }
+speed(){ conf_load; apply_io; echo "kernel: $(uname -r)"; echo "boot options: $(tr ' ' '\n' < /proc/cmdline | grep -E 'mitigations|init_on|watchdog' | tr '\n' ' ')"; grep -h . /sys/devices/system/cpu/vulnerabilities/* 2>/dev/null | sort | uniq -c | sed 's/^/  /' | head -6; }
 reset(){ save_conf sh -c ". $SHARE/platform/platform-lib.sh; conf_default > $PLATFORM_CONF"; apply_modules; apply_cpu; echo "Recommended settings restored."; }
 
 case "${1:-status}" in
@@ -110,6 +132,9 @@ case "${1:-status}" in
   cpu)     cpu "${2:-}" ;;
   fan)     fan "${2:-}" ;;
   reset)   reset ;;
-  apply)   apply_modules; apply_cpu ;;
-  *) echo "usage: phoenix platform [status|menu|enable MOD|disable MOD|cpu PROFILE|fan MODE|reset|apply]" ;;
+  apply)   apply_modules; apply_cpu; apply_io ;;
+  speed)   speed ;;
+  perf)    perf "${2:-}" ;;
+  anim)    anim "${2:-}" ;;
+  *) echo "usage: phoenix platform [status|menu|enable MOD|disable MOD|cpu PROFILE|fan MODE|speed|perf on|off|anim N|reset|apply]" ;;
 esac
