@@ -1,0 +1,31 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Phoenix</title>
+<style>
+  :root { --bg:#fff; --fg:#202124; --muted:#5f6368; --line:#e3e3e3; --accent:#e8431b; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#202124; --fg:#e8eaed; --muted:#9aa0a6; --line:#3c4043; } }
+  body { margin:0; width:360px; font:13px/1.45 system-ui, sans-serif; background:var(--bg); color:var(--fg); }
+  header { display:flex; align-items:center; gap:8px; padding:12px 14px; border-bottom:1px solid var(--line); font-weight:600; }
+  .dot { width:12px; height:12px; border-radius:50%; flex:none; }
+  .issue { padding:10px 14px; border-bottom:1px solid var(--line); }
+  .issue b { display:flex; align-items:center; gap:8px; }
+  .issue p { margin:4px 0 0 20px; color:var(--muted); }
+  h2 { font-size:12px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); margin:12px 14px 4px; }
+  .row { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:5px 14px; }
+  .row small { display:block; color:var(--muted); }
+  select { font:inherit; background:var(--bg); color:var(--fg); border:1px solid var(--line); border-radius:6px; padding:2px 4px; }
+  .live { padding:4px 14px 8px; color:var(--muted); }
+  footer { padding:8px 14px; color:var(--muted); display:flex; justify-content:space-between; border-top:1px solid var(--line); }
+  button { font:inherit; background:none; border:1px solid var(--line); border-radius:6px; color:var(--fg); padding:2px 8px; cursor:pointer; }
+  #msg { padding:0 14px; color:var(--accent); min-height:1em; }
+</style></head>
+<body>
+  <header><span id="dot" class="dot"></span><span id="summary">Phoenix</span></header>
+  <div id="list"></div>
+  <h2>This computer</h2>
+  <div class="live" id="live">…</div>
+  <h2>Settings</h2>
+  <div id="settings"></div>
+  <div id="msg"></div>
+  <footer><span id="when"></span><button id="refresh">Check now</button></footer>
+  <script src="popup.js"></script>
+</body></html>

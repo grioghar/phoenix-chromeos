@@ -9,7 +9,7 @@ and tunes it for speed. It re-applies all of that after every ChromeOS update.
 
 The goal is to give a 10-year-old laptop a current, fast, Play-Store-capable OS.
 
-> **Status: early, working on the reference machine.** A 2011 Dell Vostro 3550 (Sandy Bridge,
+> **Status: early, working on the reference machine.** A 2011 Dell Vostro 3750 (Sandy Bridge,
 > Intel HD 3000, BIOS-only) runs ChromeOS R150 with the Play Store, installed on its internal drive.
 > The general installer, update pipeline and optimized kernels are being built now; see [Roadmap](#roadmap).
 
@@ -50,6 +50,7 @@ phoenix touchpad tune  stop pointer jumps during two-finger scrolling (ALPS touc
 phoenix rootshell on   make phoenix commands work in the browser terminal (run once from the console)
 phoenix upgrade        move an existing install to the current Phoenix release
 phoenix kernel install use a kernel optimized for this CPU (stock kernel stays in the boot menu)
+phoenix health         hardware/system problems (also shown by the Phoenix Health panel on the desktop)
 phoenix update         update the phoenix command
 ```
 
@@ -77,7 +78,8 @@ Add `-v` to any command to see every step.
 | `installer/` | Install to an internal drive (BIOS layer, hostname, platform modules) |
 | `hooks/` | Brunch patch hook that restores fixes after updates |
 | `boot/` | Boot screen (framebuffer) and initramfs builder |
-| `services/` | ChromeOS (upstart) services: hostname, platform, fan |
+| `services/` | ChromeOS (upstart) services: hostname, platform, fan, throttle, health, update watcher |
+| `desktop/` | Phoenix Health: Chrome extension (status dot, notifications, settings panel) + local status server |
 | `shim/` | crosvm CPUID shim (MOVBE emulation, hides AVX from Android) |
 | `build/` | Release builder, Android image patcher, optimized kernel builder, profile generator |
 | `server/` | Phoenix server: scripts, components, diagnostics, hardware reports, daily intake |
@@ -93,7 +95,7 @@ images, Android images) are downloaded or built on demand, never stored here.
 
 ## Roadmap
 
-- [x] Play Store on a Sandy Bridge / HD 3000 / BIOS-only laptop (Dell Vostro 3550)
+- [x] Play Store on a Sandy Bridge / HD 3000 / BIOS-only laptop (Dell Vostro 3750)
 - [x] Hardware detection, 411 machine profiles, platform modules, `phoenix platform`
 - [x] Install to the internal drive with hostname and platform module selection
 - [x] Boot screen; update-survival hook; hardware reports to GitHub issues

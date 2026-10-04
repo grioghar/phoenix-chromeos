@@ -143,7 +143,7 @@ class H(http.server.BaseHTTPRequestHandler):
             import io, tarfile
             buf = io.BytesIO()
             with tarfile.open(fileobj=buf, mode="w:gz") as t:
-                for d in ("detect", "platform", "profiles", "services"):
+                for d in ("detect", "platform", "profiles", "services", "desktop"):
                     t.add(REPO + "/" + d, arcname=d)
             body = buf.getvalue()
             self.send_response(200); self.send_header("Content-Type", "application/gzip")

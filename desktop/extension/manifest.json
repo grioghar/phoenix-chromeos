@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Phoenix Health",
+  "version": "1.0",
+  "description": "Shows this computer's Phoenix health status: green (fine), yellow (warning) or red (problem), with notifications.",
+  "permissions": [
+    "notifications",
+    "alarms",
+    "storage"
+  ],
+  "host_permissions": [
+    "http://127.0.0.1:8098/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Phoenix Health",
+    "default_popup": "popup.html"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4n9K/6z3UHGI824Oz3pu+Y+CmGMIjCFScqxw6bgFKPFNKJhqx8uWEBy+Yyu8Zhc/OYPIIYQpqmtT6+x+MiPD3lbXvhBJLUjpSrNg4FwHQZl7fHqP3Bw5zO4LhwWSNGj7uGcf8+eHJIyBoDREn1vuzpoxZBUnegW/nuH3OZvytTnHQ52SsP1fiJRQJV/RJbWNxfSOZOA7s/JiuPbQy+T7uNvxuK6crxUq5HZAOGB9aehzDbUcNetdPM9dHNefNusO4tfQIpxyklVFsFW2v1+mzlj9T+oPPgluH2vvQn+6s2E0MeBM8PjCjhNczN9906aWVCyAkXCP/vqkDQf6RFRkEwIDAQAB"
+}

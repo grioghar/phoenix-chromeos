@@ -12,7 +12,7 @@
 #   phoenix platform maintain-menu interactive maintenance settings
 #   phoenix platform maintain-now  run maintenance tasks immediately
 #   phoenix platform throttle on|off          undo firmware throttling (dead battery, unrecognised charger)
-#   phoenix platform thermal on|off|limit N|hysteresis N|step MHZ|poll S   temperature-based speed control
+#   phoenix platform thermal on|off|limit N|limit default|hysteresis N|step MHZ|poll S   temperature-based speed control
 #   phoenix platform reset         back to the recommended settings for this machine
 set -e
 [ "${VERBOSE:-0}" = 1 ] && set -x
@@ -68,7 +68,7 @@ status(){
   echo "Sensors:"; sensors_report | grep . || echo "  (none reported yet)"
   echo
   echo "Speed:        disk tuning $io_tuning   performance mode $performance_mode$( perf_mode_active && echo ' (active)' || { [ "$performance_mode" = on ] && echo ' (after reboot)'; } )   Android animations $android_animations"
-  echo "Throttle:     override $throttle_override   thermal guard $thermal_guard (limit ${thermal_limit} C, -${thermal_hysteresis} C, ${thermal_step} MHz steps, every ${thermal_poll} s)   now: $(awk '{s+=$1} END{printf "%d MHz", s/NR/1000}' /sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq 2>/dev/null), max $(( $(cat /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq 2>/dev/null || echo 0) / 1000 )) MHz"
+  echo "Throttle:     override $throttle_override   thermal guard $thermal_guard (limit ${thermal_limit} C [$(thermal_source)], -${thermal_hysteresis} C, ${thermal_step} MHz steps, every ${thermal_poll} s)   now: $(awk '{s+=$1} END{printf "%d MHz", s/NR/1000}' /sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq 2>/dev/null), max $(( $(cat /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq 2>/dev/null || echo 0) / 1000 )) MHz"
 }
 
 menu(){
@@ -187,7 +187,8 @@ throttle(){ case "$1" in on|off) save_conf conf_set throttle_override "$1"; appl
 thermal(){
   case "$1" in
     on|off) save_conf conf_set thermal_guard "$1" ;;
-    limit)  [ "${2:-0}" -ge 60 ] 2>/dev/null && [ "$2" -le 100 ] && save_conf conf_set thermal_limit "$2" || { echo "limit: 60-100 C"; return; } ;;
+    limit)  if [ "${2:-}" = default ]; then save_conf sh -c "grep -v '^thermal_limit=' $PLATFORM_CONF > $PLATFORM_CONF.n; mv $PLATFORM_CONF.n $PLATFORM_CONF"; PHX_THERMAL_DEFAULT=""
+            else [ "${2:-0}" -ge 60 ] 2>/dev/null && [ "$2" -le 100 ] && save_conf conf_set thermal_limit "$2" || { echo "limit: 60-100 C, or 'default'"; return; }; fi ;;
     hysteresis) [ "${2:-0}" -ge 1 ] 2>/dev/null && [ "$2" -le 20 ] && save_conf conf_set thermal_hysteresis "$2" || { echo "hysteresis: 1-20 C"; return; } ;;
     step)   [ "${2:-0}" -ge 50 ] 2>/dev/null && [ "$2" -le 1000 ] && save_conf conf_set thermal_step "$2" || { echo "step: 50-1000 MHz"; return; } ;;
     poll)   [ "${2:-0}" -ge 1 ] 2>/dev/null && [ "$2" -le 60 ] && save_conf conf_set thermal_poll "$2" || { echo "poll: 1-60 s"; return; } ;;

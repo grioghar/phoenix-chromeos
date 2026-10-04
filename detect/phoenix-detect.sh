@@ -15,13 +15,20 @@ has_flag(){ case " $CPUFLAGS " in *" $1 "*) echo 1;; *) echo 0;; esac; }
 
 # ---------------------------------------------------------------- machine identity (DMI)
 VENDOR=$(rd /sys/class/dmi/id/sys_vendor); PRODUCT=$(rd /sys/class/dmi/id/product_name)
-PVERSION=$(rd /sys/class/dmi/id/product_version); BOARD=$(rd /sys/class/dmi/id/board_name)
+# Brunch's kernel reports product_name as "Brunch": read the firmware's own strings from the raw
+# SMBIOS tables instead (type 1 = system: 4 vendor, 5 product, 6 version; type 2 = board: 5 name)
+dmi_raw(){ R=$SYS/sys/firmware/dmi/entries/$1-0/raw; [ -r "$R" ] || return 0
+  len=$(od -An -tu1 -j1 -N1 "$R" | tr -d ' '); i=$(od -An -tu1 -j$2 -N1 "$R" | tr -d ' ')
+  [ -n "$len" ] && [ "${i:-0}" -gt 0 ] && tail -c +$((len + 1)) "$R" | tr '\000' '\n' | sed -n "${i}p" | sed 's/[[:space:]]*$//'; }
+case "$PRODUCT" in Brunch|"") PRODUCT=$(dmi_raw 1 5); PVERSION_RAW=$(dmi_raw 1 6) ;; esac
+PVERSION=${PVERSION_RAW:-$(rd /sys/class/dmi/id/product_version)}; BOARD=$(rd /sys/class/dmi/id/board_name)
 BIOS=$(rd /sys/class/dmi/id/bios_version); CHASSIS_N=$(rd /sys/class/dmi/id/chassis_type)
 case "$CHASSIS_N" in
   8|9|10|14) CHASSIS=laptop;; 30|31|32) CHASSIS=convertible;; 3|4|5|6|7|13|15|16|35|36) CHASSIS=desktop;; *) CHASSIS=unknown;;
 esac
 # ThinkPads keep the marketing name in product_version
 case "$VENDOR" in LENOVO) [ -n "$PVERSION" ] && MODEL="$PVERSION" || MODEL="$PRODUCT";; *) MODEL="$PRODUCT";; esac
+MODEL=$(echo "$MODEL" | sed 's/^Dell System //')   # older Dells: "Dell System Vostro 3750"
 slug(){ echo "$1" | tr 'A-Z' 'a-z' | sed 's/[^a-z0-9]\{1,\}/-/g; s/^-//; s/-$//'; }
 VSLUG=$(slug "$(echo "$VENDOR" | awk '{print $1}')"); MSLUG=$(slug "$MODEL")
 BVENDOR=$(rd /sys/class/dmi/id/board_vendor)

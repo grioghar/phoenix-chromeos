@@ -2,7 +2,7 @@
 
 Read with: README.md, docs/HOWTO.md, docs/ARCHITECTURE.md, docs/FINDINGS.md, docs/PERFORMANCE.md.
 
-## Reference machine: Dell Vostro 3550 (192.168.1.76)
+## Reference machine: Dell Vostro 3750 (192.168.1.76; firmware says "Dell System Vostro 3750" — long assumed to be a 3550)
 - ChromeOS R150 16700.65.0 **LTC channel** (rammus) on Brunch r150, installed on the internal HDD,
   BIOS boot via Phoenix's GRUB i386-pc layer + hybrid MBR. Play Store works.
 - Running: Flex Rust binaries + crocus Mesa, crosvm with `libkvm_movbe.so` (MOVBE in guest CPUID,

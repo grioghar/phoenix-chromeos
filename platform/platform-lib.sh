@@ -58,10 +58,38 @@ module_loaded(){ [ -d "/sys/module/$(echo "$1" | tr - _)" ]; }
 conf_load(){
   modules=""; cpu_profile=balanced; fan_mode=bios; io_tuning=auto; performance_mode=off; android_animations=1
   # daily maintenance (platform/maintain.sh); ChromeOS already TRIMs SSDs and rotates logs
-  throttle_override=on; thermal_guard=on; thermal_limit=90; thermal_hysteresis=5; thermal_step=100; thermal_poll=3   # platform/throttle.sh
+  throttle_override=on; thermal_guard=on; thermal_limit=""; thermal_hysteresis=5; thermal_step=100; thermal_poll=3   # platform/throttle.sh
+  health_interval=300   # Phoenix Health extension refresh (s)
   maintenance=on; maintenance_trim=off; maintenance_crashes=on; maintenance_crash_days=7; maintenance_android=on; maintenance_logs=off
   [ -r "$PLATFORM_CONF" ] && . "$PLATFORM_CONF"
+  [ -n "$thermal_limit" ] || thermal_limit=${PHX_THERMAL_DEFAULT:=$(thermal_default)}   # this CPU's default
 }
+# thermal_default: the guard's default limit for THIS CPU (°C), in order of trust:
+#   1. platform/cpu-thermal.conf (researched per family: "regex|limit|tjmax|family")
+#   2. TjMax the CPU reports via coretemp (temp*_crit) - 5
+#   3. TjMax from MSR 0x1A2 (IA32_TEMPERATURE_TARGET bits 23:16) - 5
+#   4. 90
+thermal_default(){
+  model=$(grep -m1 '^model name' /proc/cpuinfo 2>/dev/null | sed 's/^[^:]*: //')
+  T=$PHOENIX_SHARE/platform/cpu-thermal.conf
+  if [ -r "$T" ] && [ -n "$model" ]; then
+    l=$(grep -v '^#' "$T" | while IFS='|' read -r rx lim tj fam; do
+          [ -n "$lim" ] && echo "$model" | grep -Eiq "$rx" && { echo "$lim"; break; }; done)
+    [ -n "$l" ] && { echo "$l"; return; }
+  fi
+  for h in /sys/class/hwmon/hwmon*; do
+    [ "$(cat $h/name 2>/dev/null)" = coretemp ] || continue
+    c=$(cat $h/temp1_crit 2>/dev/null) && [ -n "$c" ] && { echo $(( c / 1000 - 5 )); return; }
+  done
+  if modprobe msr 2>/dev/null; [ -r /dev/cpu/0/msr ]; then
+    v=$(dd if=/dev/cpu/0/msr bs=8 count=1 skip=$((0x1A2)) iflag=skip_bytes 2>/dev/null | od -An -tu8 | tr -d ' ')
+    tj=$(( (${v:-0} >> 16) & 255 )); [ $tj -ge 60 ] && [ $tj -le 110 ] && { echo $(( tj - 5 )); return; }
+  fi
+  echo 90
+}
+thermal_source(){   # where the default came from (for status)
+  [ -n "$(grep -s '^thermal_limit=' "$PLATFORM_CONF")" ] && { echo "set by you"; return; }
+  echo "this CPU's default"; }
 # conf_default: a new config for this machine (recommended modules + catalog/profile options)
 conf_default(){
   echo "# Phoenix platform configuration (see: phoenix platform)"

@@ -37,7 +37,7 @@ while :; do
   fi
   # 2. thermal guard: step the maximum frequency down above the limit, back up below limit - hysteresis
   if [ "$thermal_guard" = on ] && [ -n "$HW_MAX" ]; then
-    t=$(pkg_temp); lim=${thermal_limit:-90}; hys=${thermal_hysteresis:-5}; step=$(( ${thermal_step:-100} * 1000 ))
+    t=$(pkg_temp); lim=${thermal_limit:-90};   # conf_load fills in this CPU's default hys=${thermal_hysteresis:-5}; step=$(( ${thermal_step:-100} * 1000 ))
     cur=$(cat $POL/policy0/scaling_max_freq)
     if [ $t -ge $lim ] && [ $cur -gt $HW_MIN ]; then new=$(( cur - step ))
     elif [ $t -le $(( lim - hys )) ] && [ $cur -lt $HW_MAX ]; then new=$(( cur + step ))

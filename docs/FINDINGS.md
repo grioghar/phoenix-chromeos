@@ -1,4 +1,4 @@
-# Findings: ChromeOS R150 with the Play Store on a Dell Vostro 3550
+# Findings: ChromeOS R150 with the Play Store on a Dell Vostro 3750 (long assumed to be a 3550)
 
 Hardware: i5-2410M (Sandy Bridge), Intel HD 3000 (Gen6), BIOS only, ALPS touchpad, 8 GB RAM.
 Base: Brunch r150 + rammus 16700.65.0 (LTC) + ChromeOS Flex (reven) 16700.65.0.
@@ -21,3 +21,5 @@ Base: Brunch r150 + rammus 16700.65.0 (LTC) + ChromeOS Flex (reven) 16700.65.0.
 - Emulation hot spots: the `kvm:kvm_emulate_insn` tracepoint, then count by RIP and instruction bytes
 - Testing guest binaries: chroot into the Android image with apex bind mounts, then
   `qemu-x86_64-static -cpu SandyBridge,+movbe`
+| Every model profile missed (generic profile) | Brunch's kernel reports DMI product_name as "Brunch" | Detection reads the firmware strings from the raw SMBIOS table (/sys/firmware/dmi/entries/1-0/raw) |
+| CPU stuck at ~418 MHz | Dell BIOS throttling with a failed battery: lowest P-state plus 1/8 clock modulation | Throttle override (clear MSR 0x19A and BD PROCHOT) with a thermal guard |

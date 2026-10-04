@@ -147,6 +147,17 @@ The boot menu always keeps **ChromeOS (stock kernel)** as a fallback.
 Expect a modest gain from the optimized kernel (a few percent). Performance mode makes the larger
 difference on older CPUs.
 
+## 6c. Phoenix Health on the desktop
+
+Phoenix checks the computer every minute: failed battery, firmware throttling, cooling, disk space,
+virtualization, held updates. A **Phoenix Health** icon in Chrome's toolbar shows the result:
+**green** (all good), **yellow** (warning) or **red** (problem). Pin it with the puzzle-piece menu.
+New problems also appear as ChromeOS notifications, which stay in the tray. Click the icon to see
+the details and to change Phoenix settings (performance mode, throttle override, temperature limit,
+CPU profile, fan, Android animations, maintenance, check interval). The panel talks only to Phoenix
+on this computer (127.0.0.1), and Phoenix accepts requests only from this extension. In the
+console: `phoenix health`.
+
 ## 7. Touchpad, hostname
 
 ```bash
